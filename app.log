@@ -1,0 +1,12 @@
+2026-03-25 20:22:55,INFO,main,Application started
+2026-03-25 20:22:55,INFO,db,Connected to database
+2026-03-25 20:22:55,WARNING,network,Slow response time detected
+2026-03-25 20:22:55,WARNING,db,Query took longer than expected
+2026-03-25 20:22:55,ERROR,network,Connection timeout
+2026-03-25 20:22:55,ERROR,db,Failed to execute query
+2026-03-25 20:26:28,INFO,main,Application started
+2026-03-25 20:26:28,INFO,db,Connected to database
+2026-03-25 20:26:28,WARNING,network,Slow response time detected
+2026-03-25 20:26:28,WARNING,db,Query took longer than expected
+2026-03-25 20:26:28,ERROR,network,Connection timeout
+2026-03-25 20:26:28,ERROR,db,Failed to execute query
