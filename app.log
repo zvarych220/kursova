@@ -10,3 +10,4 @@
 2026-03-25 20:26:28,WARNING,db,Query took longer than expected
 2026-03-25 20:26:28,ERROR,network,Connection timeout
 2026-03-25 20:26:28,ERROR,db,Failed to execute query
+[2026-03-26 14:14:25] [INFO] [network] error

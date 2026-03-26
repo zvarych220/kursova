@@ -42,6 +42,15 @@ inline LogLevel stringToLevel(const std::string& s) {
 
 enum class OutputFormat { TXT, CSV, JSON };
 
+inline std::ostream& operator<<(std::ostream& os, OutputFormat fmt) {
+    switch (fmt) {
+        case OutputFormat::TXT:  return os << "TXT";
+        case OutputFormat::CSV:  return os << "CSV";
+        case OutputFormat::JSON: return os << "JSON";
+    }
+    return os << "UNKNOWN";
+}
+
 // ─── Colors ──────────────────────────────────────────────────────────────────
 
 namespace Color {
@@ -168,41 +177,143 @@ private:
     std::map<std::string, std::vector<LogEntry>>   bySource;
 };
 
-// ─── LogFormatter ────────────────────────────────────────────────────────────
+// ─── LogFormatter (Factory Method) ──────────────────────────────────────────
+// ILogFormatter — абстрактний продукт Factory Method
 
-class LogFormatter {
+class ILogFormatter {
 public:
-    // Req 3.1 — TXT: "[time] [LEVEL] [source] message"
-    std::string toTXT(const LogEntry& e) const {
-        return "[" + e.formattedTime() + "] [" + levelToString(e.level) + "] [" + e.source + "] " + e.message;
+    virtual ~ILogFormatter() = default;
+    virtual std::string format(const LogEntry& e) const = 0;
+    virtual std::string header() const { return ""; }          // опціональний заголовок (CSV)
+    virtual std::string prologue() const { return ""; }        // перед списком (JSON "[")
+    virtual std::string epilogue() const { return ""; }        // після списку  (JSON "]")
+    virtual bool needsIndexSeparator() const { return false; } // JSON потребує ком між елементами
+};
+
+// Конкретні продукти
+
+class TXTFormatter : public ILogFormatter {
+public:
+    // useColor: чи додавати ANSI-кольори до рядка виводу
+    explicit TXTFormatter(bool useColor = false) : useColor_(useColor) {}
+
+    std::string format(const LogEntry& e) const override {
+        std::string line = "[" + e.formattedTime() + "] [" + levelToString(e.level) + "] [" + e.source + "] " + e.message;
+        if (useColor_)
+            return Color::forLevel(e.level) + line + Color::RESET;
+        return line;
     }
 
-    // Req 3.2 — CSV: "time,LEVEL,source,message"
-    std::string toCSV(const LogEntry& e) const {
-        return e.formattedTime() + "," + levelToString(e.level) + "," + e.source + "," + e.message;
+private:
+    bool useColor_;
+};
+
+class CSVFormatter : public ILogFormatter {
+public:
+    // delimiter: символ-розділювач колонок (за замовчуванням ',')
+    explicit CSVFormatter(char delimiter = ',') : delimiter_(delimiter) {}
+
+    std::string format(const LogEntry& e) const override {
+        std::string d(1, delimiter_);
+        return e.formattedTime() + d + levelToString(e.level) + d + e.source + d + e.message;
+    }
+    std::string header() const override {
+        std::string d(1, delimiter_);
+        return "time" + d + "level" + d + "source" + d + "message";
     }
 
-    std::string csvHeader() const {
-        return "time,level,source,message";
-    }
+private:
+    char delimiter_;
+};
 
-    // Req 3.3 — JSON: {"time":"...","level":"...","source":"...","message":"..."}
-    std::string toJSON(const LogEntry& e) const {
+class JSONFormatter : public ILogFormatter {
+public:
+    // indent: кількість пробілів для відступу елементів масиву
+    explicit JSONFormatter(int indent = 2) : indent_(indent) {}
+
+    std::string format(const LogEntry& e) const override {
         return "{\"time\":\"" + e.formattedTime() +
                "\",\"level\":\"" + levelToString(e.level) +
                "\",\"source\":\"" + e.source +
                "\",\"message\":\"" + e.message + "\"}";
     }
+    std::string prologue() const override { return "[\n"; }
+    std::string epilogue() const override { return "]\n"; }
+    bool needsIndexSeparator() const override { return true; }
 
-    // Dispatcher by format
-    std::string format(const LogEntry& e, OutputFormat fmt) const {
-        switch (fmt) {
-            case OutputFormat::TXT:  return toTXT(e);
-            case OutputFormat::CSV:  return toCSV(e);
-            case OutputFormat::JSON: return toJSON(e);
-        }
-        return toTXT(e);
+    // використовується при записі у файл для відступу
+    std::string indentStr() const { return std::string(indent_, ' '); }
+
+private:
+    int indent_;
+};
+
+// FormatterFactory — абстрактний творець (Factory Method)
+
+class FormatterFactory {
+public:
+    // outputFormat: зберігає прив'язку фабрики до конкретного формату виводу
+    explicit FormatterFactory(OutputFormat fmt) : outputFormat_(fmt) {}
+    virtual ~FormatterFactory() = default;
+    virtual std::unique_ptr<ILogFormatter> createFormatter() const = 0;
+    OutputFormat outputFormat() const { return outputFormat_; }
+
+private:
+    OutputFormat outputFormat_;
+};
+
+class TXTFormatterFactory : public FormatterFactory {
+public:
+    // useColor: передається у TXTFormatter для увімкнення кольорового виводу
+    explicit TXTFormatterFactory(bool useColor = false)
+        : FormatterFactory(OutputFormat::TXT), useColor_(useColor) {}
+    std::unique_ptr<ILogFormatter> createFormatter() const override {
+        return std::make_unique<TXTFormatter>(useColor_);
     }
+private:
+    bool useColor_;
+};
+
+class CSVFormatterFactory : public FormatterFactory {
+public:
+    // delimiter: передається у CSVFormatter як символ-розділювач
+    explicit CSVFormatterFactory(char delimiter = ',')
+        : FormatterFactory(OutputFormat::CSV), delimiter_(delimiter) {}
+    std::unique_ptr<ILogFormatter> createFormatter() const override {
+        return std::make_unique<CSVFormatter>(delimiter_);
+    }
+private:
+    char delimiter_;
+};
+
+class JSONFormatterFactory : public FormatterFactory {
+public:
+    // indent: передається у JSONFormatter як розмір відступу
+    explicit JSONFormatterFactory(int indent = 2)
+        : FormatterFactory(OutputFormat::JSON), indent_(indent) {}
+    std::unique_ptr<ILogFormatter> createFormatter() const override {
+        return std::make_unique<JSONFormatter>(indent_);
+    }
+private:
+    int indent_;
+};
+
+// Хелпер: отримати фабрику за enum
+inline std::unique_ptr<FormatterFactory> makeFormatterFactory(OutputFormat fmt) {
+    switch (fmt) {
+        case OutputFormat::CSV:  return std::make_unique<CSVFormatterFactory>();
+        case OutputFormat::JSON: return std::make_unique<JSONFormatterFactory>();
+        default:                 return std::make_unique<TXTFormatterFactory>();
+    }
+}
+// Зворотна сумісність: LogFormatter-обгортка для старого коду
+class LogFormatter {
+public:
+    std::string format(const LogEntry& e, OutputFormat fmt) const {
+        auto f = makeFormatterFactory(fmt)->createFormatter();
+        return f->format(e);
+    }
+    std::string csvHeader() const { return "time,level,source,message"; }
 };
 
 // ─── LogFileWriter ───────────────────────────────────────────────────────────
@@ -323,6 +434,78 @@ private:
         return static_cast<size_t>(f.tellg());
     }
 };
+
+// ─── Abstract Factory (OutputFactory) ───────────────────────────────────────
+// Створює узгоджену пару: форматер + стратегію запису у файл.
+// Кожна конкретна фабрика гарантує, що формат форматера і логіка запису збігаються.
+
+class IOutputFactory {
+public:
+    virtual ~IOutputFactory() = default;
+    virtual std::unique_ptr<ILogFormatter> createFormatter() const = 0;
+    virtual OutputFormat                   getFormat()       const = 0;
+    // Записує всі entries у файл відповідно до формату фабрики
+    virtual void saveAll(const std::vector<LogEntry>& entries,
+                         const std::string& basePath) const {
+        auto fmt       = getFormat();
+        auto formatter = createFormatter();
+
+        // визначаємо розширення
+        std::string ext;
+        switch (fmt) {
+            case OutputFormat::CSV:  ext = ".csv";  break;
+            case OutputFormat::JSON: ext = ".json"; break;
+            default:                 ext = ".txt";  break;
+        }
+        auto dot  = basePath.rfind('.');
+        std::string path = (dot == std::string::npos ? basePath : basePath.substr(0, dot)) + ext;
+
+        std::ofstream ofs(path);
+        if (!ofs.is_open()) { std::cerr << "[OutputFactory] Cannot open: " << path << "\n"; return; }
+
+        if (!formatter->header().empty())   ofs << formatter->header() << "\n";
+        if (!formatter->prologue().empty()) ofs << formatter->prologue();
+
+        for (size_t i = 0; i < entries.size(); ++i) {
+            std::string line = formatter->format(entries[i]);
+            if (formatter->needsIndexSeparator()) {
+                ofs << "  " << line;
+                if (i + 1 < entries.size()) ofs << ",";
+                ofs << "\n";
+            } else {
+                ofs << line << "\n";
+            }
+        }
+        if (!formatter->epilogue().empty()) ofs << formatter->epilogue();
+    }
+};
+
+class TXTOutputFactory : public IOutputFactory {
+public:
+    std::unique_ptr<ILogFormatter> createFormatter() const override { return std::make_unique<TXTFormatter>(); }
+    OutputFormat getFormat() const override { return OutputFormat::TXT; }
+};
+
+class CSVOutputFactory : public IOutputFactory {
+public:
+    std::unique_ptr<ILogFormatter> createFormatter() const override { return std::make_unique<CSVFormatter>(); }
+    OutputFormat getFormat() const override { return OutputFormat::CSV; }
+};
+
+class JSONOutputFactory : public IOutputFactory {
+public:
+    std::unique_ptr<ILogFormatter> createFormatter() const override { return std::make_unique<JSONFormatter>(); }
+    OutputFormat getFormat() const override { return OutputFormat::JSON; }
+};
+
+// Хелпер: отримати фабрику виводу за enum
+inline std::unique_ptr<IOutputFactory> makeOutputFactory(OutputFormat fmt) {
+    switch (fmt) {
+        case OutputFormat::CSV:  return std::make_unique<CSVOutputFactory>();
+        case OutputFormat::JSON: return std::make_unique<JSONOutputFactory>();
+        default:                 return std::make_unique<TXTOutputFactory>();
+    }
+}
 
 // ─── LogAnalyzer ─────────────────────────────────────────────────────────────
 
@@ -594,9 +777,10 @@ public:
         analyzer.printStats(storage);
     }
 
-    // Req 3.1–3.3 — delegate to writer
+    // Req 3.1–3.3 — використовує Abstract Factory для збереження у потрібному форматі
     void saveAll(OutputFormat fmt) {
-        writer.saveAll(storage.getEntries(), formatter, fmt);
+        auto factory = makeOutputFactory(fmt);
+        factory->saveAll(storage.getEntries(), config.filePath);
     }
 
     // Req 7.1 — read-only access to storage
@@ -754,7 +938,7 @@ private:
             std::cout << "Entries " << (from + 1) << "-" << to << " of " << total << ":\n\n";
             for (size_t i = from; i < to; ++i) {
                 const auto& e = entries[i];
-                std::cout << Color::forLevel(e.level) << fmt.toTXT(e) << Color::RESET << "\n";
+                std::cout << Color::forLevel(e.level) << fmt.format(e, OutputFormat::TXT) << Color::RESET << "\n";
             }
 
             bool hasPrev = (page > 0);
@@ -990,6 +1174,69 @@ int main(int argc, char* argv[]) {
     cfg.maxFileSizeKB = 1024;
     Logger::instance().configure(cfg);
     Logger::instance().loadFromFile(cfg.filePath);
+
+    // ─── Демонстрація патерну Factory Method ─────────────────────────────────
+    // Показує що кожна конкретна фабрика створює свій форматер
+    // і форматує один і той самий запис по-різному.
+    {
+        std::cout << "\n╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║     DEMO: Factory Method (FormatterFactory)  ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        // Тестовий запис журналу
+        LogEntry sample;
+        sample.level     = LogLevel::WARNING;
+        sample.source    = "auth";
+        sample.message   = "Failed login attempt";
+        sample.timestamp = std::chrono::system_clock::now();
+
+        // Три конкретні творці — кожен створює свій продукт
+        std::vector<std::unique_ptr<FormatterFactory>> factories;
+        factories.push_back(std::make_unique<TXTFormatterFactory>(false));
+        factories.push_back(std::make_unique<CSVFormatterFactory>(','));
+        factories.push_back(std::make_unique<JSONFormatterFactory>(2));
+
+        for (const auto& factory : factories) {
+            auto formatter = factory->createFormatter();
+            std::cout << "[Factory: " << factory->outputFormat() << "]\n";
+            if (!formatter->header().empty())
+                std::cout << "  header : " << formatter->header() << "\n";
+            std::cout << "  format : " << formatter->format(sample) << "\n\n";
+        }
+    }
+
+    // ─── Демонстрація патерну Abstract Factory ────────────────────────────────
+    // Показує що кожна фабрика створює узгоджену пару продуктів
+    // (форматер + стратегія запису) і зберігає файл у своєму форматі.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║   DEMO: Abstract Factory (IOutputFactory)   ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        // Тестові записи для збереження
+        std::vector<LogEntry> samples;
+        for (auto lvl : { LogLevel::INFO, LogLevel::WARNING, LogLevel::ERROR }) {
+            LogEntry e;
+            e.level     = lvl;
+            e.source    = "demo";
+            e.message   = "Abstract Factory test entry";
+            e.timestamp = std::chrono::system_clock::now();
+            samples.push_back(e);
+        }
+
+        // Три конкретні фабрики — кожна зберігає файл свого сімейства
+        std::vector<std::unique_ptr<IOutputFactory>> outFactories;
+        outFactories.push_back(std::make_unique<TXTOutputFactory>());
+        outFactories.push_back(std::make_unique<CSVOutputFactory>());
+        outFactories.push_back(std::make_unique<JSONOutputFactory>());
+
+        for (const auto& factory : outFactories) {
+            factory->saveAll(samples, exeDir + "demo_output");
+            std::cout << "[Factory: " << factory->getFormat()
+                      << "] -> файл збережено\n";
+        }
+        std::cout << "\n";
+    }
 
     CLI cli(Logger::instance(), userManager);
     if (!cli.login()) {
