@@ -1,5 +1,3 @@
-// Compile: g++ -std=c++17 -o logger main.cpp
-
 #include <string>
 #include <vector>
 #include <deque>
@@ -15,6 +13,10 @@
 #include <optional>
 #include <limits>
 #include <functional>
+#include <thread>
+#include <atomic>
+#include <mutex>
+#include <random>
 
 // ─── Log Level ───────────────────────────────────────────────────────────────
 
@@ -102,6 +104,37 @@ struct LogConfig {
     size_t       maxFileSizeKB = 1024; // 1 MB default
 };
 
+// ─── Flyweight (LogEntryMeta pool) ───────────────────────────────────────────
+// Незмінна частина запису (source + level-рядок) — розділяється між усіма записами
+
+struct LogEntryMeta {
+    std::string source;
+    std::string levelStr;
+};
+
+// Пул Flyweight — повертає спільний об'єкт для однакових (source, level) пар
+class LogMetaPool {
+public:
+    static LogMetaPool& instance() {
+        static LogMetaPool pool;
+        return pool;
+    }
+
+    // Повертає вказівник на існуючий або щойно створений об'єкт метаданих
+    const LogEntryMeta* get(const std::string& source, LogLevel level) {
+        std::string key = source + "|" + levelToString(level);
+        auto it = pool_.find(key);
+        if (it != pool_.end()) return &it->second;
+        pool_[key] = LogEntryMeta{ source, levelToString(level) };
+        return &pool_[key];
+    }
+
+    size_t poolSize() const { return pool_.size(); }
+
+private:
+    std::map<std::string, LogEntryMeta> pool_;
+};
+
 // ─── LogStorage ──────────────────────────────────────────────────────────────
 
 class LogStorage {
@@ -110,6 +143,9 @@ public:
 
     // 2.1 — add entry to all containers
     void add(LogEntry entry) {
+        // Flyweight: реєструємо метадані у пулі при кожному додаванні запису
+        LogMetaPool::instance().get(entry.source, entry.level);
+
         byLevel[entry.level].push_back(entry);
         bySource[entry.source].push_back(entry);
 
@@ -169,6 +205,38 @@ public:
 
     const std::vector<LogEntry>& getEntries() const { return entries; }
     const std::deque<LogEntry>&  getRecent()  const { return recent; }
+
+    // Clear all entries from memory
+    void clearAll() {
+        entries.clear();
+        recent.clear();
+        byLevel.clear();
+        bySource.clear();
+    }
+
+    // Remove entries whose timestamp falls within [start, end]
+    size_t clearByDateRange(
+        std::chrono::system_clock::time_point start,
+        std::chrono::system_clock::time_point end)
+    {
+        auto before = entries.size();
+        entries.erase(std::remove_if(entries.begin(), entries.end(),
+            [&](const LogEntry& e) {
+                return e.timestamp >= start && e.timestamp <= end;
+            }), entries.end());
+        size_t removed = before - entries.size();
+        // Rebuild index maps and recent from scratch
+        byLevel.clear();
+        bySource.clear();
+        recent.clear();
+        for (const auto& e : entries) {
+            byLevel[e.level].push_back(e);
+            bySource[e.source].push_back(e);
+            if (recent.size() >= MAX_RECENT) recent.pop_front();
+            recent.push_back(e);
+        }
+        return removed;
+    }
 
 private:
     std::vector<LogEntry>                          entries;
@@ -507,6 +575,51 @@ inline std::unique_ptr<IOutputFactory> makeOutputFactory(OutputFormat fmt) {
     }
 }
 
+// ─── Decorator (ILogFormatter decorators) ────────────────────────────────────
+// Базовий декоратор — зберігає посилання на обгорнутий форматер
+
+class FormatterDecorator : public ILogFormatter {
+public:
+    explicit FormatterDecorator(std::unique_ptr<ILogFormatter> inner)
+        : inner_(std::move(inner)) {}
+
+    std::string format(const LogEntry& e) const override { return inner_->format(e); }
+    std::string header()   const override { return inner_->header(); }
+    std::string prologue() const override { return inner_->prologue(); }
+    std::string epilogue() const override { return inner_->epilogue(); }
+    bool needsIndexSeparator() const override { return inner_->needsIndexSeparator(); }
+
+protected:
+    std::unique_ptr<ILogFormatter> inner_;
+};
+
+// Конкретний декоратор 1: переводить повідомлення у верхній регістр
+class UpperCaseDecorator : public FormatterDecorator {
+public:
+    using FormatterDecorator::FormatterDecorator;
+
+    std::string format(const LogEntry& e) const override {
+        LogEntry upper = e;
+        for (auto& c : upper.message)
+            c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+        return inner_->format(upper);
+    }
+};
+
+// Конкретний декоратор 2: додає префікс із порядковим номером запису
+class NumberedDecorator : public FormatterDecorator {
+public:
+    explicit NumberedDecorator(std::unique_ptr<ILogFormatter> inner)
+        : FormatterDecorator(std::move(inner)), counter_(0) {}
+
+    std::string format(const LogEntry& e) const override {
+        return "#" + std::to_string(++counter_) + " " + inner_->format(e);
+    }
+
+private:
+    mutable int counter_;
+};
+
 // ─── LogAnalyzer ─────────────────────────────────────────────────────────────
 
 class LogAnalyzer {
@@ -545,6 +658,10 @@ public:
             std::cout << "[" << it->formattedTime() << "] [" << it->source << "] " << it->message << "\n";
         else
             std::cout << "(none)\n";
+
+        // Flyweight: показуємо кількість унікальних об'єктів метаданих у пулі
+        std::cout << "\nFlyweight pool (unique source+level pairs): "
+                  << LogMetaPool::instance().poolSize() << "\n";
 
         std::cout << "======================\n";
     }
@@ -744,6 +861,166 @@ private:
     }
 };
 
+// ─── Observer ────────────────────────────────────────────────────────────────
+// ILogObserver — інтерфейс спостерігача.
+// Реалізації отримують сповіщення щоразу, коли до сховища додається новий запис.
+
+class ILogObserver {
+public:
+    virtual ~ILogObserver() = default;
+    virtual void onEntryAdded(const LogEntry& entry) = 0;
+};
+
+// Конкретний спостерігач 1: виводить у консоль кожен новий запис
+class ConsoleObserver : public ILogObserver {
+public:
+    void onEntryAdded(const LogEntry& entry) override {
+        std::cout << Color::forLevel(entry.level)
+                  << "[ConsoleObserver] New entry: ["
+                  << levelToString(entry.level) << "] ["
+                  << entry.source << "] " << entry.message
+                  << Color::RESET << "\n";
+    }
+};
+
+// Конкретний спостерігач 2: реагує лише на ERROR — виводить попередження
+class AlertObserver : public ILogObserver {
+public:
+    void onEntryAdded(const LogEntry& entry) override {
+        if (entry.level == LogLevel::ERROR) {
+            std::cout << Color::RED
+                      << "[AlertObserver] *** ALERT *** ERROR detected from ["
+                      << entry.source << "]: " << entry.message
+                      << Color::RESET << "\n";
+        }
+    }
+};
+
+// Конкретний спостерігач 3: рахує кількість записів кожного рівня
+class CounterObserver : public ILogObserver {
+public:
+    void onEntryAdded(const LogEntry& entry) override {
+        counts_[entry.level]++;
+    }
+
+    void printCounts() const {
+        std::cout << "[CounterObserver] Counts: ";
+        for (auto lvl : { LogLevel::DEBUG, LogLevel::INFO, LogLevel::WARNING, LogLevel::ERROR })
+            std::cout << levelToString(lvl) << "=" << counts_.at(lvl) << " ";
+        std::cout << "\n";
+    }
+
+private:
+    std::map<LogLevel, int> counts_ = {
+        { LogLevel::DEBUG, 0 }, { LogLevel::INFO, 0 },
+        { LogLevel::WARNING, 0 }, { LogLevel::ERROR, 0 }
+    };
+};
+
+// LogEventSource — суб'єкт (Subject): керує списком спостерігачів
+// і сповіщає їх при кожному новому записі.
+class LogEventSource {
+public:
+    void subscribe(ILogObserver* observer) {
+        observers_.push_back(observer);
+    }
+
+    void unsubscribe(ILogObserver* observer) {
+        observers_.erase(
+            std::remove(observers_.begin(), observers_.end(), observer),
+            observers_.end());
+    }
+
+    void notify(const LogEntry& entry) {
+        for (auto* obs : observers_)
+            obs->onEntryAdded(entry);
+    }
+
+private:
+    std::vector<ILogObserver*> observers_;
+};
+
+// ─── Visitor ─────────────────────────────────────────────────────────────────
+// ILogVisitor — інтерфейс відвідувача.
+// Дозволяє додавати нові операції над LogEntry без зміни його структури.
+
+class ILogVisitor {
+public:
+    virtual ~ILogVisitor() = default;
+    virtual void visit(const LogEntry& entry) = 0;
+    virtual void finalize() {}  // викликається після обходу всіх записів
+};
+
+// Конкретний відвідувач 1: збирає статистику по рівнях та джерелах
+class StatsVisitor : public ILogVisitor {
+public:
+    void visit(const LogEntry& entry) override {
+        levelCounts_[entry.level]++;
+        sourceCounts_[entry.source]++;
+        total_++;
+    }
+
+    void finalize() override {
+        std::cout << "=== StatsVisitor Report ===\n";
+        std::cout << "Total: " << total_ << "\n";
+        std::cout << "By level:\n";
+        for (auto lvl : { LogLevel::DEBUG, LogLevel::INFO, LogLevel::WARNING, LogLevel::ERROR })
+            std::cout << "  " << levelToString(lvl) << ": " << levelCounts_[lvl] << "\n";
+        std::cout << "By source:\n";
+        for (const auto& [src, cnt] : sourceCounts_)
+            std::cout << "  " << src << ": " << cnt << "\n";
+        std::cout << "===========================\n";
+    }
+
+private:
+    std::map<LogLevel, int>      levelCounts_ = {
+        { LogLevel::DEBUG, 0 }, { LogLevel::INFO, 0 },
+        { LogLevel::WARNING, 0 }, { LogLevel::ERROR, 0 }
+    };
+    std::map<std::string, int>   sourceCounts_;
+    int                          total_ = 0;
+};
+
+// Конкретний відвідувач 2: фільтрує записи за рівнем і збирає їх у список
+class FilterVisitor : public ILogVisitor {
+public:
+    explicit FilterVisitor(LogLevel targetLevel) : targetLevel_(targetLevel) {}
+
+    void visit(const LogEntry& entry) override {
+        if (entry.level == targetLevel_)
+            matched_.push_back(entry);
+    }
+
+    const std::vector<LogEntry>& results() const { return matched_; }
+
+private:
+    LogLevel              targetLevel_;
+    std::vector<LogEntry> matched_;
+};
+
+// Конкретний відвідувач 3: серіалізує записи у plain-text рядок (для звіту)
+class ReportVisitor : public ILogVisitor {
+public:
+    void visit(const LogEntry& entry) override {
+        report_ += "[" + entry.formattedTime() + "] "
+                 + "[" + levelToString(entry.level) + "] "
+                 + "[" + entry.source + "] "
+                 + entry.message + "\n";
+    }
+
+    const std::string& report() const { return report_; }
+
+private:
+    std::string report_;
+};
+
+// Хелпер: обійти всі записи сховища відвідувачем
+inline void acceptVisitor(const LogStorage& storage, ILogVisitor& visitor) {
+    for (const auto& entry : storage.getEntries())
+        visitor.visit(entry);
+    visitor.finalize();
+}
+
 // ─── Logger (Singleton) ──────────────────────────────────────────────────────
 
 class Logger {
@@ -760,13 +1037,20 @@ public:
         writer.configure(cfg);
     }
 
+    // Observer: підписати/відписати спостерігача
+    void subscribe(ILogObserver* observer)   { eventSource_.subscribe(observer); }
+    void unsubscribe(ILogObserver* observer) { eventSource_.unsubscribe(observer); }
+
     // Req 7.1, 6.1, 8.3 — create entry, filter by minLevel, store and write
     void log(LogLevel level, const std::string& source, const std::string& message) {
         try {
             if (level < config.minLevel) return;
             LogEntry entry{ level, source, message, std::chrono::system_clock::now() };
+            std::lock_guard<std::mutex> lock(mtx);
             storage.add(entry);
             writer.write(entry, formatter);
+            // Observer: сповіщаємо всіх підписників про новий запис
+            eventSource_.notify(entry);
         } catch (const std::exception& ex) {
             std::cerr << "[Logger] log error: " << ex.what() << "\n";
         }
@@ -786,6 +1070,33 @@ public:
     // Req 7.1 — read-only access to storage
     const LogStorage& getStorage() const { return storage; }
 
+    // Mutable access for LogStorageProxy
+    LogStorage& getStorageMutable() { return storage; }
+
+    // Clear all logs from memory and rewrite the log file as empty
+    void clearAll() {
+        std::lock_guard<std::mutex> lock(mtx);
+        storage.clearAll();
+        // Truncate the log file
+        std::ofstream ofs(config.filePath, std::ios::trunc);
+    }
+
+    // Clear logs in [start, end] from memory and rewrite the log file
+    size_t clearByDateRange(
+        std::chrono::system_clock::time_point start,
+        std::chrono::system_clock::time_point end)
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        size_t removed = storage.clearByDateRange(start, end);
+        // Rewrite log file with remaining entries
+        std::ofstream ofs(config.filePath, std::ios::trunc);
+        if (ofs.is_open()) {
+            for (const auto& e : storage.getEntries())
+                ofs << formatter.format(e, config.format) << "\n";
+        }
+        return removed;
+    }
+
     // Load existing TXT log file into storage (without re-writing to file)
     void loadFromFile(const std::string& path) {
         LogLoader::load(path, storage);
@@ -801,9 +1112,93 @@ private:
     LogFormatter formatter;
     LogAnalyzer  analyzer;
     LogFileWriter writer;
+    LogEventSource eventSource_;
+    mutable std::mutex mtx;
 };
 
-// ─── CLI ─────────────────────────────────────────────────────────────────────
+// ─── Proxy (LogStorageProxy) ─────────────────────────────────────────────────
+// Контролює доступ до LogStorage залежно від ролі користувача.
+// ADMIN може лише читати записи; SUPERADMIN має повний доступ (читання + очищення).
+
+class ILogStorageAccess {
+public:
+    virtual ~ILogStorageAccess() = default;
+    virtual std::vector<LogEntry> getEntries()                          const = 0;
+    virtual std::vector<LogEntry> filter(LogLevel level)                const = 0;
+    virtual std::vector<LogEntry> filterBySource(const std::string& s)  const = 0;
+    virtual void                  clearAll()                                  = 0;
+};
+
+class LogStorageProxy : public ILogStorageAccess {
+public:
+    LogStorageProxy(LogStorage& storage, Role role)
+        : storage_(storage), role_(role) {}
+
+    std::vector<LogEntry> getEntries() const override {
+        return storage_.getEntries();
+    }
+
+    std::vector<LogEntry> filter(LogLevel level) const override {
+        return storage_.filter(level);
+    }
+
+    std::vector<LogEntry> filterBySource(const std::string& s) const override {
+        return storage_.filterBySource(s);
+    }
+
+    // Тільки SUPERADMIN може очищати сховище
+    void clearAll() override {
+        if (role_ != Role::SUPERADMIN) {
+            std::cout << Color::RED
+                      << "[Proxy] Access denied: only superadmin can clear logs.\n"
+                      << Color::RESET;
+            return;
+        }
+        storage_.clearAll();
+        std::cout << Color::GREEN << "[Proxy] Logs cleared by superadmin.\n" << Color::RESET;
+    }
+
+private:
+    LogStorage& storage_;
+    Role        role_;
+};
+
+// ─── Facade (LoggingFacade) ───────────────────────────────────────────────────
+// Спрощений інтерфейс для найпоширеніших операцій із системою логування.
+// Приховує взаємодію між Logger, LogStorage, LogAnalyzer та IOutputFactory.
+
+class LoggingFacade {
+public:
+    explicit LoggingFacade(Logger& logger) : logger_(logger) {}
+
+    // Додати запис одним викликом
+    void addEntry(LogLevel level, const std::string& source, const std::string& message) {
+        logger_.log(level, source, message);
+    }
+
+    // Зберегти логи одразу у всіх трьох форматах
+    void saveAllFormats(const std::string& /*basePath*/) {
+        for (auto fmt : { OutputFormat::TXT, OutputFormat::CSV, OutputFormat::JSON })
+            logger_.saveAll(fmt);
+    }
+
+    // Показати статистику
+    void showStats() {
+        logger_.printStats();
+    }
+
+    // Отримати останні N записів
+    std::vector<LogEntry> getRecent(size_t n) const {
+        const auto& entries = logger_.getStorage().getEntries();
+        if (entries.size() <= n) return entries;
+        return std::vector<LogEntry>(entries.end() - static_cast<std::ptrdiff_t>(n), entries.end());
+    }
+
+private:
+    Logger& logger_;
+};
+
+// ─── Logger (Singleton) ──────────────────────────────────────────────────────
 
 class CLI {
 public:
@@ -826,6 +1221,10 @@ public:
             auto user = userManager.authenticate(username, password);
             if (user) {
                 currentUser = user;
+                // Facade та Proxy створюються після логіну, коли відома роль
+                facade_ = std::make_unique<LoggingFacade>(logger);
+                proxy_  = std::make_unique<LogStorageProxy>(
+                    logger.getStorageMutable(), currentUser->role);
                 return true;
             }
             std::cout << Color::RED << "Invalid credentials. Try again." << Color::RESET << "\n";
@@ -858,7 +1257,11 @@ public:
                     if (isSuperAdmin()) handleManageUsers();
                     else { std::cout << "Access denied.\n"; pause(); }
                     break;
-                case 0: std::cout << "Goodbye.\n"; return;
+                case 8: handleClearLogs();  break;
+                case 9: handleVisitorAnalysis(); break;
+                case 0:
+                    std::cout << "Goodbye.\n";
+                    return;
                 default: std::cout << "Invalid option. Try again.\n"; pause(); break;
             }
         }
@@ -868,6 +1271,11 @@ private:
     Logger&      logger;
     UserManager& userManager;
     std::optional<User> currentUser;
+    std::unique_ptr<LoggingFacade>    facade_;
+    std::unique_ptr<LogStorageProxy>  proxy_;
+    // Observer: спостерігачі активні протягом усієї сесії користувача
+    ConsoleObserver consoleObs_;
+    AlertObserver   alertObs_;
 
     bool isSuperAdmin() const {
         return currentUser && currentUser->role == Role::SUPERADMIN;
@@ -889,7 +1297,9 @@ private:
                   << "2. View logs\n"
                   << "3. Sort logs\n"
                   << "4. Statistics\n"
-                  << "5. Save logs to file\n";
+                  << "5. Save logs to file\n"
+                  << "8. Clear logs\n"
+                  << "9. Visitor: analyze logs\n";
         if (isSuperAdmin()) {
             std::cout << "6. Configure logger\n"
                       << "7. Manage users\n";
@@ -925,8 +1335,40 @@ private:
     void printEntries(const std::vector<LogEntry>& entries) const {
         if (entries.empty()) { std::cout << "(no entries)\n"; pause(); return; }
 
+        // Decorator: запитуємо режим відображення
+        std::cout << "Display mode:\n"
+                  << "  1. Normal\n"
+                  << "  2. Numbered lines\n"
+                  << "  3. UPPERCASE messages\n"
+                  << "  4. Numbered + UPPERCASE\n"
+                  << "Choice [1]: ";
+        std::string modeInput;
+        std::getline(std::cin, modeInput);
+        int mode = 1;
+        try { mode = std::stoi(modeInput); } catch (...) {}
+
+        // Будуємо стек декораторів залежно від вибору
+        std::unique_ptr<ILogFormatter> formatter;
+        switch (mode) {
+            case 2:
+                formatter = std::make_unique<NumberedDecorator>(
+                    std::make_unique<TXTFormatter>(true));
+                break;
+            case 3:
+                formatter = std::make_unique<UpperCaseDecorator>(
+                    std::make_unique<TXTFormatter>(true));
+                break;
+            case 4:
+                formatter = std::make_unique<NumberedDecorator>(
+                    std::make_unique<UpperCaseDecorator>(
+                        std::make_unique<TXTFormatter>(true)));
+                break;
+            default:
+                formatter = std::make_unique<TXTFormatter>(true);
+                break;
+        }
+
         static constexpr size_t PAGE_SIZE = 20;
-        LogFormatter fmt;
         size_t total = entries.size();
         size_t page  = 0;
 
@@ -937,8 +1379,7 @@ private:
 
             std::cout << "Entries " << (from + 1) << "-" << to << " of " << total << ":\n\n";
             for (size_t i = from; i < to; ++i) {
-                const auto& e = entries[i];
-                std::cout << Color::forLevel(e.level) << fmt.format(e, OutputFormat::TXT) << Color::RESET << "\n";
+                std::cout << formatter->format(entries[i]) << "\n";
             }
 
             bool hasPrev = (page > 0);
@@ -959,7 +1400,6 @@ private:
     }
 
     void handleAddEntry() {
-        clearScreen();
         std::cout << "-- Add log entry --\n";
         LogLevel level = promptLevel();
 
@@ -977,9 +1417,15 @@ private:
             if (!message.empty()) break;
             std::cout << "Message cannot be empty.\n";
         }
-        logger.log(level, source, message);
+        // Facade: один виклик замість прямого звернення до logger
+        // Observer: підписуємо спостерігачів лише на цей один запис
+        logger.subscribe(&consoleObs_);
+        logger.subscribe(&alertObs_);
+        facade_->addEntry(level, source, message);
+        logger.unsubscribe(&consoleObs_);
+        logger.unsubscribe(&alertObs_);
         std::cout << "Entry added.\n";
-        pause();
+        pause(); // пауза дозволяє побачити вивід спостерігачів перед очищенням екрану
     }
 
     void handleViewLogs() {
@@ -989,20 +1435,21 @@ private:
                   << "2. Filter by level\n"
                   << "3. Filter by source\n"
                   << "4. Filter by time range\n"
+                  << "5. Live monitor (Observer)\n"
                   << "Choice: ";
         std::string input;
         std::getline(std::cin, input);
         int choice = 0;
         try { choice = std::stoi(input); } catch (...) {}
 
-        const LogStorage& storage = logger.getStorage();
+        // Proxy: доступ до сховища через контролер прав
         switch (choice) {
-            case 1: printEntries(storage.getEntries()); break;
-            case 2: { LogLevel lv = promptLevel(); printEntries(storage.filter(lv)); break; }
+            case 1: printEntries(proxy_->getEntries()); break;
+            case 2: { LogLevel lv = promptLevel(); printEntries(proxy_->filter(lv)); break; }
             case 3: {
                 std::cout << "Source: ";
                 std::string src; std::getline(std::cin, src);
-                printEntries(storage.filterBySource(src));
+                printEntries(proxy_->filterBySource(src));
                 break;
             }
             case 4: {
@@ -1025,9 +1472,10 @@ private:
                     try { end = parseTime(s); break; }
                     catch (...) { std::cout << "Invalid format.\n"; }
                 }
-                printEntries(storage.filterByTimeRange(start, end));
+                printEntries(logger.getStorage().filterByTimeRange(start, end));
                 break;
             }
+            case 5: handleLiveMonitor(); break;
             default: std::cout << "Invalid option.\n"; pause(); break;
         }
     }
@@ -1041,17 +1489,18 @@ private:
         std::string input; std::getline(std::cin, input);
         int choice = 0;
         try { choice = std::stoi(input); } catch (...) {}
-        const LogStorage& storage = logger.getStorage();
+        // Proxy: читання через контролер прав
         switch (choice) {
-            case 1: printEntries(storage.sortedByTime());   break;
-            case 2: printEntries(storage.sortedBySource()); break;
+            case 1: printEntries(logger.getStorage().sortedByTime());   break;
+            case 2: printEntries(logger.getStorage().sortedBySource()); break;
             default: std::cout << "Invalid option.\n"; pause(); break;
         }
     }
 
     void handleStatistics() {
         clearScreen();
-        logger.printStats();
+        // Facade: один виклик замість logger.printStats()
+        facade_->showStats();
         pause();
     }
 
@@ -1059,9 +1508,66 @@ private:
         clearScreen();
         std::cout << "-- Save logs --\n";
         OutputFormat fmt = promptFormat();
+        // Facade: зберігає у вибраному форматі
+        facade_->addEntry(LogLevel::INFO, "system", "Logs exported"); // аудит через facade
         logger.saveAll(fmt);
         std::cout << "Logs saved.\n";
         pause();
+    }
+
+    void handleClearLogs() {
+        clearScreen();
+        std::cout << "-- Clear logs --\n"
+                  << "1. Clear all logs\n"
+                  << "2. Clear by date range\n"
+                  << "0. Back\n"
+                  << "Choice: ";
+        std::string input; std::getline(std::cin, input);
+        int choice = 0;
+        try { choice = std::stoi(input); } catch (...) {}
+
+        auto parseTime = [](const std::string& s) {
+            std::tm tm{}; std::istringstream ss(s);
+            ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+            if (ss.fail()) throw std::invalid_argument("bad time");
+            return std::chrono::system_clock::from_time_t(std::mktime(&tm));
+        };
+
+        switch (choice) {
+            case 1: {
+                std::cout << "Are you sure? (yes/no): ";
+                std::string confirm; std::getline(std::cin, confirm);
+                if (confirm == "yes") {
+                    // Proxy: clearAll перевіряє роль — admin отримає відмову
+                    proxy_->clearAll();
+                } else {
+                    std::cout << "Cancelled.\n";
+                }
+                pause();
+                break;
+            }
+            case 2: {
+                std::chrono::system_clock::time_point start, end;
+                while (true) {
+                    std::cout << "From (YYYY-MM-DD HH:MM:SS): ";
+                    std::string s; std::getline(std::cin, s);
+                    try { start = parseTime(s); break; }
+                    catch (...) { std::cout << "Invalid format.\n"; }
+                }
+                while (true) {
+                    std::cout << "To   (YYYY-MM-DD HH:MM:SS): ";
+                    std::string s; std::getline(std::cin, s);
+                    try { end = parseTime(s); break; }
+                    catch (...) { std::cout << "Invalid format.\n"; }
+                }
+                size_t removed = logger.clearByDateRange(start, end);
+                std::cout << Color::GREEN << "Removed " << removed << " entries.\n" << Color::RESET;
+                pause();
+                break;
+            }
+            case 0: break;
+            default: std::cout << "Invalid option.\n"; pause(); break;
+        }
     }
 
     void handleConfigure() {
@@ -1147,9 +1653,103 @@ private:
             }
         }
     }
-};
+    void handleLiveMonitor() {
+        // Observer: LiveObserver накопичує нові записи у потокобезпечній черзі
+        struct LiveObserver : public ILogObserver {
+            std::mutex              mtx;
+            std::vector<LogEntry>   newEntries;
+            void onEntryAdded(const LogEntry& entry) override {
+                std::lock_guard<std::mutex> lock(mtx);
+                newEntries.push_back(entry);
+            }
+        };
 
-// ─── main ────────────────────────────────────────────────────────────────────
+        LiveObserver liveObs;
+        logger.subscribe(&liveObs);
+
+        // Показуємо останні 15 записів як початковий стан
+        static constexpr size_t VISIBLE = 15;
+        std::atomic<bool> stop{false};
+
+        // Окремий потік читає Enter для виходу
+        std::thread inputThread([&stop]() {
+            std::string s;
+            std::getline(std::cin, s);
+            stop.store(true);
+        });
+
+        TXTFormatter fmt(true);
+
+        while (!stop.load()) {
+            clearScreen();
+            std::cout << "=== Live Monitor (Observer) === [Enter to exit]\n\n";
+
+            // Беремо останні VISIBLE записів зі сховища
+            const auto& all = logger.getStorage().getEntries();
+            size_t from = all.size() > VISIBLE ? all.size() - VISIBLE : 0;
+            for (size_t i = from; i < all.size(); ++i)
+                std::cout << fmt.format(all[i]) << "\n";
+
+            // Показуємо лічильник нових записів з моменту відкриття монітора
+            {
+                std::lock_guard<std::mutex> lock(liveObs.mtx);
+                if (!liveObs.newEntries.empty())
+                    std::cout << "\n" << Color::CYAN
+                              << "[Observer] +" << liveObs.newEntries.size()
+                              << " new since monitor opened"
+                              << Color::RESET << "\n";
+            }
+
+            std::cout << "\n[auto-refresh every 1s]\n";
+
+            // Чекаємо 1 секунду з можливістю раннього виходу
+            for (int i = 0; i < 10 && !stop.load(); ++i)
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+
+        inputThread.join();
+        logger.unsubscribe(&liveObs);
+    }
+
+    void handleVisitorAnalysis() {
+        clearScreen();
+        std::cout << "-- Visitor: Analyze logs --\n"
+                  << "1. Statistics (StatsVisitor)\n"
+                  << "2. Filter by level (FilterVisitor)\n"
+                  << "3. Generate report (ReportVisitor)\n"
+                  << "Choice: ";
+        std::string input; std::getline(std::cin, input);
+        int choice = 0;
+        try { choice = std::stoi(input); } catch (...) {}
+
+        switch (choice) {
+            case 1: {
+                StatsVisitor sv;
+                acceptVisitor(logger.getStorage(), sv);
+                break;
+            }
+            case 2: {
+                LogLevel lv = promptLevel();
+                FilterVisitor fv(lv);
+                acceptVisitor(logger.getStorage(), fv);
+                std::cout << "Matched " << fv.results().size()
+                          << " entries with level " << levelToString(lv) << ":\n";
+                TXTFormatter txt;
+                for (const auto& e : fv.results())
+                    std::cout << "  " << txt.format(e) << "\n";
+                break;
+            }
+            case 3: {
+                ReportVisitor rv;
+                acceptVisitor(logger.getStorage(), rv);
+                std::cout << rv.report();
+                break;
+            }
+            default: std::cout << "Invalid option.\n"; break;
+        }
+        pause();
+    }
+};
 
 int main(int argc, char* argv[]) {
     // Resolve directory of the executable so we find users.json next to it
@@ -1238,11 +1838,227 @@ int main(int argc, char* argv[]) {
         std::cout << "\n";
     }
 
+    // ─── Демонстрація патерну Decorator ──────────────────────────────────────
+    // Декоратори обгортають існуючі форматери, додаючи нову поведінку
+    // без зміни оригінальних класів.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║        DEMO: Decorator (FormatterDecorator) ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        LogEntry sample;
+        sample.level     = LogLevel::ERROR;
+        sample.source    = "network";
+        sample.message   = "connection timeout";
+        sample.timestamp = std::chrono::system_clock::now();
+
+        // Базовий TXT форматер
+        auto base = std::make_unique<TXTFormatter>(false);
+        std::cout << "[Base TXT]       : " << base->format(sample) << "\n";
+
+        // UpperCaseDecorator поверх TXT
+        auto upper = std::make_unique<UpperCaseDecorator>(std::make_unique<TXTFormatter>(false));
+        std::cout << "[UpperCase+TXT]  : " << upper->format(sample) << "\n";
+
+        // NumberedDecorator поверх CSV
+        auto numbered = std::make_unique<NumberedDecorator>(std::make_unique<CSVFormatter>());
+        std::cout << "[Numbered+CSV]   : " << numbered->format(sample) << "\n";
+        std::cout << "[Numbered+CSV]   : " << numbered->format(sample) << "\n";
+
+        // Стек декораторів: Numbered → UpperCase → TXT
+        auto stacked = std::make_unique<NumberedDecorator>(
+            std::make_unique<UpperCaseDecorator>(
+                std::make_unique<TXTFormatter>(false)));
+        std::cout << "[Numbered+Upper] : " << stacked->format(sample) << "\n\n";
+    }
+
+    // ─── Демонстрація патерну Flyweight ──────────────────────────────────────
+    // LogMetaPool кешує незмінні метадані (source + level) і повертає
+    // спільний об'єкт замість створення нового для кожного запису.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║        DEMO: Flyweight (LogMetaPool)        ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        auto& pool = LogMetaPool::instance();
+
+        // Симулюємо 6 записів з 3 унікальними (source, level) парами
+        struct RawEntry { std::string source; LogLevel level; std::string message; };
+        std::vector<RawEntry> raw = {
+            { "auth",    LogLevel::ERROR,   "login failed"       },
+            { "auth",    LogLevel::ERROR,   "token expired"      },
+            { "network", LogLevel::WARNING, "high latency"       },
+            { "network", LogLevel::WARNING, "packet loss"        },
+            { "db",      LogLevel::INFO,    "query executed"     },
+            { "db",      LogLevel::INFO,    "connection opened"  },
+        };
+
+        std::cout << "Entries: " << raw.size()
+                  << "  |  Unique meta objects in pool: ";
+
+        std::vector<const LogEntryMeta*> metas;
+        for (const auto& r : raw) {
+            const LogEntryMeta* meta = pool.get(r.source, r.level);
+            metas.push_back(meta);
+        }
+
+        std::cout << pool.poolSize() << "\n\n";
+
+        for (size_t i = 0; i < raw.size(); ++i) {
+            std::cout << "  [" << metas[i]->levelStr << "] ["
+                      << metas[i]->source << "] " << raw[i].message
+                      << "  (meta@" << static_cast<const void*>(metas[i]) << ")\n";
+        }
+
+        // Перевіряємо що однакові пари повертають той самий об'єкт
+        std::cout << "\n  auth/ERROR ptr same? "
+                  << (pool.get("auth", LogLevel::ERROR) == pool.get("auth", LogLevel::ERROR)
+                      ? "yes (shared)" : "no") << "\n\n";
+    }
+
+    // ─── Демонстрація патерну Proxy ──────────────────────────────────────────
+    // LogStorageProxy контролює доступ до LogStorage залежно від ролі.
+    // admin може лише читати; superadmin має повний доступ.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║        DEMO: Proxy (LogStorageProxy)        ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        // Додаємо тестові записи у сховище
+        LogStorage demoStorage;
+        LogEntry e1{ LogLevel::INFO, "proxy-demo", "test entry 1", std::chrono::system_clock::now() };
+        LogEntry e2{ LogLevel::ERROR, "proxy-demo", "test entry 2", std::chrono::system_clock::now() };
+        demoStorage.add(e1);
+        demoStorage.add(e2);
+
+        // Proxy для admin — читання дозволено, очищення заблоковано
+        LogStorageProxy adminProxy(demoStorage, Role::ADMIN);
+        std::cout << "[admin] getEntries count: " << adminProxy.getEntries().size() << "\n";
+        std::cout << "[admin] trying clearAll -> ";
+        adminProxy.clearAll();
+
+        // Proxy для superadmin — повний доступ
+        LogStorageProxy superProxy(demoStorage, Role::SUPERADMIN);
+        std::cout << "[superadmin] getEntries count: " << superProxy.getEntries().size() << "\n";
+        std::cout << "[superadmin] trying clearAll -> ";
+        superProxy.clearAll();
+        std::cout << "[superadmin] entries after clear: " << superProxy.getEntries().size() << "\n\n";
+    }
+
+    // ─── Демонстрація патерну Facade ─────────────────────────────────────────
+    // LoggingFacade спрощує типові операції: додати запис, зберегти у всіх
+    // форматах, показати статистику — один виклик замість кількох.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║       DEMO: Facade (LoggingFacade)          ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        LoggingFacade facade(Logger::instance());
+
+        // Один виклик — додати запис
+        facade.addEntry(LogLevel::INFO,    "facade-demo", "System started via facade");
+        facade.addEntry(LogLevel::WARNING, "facade-demo", "Low disk space via facade");
+        facade.addEntry(LogLevel::ERROR,   "facade-demo", "Critical error via facade");
+
+        // Отримати останні 3 записи
+        auto recent = facade.getRecent(3);
+        std::cout << "Last " << recent.size() << " entries via facade:\n";
+        TXTFormatter txt;
+        for (const auto& e : recent)
+            std::cout << "  " << txt.format(e) << "\n";
+
+        // Зберегти у всіх форматах одним викликом
+        facade.saveAllFormats(exeDir + "app");
+        std::cout << "\nSaved to TXT/CSV/JSON via facade.\n\n";
+    }
+
+    // ─── Демонстрація патерну Observer ───────────────────────────────────────
+    // Спостерігачі підписуються на Logger і отримують сповіщення при кожному
+    // новому записі. AlertObserver реагує лише на ERROR.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║        DEMO: Observer (LogEventSource)      ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        ConsoleObserver consoleObs;
+        AlertObserver   alertObs;
+        CounterObserver counterObs;
+
+        Logger::instance().subscribe(&consoleObs);
+        Logger::instance().subscribe(&alertObs);
+        Logger::instance().subscribe(&counterObs);
+
+        Logger::instance().log(LogLevel::INFO,    "observer-demo", "Service started");
+        Logger::instance().log(LogLevel::WARNING, "observer-demo", "Memory usage high");
+        Logger::instance().log(LogLevel::ERROR,   "observer-demo", "Database unreachable");
+        Logger::instance().log(LogLevel::INFO,    "observer-demo", "Retry succeeded");
+
+        counterObs.printCounts();
+
+        // Відписуємо спостерігачів після демо
+        Logger::instance().unsubscribe(&consoleObs);
+        Logger::instance().unsubscribe(&alertObs);
+        Logger::instance().unsubscribe(&counterObs);
+        std::cout << "\n";
+    }
+
+    // ─── Демонстрація патерну Visitor ────────────────────────────────────────
+    // Відвідувачі обходять записи сховища і виконують різні операції
+    // (статистика, фільтрація, звіт) без зміни LogEntry.
+    {
+        std::cout << "╔══════════════════════════════════════════════╗\n";
+        std::cout <<   "║        DEMO: Visitor (ILogVisitor)          ║\n";
+        std::cout <<   "╚══════════════════════════════════════════════╝\n";
+
+        // StatsVisitor — підраховує записи по рівнях та джерелах
+        StatsVisitor sv;
+        acceptVisitor(Logger::instance().getStorage(), sv);
+
+        // FilterVisitor — збирає лише ERROR записи
+        FilterVisitor fv(LogLevel::ERROR);
+        acceptVisitor(Logger::instance().getStorage(), fv);
+        std::cout << "FilterVisitor (ERROR): found " << fv.results().size() << " entries\n";
+
+        // ReportVisitor — будує текстовий звіт
+        ReportVisitor rv;
+        acceptVisitor(Logger::instance().getStorage(), rv);
+        std::cout << "ReportVisitor: report length = " << rv.report().size() << " chars\n\n";
+    }
+
     CLI cli(Logger::instance(), userManager);
     if (!cli.login()) {
         std::cout << "Bye.\n";
         return 0;
     }
+
+    // Background random log generator — fires every 5 seconds
+    std::atomic<bool> stopGen{false};
+    std::thread logGen([&stopGen]() {
+        static const std::vector<std::string> sources = { "auth", "db", "network", "cache", "scheduler" };
+        static const std::vector<std::pair<LogLevel, std::string>> messages = {
+            { LogLevel::INFO,    "Heartbeat OK" },
+            { LogLevel::INFO,    "Cache refreshed" },
+            { LogLevel::INFO,    "Scheduled task completed" },
+            { LogLevel::WARNING, "High memory usage detected" },
+            { LogLevel::WARNING, "Slow query detected" },
+            { LogLevel::ERROR,   "Connection pool exhausted" },
+            { LogLevel::DEBUG,   "Token validated" },
+            { LogLevel::DEBUG,   "Config reloaded" },
+        };
+        std::mt19937 rng(std::random_device{}());
+        while (!stopGen.load()) {
+            for (int i = 0; i < 50 && !stopGen.load(); ++i)
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            if (stopGen.load()) break;
+            std::uniform_int_distribution<size_t> srcDist(0, sources.size() - 1);
+            std::uniform_int_distribution<size_t> msgDist(0, messages.size() - 1);
+            const auto& [lvl, msg] = messages[msgDist(rng)];
+            Logger::instance().log(lvl, sources[srcDist(rng)], msg);
+        }
+    });
+
     cli.run();
+    stopGen.store(true);
+    logGen.join();
     return 0;
 }

@@ -1,0 +1,5 @@
+[
+  {"time":"2026-04-06 14:25:01","level":"INFO","source":"demo","message":"Abstract Factory test entry"},
+  {"time":"2026-04-06 14:25:01","level":"WARNING","source":"demo","message":"Abstract Factory test entry"},
+  {"time":"2026-04-06 14:25:01","level":"ERROR","source":"demo","message":"Abstract Factory test entry"}
+]

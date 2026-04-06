@@ -11,3 +11,486 @@
 2026-03-25 20:26:28,ERROR,network,Connection timeout
 2026-03-25 20:26:28,ERROR,db,Failed to execute query
 [2026-03-26 14:14:25] [INFO] [network] error
+[2026-03-31 15:48:58] [ERROR] [network] Connection pool exhausted
+[2026-03-31 15:49:09] [INFO] [network] Scheduled task completed
+[2026-03-31 15:49:14] [WARNING] [network] High memory usage detected
+[2026-03-31 15:49:24] [WARNING] [auth] Slow query detected
+[2026-03-31 15:49:29] [INFO] [auth] Cache refreshed
+[2026-03-31 16:05:25] [INFO] [facade-demo] System started via facade
+[2026-03-31 16:05:25] [WARNING] [facade-demo] Low disk space via facade
+[2026-03-31 16:05:25] [ERROR] [facade-demo] Critical error via facade
+[2026-03-31 16:14:48] [INFO] [facade-demo] System started via facade
+[2026-03-31 16:14:48] [WARNING] [facade-demo] Low disk space via facade
+[2026-03-31 16:14:48] [ERROR] [facade-demo] Critical error via facade
+[2026-03-31 16:15:10] [INFO] [facade-demo] System started via facade
+[2026-03-31 16:15:10] [WARNING] [facade-demo] Low disk space via facade
+[2026-03-31 16:15:10] [ERROR] [facade-demo] Critical error via facade
+[2026-03-31 16:15:32] [ERROR] [db] Connection pool exhausted
+[2026-03-31 16:15:42] [INFO] [auth] Heartbeat OK
+[2026-03-31 16:15:52] [INFO] [db] Scheduled task completed
+[2026-03-31 16:46:11] [INFO] [facade-demo] System started via facade
+[2026-03-31 16:46:11] [WARNING] [facade-demo] Low disk space via facade
+[2026-03-31 16:46:11] [ERROR] [facade-demo] Critical error via facade
+[2026-03-31 16:46:26] [INFO] [db] Heartbeat OK
+[2026-03-31 16:46:42] [WARNING] [scheduler] High memory usage detected
+[2026-03-31 16:46:47] [INFO] [db] Scheduled task completed
+[2026-03-31 16:46:52] [WARNING] [network] High memory usage detected
+[2026-03-31 16:46:57] [INFO] [db] Cache refreshed
+[2026-03-31 16:47:02] [WARNING] [auth] High memory usage detected
+[2026-03-31 16:47:08] [INFO] [facade-demo] System started via facade
+[2026-03-31 16:47:08] [WARNING] [facade-demo] Low disk space via facade
+[2026-03-31 16:47:08] [ERROR] [facade-demo] Critical error via facade
+[2026-03-31 16:47:15] [ERROR] [network] Connection pool exhausted
+[2026-03-31 16:47:20] [WARNING] [auth] Slow query detected
+[2026-03-31 16:47:25] [INFO] [network] Heartbeat OK
+[2026-03-31 16:47:30] [WARNING] [network] High memory usage detected
+[2026-03-31 16:47:35] [WARNING] [scheduler] High memory usage detected
+[2026-03-31 16:47:46] [INFO] [scheduler] Scheduled task completed
+[2026-03-31 16:47:56] [INFO] [db] Cache refreshed
+[2026-03-31 16:48:01] [WARNING] [auth] High memory usage detected
+[2026-03-31 16:48:06] [INFO] [auth] Cache refreshed
+[2026-03-31 16:48:16] [INFO] [scheduler] Heartbeat OK
+[2026-03-31 16:48:27] [WARNING] [auth] Slow query detected
+[2026-03-31 16:48:42] [WARNING] [cache] High memory usage detected
+[2026-03-31 16:48:47] [WARNING] [cache] Slow query detected
+[2026-03-31 16:48:52] [INFO] [scheduler] Cache refreshed
+[2026-03-31 16:48:57] [WARNING] [network] Slow query detected
+[2026-03-31 16:49:03] [INFO] [scheduler] Heartbeat OK
+[2026-03-31 16:49:08] [INFO] [db] Heartbeat OK
+[2026-03-31 16:49:13] [WARNING] [auth] High memory usage detected
+[2026-03-31 16:49:25] [INFO] [test] facade demo
+[2026-03-31 16:49:28] [WARNING] [db] High memory usage detected
+[2026-03-31 16:49:33] [WARNING] [network] Slow query detected
+[2026-03-31 16:49:38] [ERROR] [cache] Connection pool exhausted
+[2026-03-31 16:49:49] [WARNING] [auth] High memory usage detected
+[2026-03-31 16:49:54] [WARNING] [scheduler] High memory usage detected
+[2026-03-31 16:49:59] [WARNING] [network] High memory usage detected
+[2026-03-31 16:50:04] [INFO] [network] Scheduled task completed
+[2026-03-31 16:50:09] [WARNING] [scheduler] Slow query detected
+[2026-03-31 16:50:14] [INFO] [cache] Cache refreshed
+[2026-03-31 16:50:20] [INFO] [scheduler] Heartbeat OK
+[2026-03-31 16:50:25] [WARNING] [cache] High memory usage detected
+[2026-03-31 16:50:30] [WARNING] [auth] Slow query detected
+[2026-03-31 16:50:35] [INFO] [auth] Cache refreshed
+[2026-03-31 16:50:40] [INFO] [auth] Heartbeat OK
+[2026-03-31 16:50:45] [INFO] [cache] Scheduled task completed
+[2026-03-31 16:51:01] [ERROR] [network] Connection pool exhausted
+[2026-03-31 16:51:06] [WARNING] [scheduler] High memory usage detected
+[2026-03-31 16:51:16] [ERROR] [scheduler] Connection pool exhausted
+[2026-03-31 16:51:21] [WARNING] [cache] High memory usage detected
+[2026-03-31 16:51:21] [INFO] [system] Logs exported
+[2026-03-31 16:51:31] [INFO] [cache] Scheduled task completed
+[2026-03-31 16:51:42] [INFO] [auth] Cache refreshed
+[2026-03-31 16:51:47] [ERROR] [network] Connection pool exhausted
+[2026-03-31 16:51:57] [WARNING] [cache] High memory usage detected
+[2026-03-31 16:52:02] [INFO] [scheduler] Scheduled task completed
+[2026-03-31 16:52:07] [INFO] [scheduler] Cache refreshed
+[2026-03-31 16:52:18] [WARNING] [db] Slow query detected
+[2026-03-31 16:52:23] [INFO] [db] Heartbeat OK
+[2026-03-31 16:52:28] [WARNING] [network] High memory usage detected
+[2026-03-31 16:52:33] [ERROR] [cache] Connection pool exhausted
+[2026-03-31 16:52:38] [ERROR] [cache] Connection pool exhausted
+[2026-03-31 16:52:43] [INFO] [scheduler] Scheduled task completed
+[2026-03-31 16:52:48] [WARNING] [scheduler] High memory usage detected
+[2026-03-31 16:52:54] [WARNING] [db] High memory usage detected
+[2026-03-31 16:53:04] [INFO] [scheduler] Cache refreshed
+[2026-03-31 16:53:09] [ERROR] [scheduler] Connection pool exhausted
+[2026-03-31 16:53:14] [WARNING] [cache] Slow query detected
+[2026-03-31 16:53:19] [ERROR] [scheduler] Connection pool exhausted
+[2026-03-31 16:53:24] [INFO] [cache] Heartbeat OK
+[2026-03-31 16:53:29] [INFO] [cache] Cache refreshed
+[2026-03-31 16:53:34] [INFO] [scheduler] Cache refreshed
+[2026-03-31 16:53:45] [INFO] [network] Heartbeat OK
+[2026-04-06 14:24:50] [INFO] [facade-demo] System started via facade
+[2026-04-06 14:24:50] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 14:24:50] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 14:24:50] [INFO] [observer-demo] Service started
+[2026-04-06 14:24:50] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 14:24:50] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 14:24:50] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 14:25:01] [INFO] [facade-demo] System started via facade
+[2026-04-06 14:25:01] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 14:25:01] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 14:25:01] [INFO] [observer-demo] Service started
+[2026-04-06 14:25:01] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 14:25:01] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 14:25:01] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 14:26:26] [INFO] [facade-demo] System started via facade
+[2026-04-06 14:26:26] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 14:26:26] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 14:26:26] [INFO] [observer-demo] Service started
+[2026-04-06 14:26:26] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 14:26:26] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 14:26:26] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 14:26:40] [WARNING] [scheduler] Slow query detected
+[2026-04-06 14:26:46] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 14:26:50] [INFO] [facade-demo] System started via facade
+[2026-04-06 14:26:50] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 14:26:50] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 14:26:50] [INFO] [observer-demo] Service started
+[2026-04-06 14:26:50] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 14:26:50] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 14:26:50] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 14:27:03] [ERROR] [db] Connection pool exhausted
+[2026-04-06 14:27:13] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 14:27:23] [ERROR] [db] Connection pool exhausted
+[2026-04-06 14:27:29] [INFO] [facade-demo] System started via facade
+[2026-04-06 14:27:29] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 14:27:29] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 14:27:29] [INFO] [observer-demo] Service started
+[2026-04-06 14:27:29] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 14:27:29] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 14:27:29] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:02:28] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:02:38] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:02:43] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:02:45] [INFO] [network] hello
+[2026-04-06 15:02:48] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:02:54] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:02:59] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:03:09] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:03:14] [WARNING] [cache] Slow query detected
+[2026-04-06 15:03:16] [ERROR] [ERROR] ERROR
+[2026-04-06 15:03:19] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:03:24] [WARNING] [network] High memory usage detected
+[2026-04-06 15:03:35] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:03:50] [WARNING] [auth] Slow query detected
+[2026-04-06 15:03:55] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:04:01] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:04:06] [WARNING] [db] High memory usage detected
+[2026-04-06 15:04:16] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:04:21] [INFO] [db] Cache refreshed
+[2026-04-06 15:04:42] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:04:47] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:04:52] [INFO] [db] Heartbeat OK
+[2026-04-06 15:05:02] [INFO] [auth] Cache refreshed
+[2026-04-06 15:05:08] [WARNING] [network] High memory usage detected
+[2026-04-06 15:05:13] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:05:18] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:05:23] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:05:28] [INFO] [network] Heartbeat OK
+[2026-04-06 15:05:38] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:05:43] [INFO] [db] Heartbeat OK
+[2026-04-06 15:05:54] [WARNING] [auth] Slow query detected
+[2026-04-06 15:05:59] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:06:04] [INFO] [db] Heartbeat OK
+[2026-04-06 15:06:14] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:06:19] [INFO] [db] Heartbeat OK
+[2026-04-06 15:06:30] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:06:35] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:06:40] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:06:45] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:06:50] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:06:56] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:07:11] [WARNING] [auth] Slow query detected
+[2026-04-06 15:07:16] [INFO] [db] Cache refreshed
+[2026-04-06 15:07:21] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:07:26] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:07:32] [INFO] [auth] Cache refreshed
+[2026-04-06 15:07:42] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:07:47] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:07:52] [INFO] [db] Cache refreshed
+[2026-04-06 15:07:57] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:08:07] [INFO] [db] Heartbeat OK
+[2026-04-06 15:08:28] [INFO] [cache] Cache refreshed
+[2026-04-06 15:08:43] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:08:48] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:08:54] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:08:59] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:09:09] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:09:19] [WARNING] [db] High memory usage detected
+[2026-04-06 15:09:24] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:09:29] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:09:35] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:09:40] [INFO] [db] Heartbeat OK
+[2026-04-06 15:09:45] [WARNING] [db] Slow query detected
+[2026-04-06 15:09:50] [WARNING] [network] Slow query detected
+[2026-04-06 15:09:55] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:10:00] [INFO] [network] Cache refreshed
+[2026-04-06 15:10:11] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:10:16] [INFO] [network] Scheduled task completed
+[2026-04-06 15:10:21] [INFO] [network] Heartbeat OK
+[2026-04-06 15:10:26] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:10:31] [INFO] [cache] Cache refreshed
+[2026-04-06 15:10:41] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:10:47] [INFO] [db] Cache refreshed
+[2026-04-06 15:10:52] [INFO] [network] Heartbeat OK
+[2026-04-06 15:10:57] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:11:12] [INFO] [cache] Cache refreshed
+[2026-04-06 15:11:17] [INFO] [network] Scheduled task completed
+[2026-04-06 15:11:23] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:11:33] [INFO] [network] Heartbeat OK
+[2026-04-06 15:11:38] [INFO] [db] Heartbeat OK
+[2026-04-06 15:11:43] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:11:48] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:11:58] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:12:04] [INFO] [cache] Cache refreshed
+[2026-04-06 15:12:09] [WARNING] [network] Slow query detected
+[2026-04-06 15:12:14] [INFO] [network] Cache refreshed
+[2026-04-06 15:12:24] [WARNING] [auth] Slow query detected
+[2026-04-06 15:12:29] [WARNING] [network] High memory usage detected
+[2026-04-06 15:12:34] [WARNING] [cache] Slow query detected
+[2026-04-06 15:12:40] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:13:00] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:13:10] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:13:16] [WARNING] [network] Slow query detected
+[2026-04-06 15:13:21] [WARNING] [auth] Slow query detected
+[2026-04-06 15:13:26] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:13:36] [WARNING] [network] Slow query detected
+[2026-04-06 15:13:52] [INFO] [network] Scheduled task completed
+[2026-04-06 15:13:57] [INFO] [network] Heartbeat OK
+[2026-04-06 15:14:07] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:14:12] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:14:17] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:14:28] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:14:38] [WARNING] [cache] Slow query detected
+[2026-04-06 15:14:43] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:14:48] [INFO] [db] Cache refreshed
+[2026-04-06 15:14:54] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:14:59] [INFO] [db] Scheduled task completed
+[2026-04-06 15:15:04] [INFO] [db] Cache refreshed
+[2026-04-06 15:15:09] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:15:14] [INFO] [network] Cache refreshed
+[2026-04-06 15:15:19] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:15:29] [WARNING] [cache] Slow query detected
+[2026-04-06 15:15:40] [INFO] [auth] Cache refreshed
+[2026-04-06 15:15:45] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:15:50] [WARNING] [db] Slow query detected
+[2026-04-06 15:15:55] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:16:00] [INFO] [db] Scheduled task completed
+[2026-04-06 15:16:05] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:16:10] [WARNING] [db] Slow query detected
+[2026-04-06 15:16:15] [WARNING] [db] Slow query detected
+[2026-04-06 15:16:21] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:16:26] [INFO] [db] Heartbeat OK
+[2026-04-06 15:16:31] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:16:41] [INFO] [network] Cache refreshed
+[2026-04-06 15:16:56] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:17:02] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:17:07] [WARNING] [network] Slow query detected
+[2026-04-06 15:17:12] [WARNING] [network] High memory usage detected
+[2026-04-06 15:17:17] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:17:22] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:17:27] [WARNING] [db] High memory usage detected
+[2026-04-06 15:17:32] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:17:37] [INFO] [network] Heartbeat OK
+[2026-04-06 15:17:43] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:17:48] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:17:58] [INFO] [cache] Cache refreshed
+[2026-04-06 15:18:03] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:18:08] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:18:13] [WARNING] [network] High memory usage detected
+[2026-04-06 15:18:19] [INFO] [cache] Cache refreshed
+[2026-04-06 15:18:24] [INFO] [network] Cache refreshed
+[2026-04-06 15:18:29] [INFO] [db] Heartbeat OK
+[2026-04-06 15:18:34] [WARNING] [auth] Slow query detected
+[2026-04-06 15:18:44] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:18:55] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:19:00] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:19:05] [INFO] [cache] Cache refreshed
+[2026-04-06 15:19:10] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:19:20] [WARNING] [cache] Slow query detected
+[2026-04-06 15:19:25] [WARNING] [auth] Slow query detected
+[2026-04-06 15:19:30] [INFO] [db] Heartbeat OK
+[2026-04-06 15:19:46] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:19:51] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:19:56] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:20:01] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:20:07] [WARNING] [auth] Slow query detected
+[2026-04-06 15:20:12] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:20:17] [INFO] [cache] Cache refreshed
+[2026-04-06 15:20:28] [INFO] [network] Cache refreshed
+[2026-04-06 15:20:39] [INFO] [auth] Cache refreshed
+[2026-04-06 15:20:44] [WARNING] [network] High memory usage detected
+[2026-04-06 15:20:49] [INFO] [cache] Cache refreshed
+[2026-04-06 15:21:00] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:21:05] [WARNING] [cache] Slow query detected
+[2026-04-06 15:21:11] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:21:16] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:21:21] [WARNING] [db] High memory usage detected
+[2026-04-06 15:21:48] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:21:53] [WARNING] [network] Slow query detected
+[2026-04-06 15:22:04] [INFO] [cache] Cache refreshed
+[2026-04-06 15:22:09] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:22:15] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:22:25] [INFO] [db] Cache refreshed
+[2026-04-06 15:22:36] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:22:42] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:22:58] [WARNING] [db] High memory usage detected
+[2026-04-06 15:23:08] [INFO] [network] Heartbeat OK
+[2026-04-06 15:23:14] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:23:19] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:23:30] [WARNING] [network] Slow query detected
+[2026-04-06 15:23:35] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:23:40] [INFO] [db] Heartbeat OK
+[2026-04-06 15:23:46] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:23:56] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:24:02] [WARNING] [cache] Slow query detected
+[2026-04-06 15:24:07] [INFO] [network] Cache refreshed
+[2026-04-06 15:24:12] [WARNING] [network] Slow query detected
+[2026-04-06 15:24:23] [WARNING] [cache] Slow query detected
+[2026-04-06 15:24:33] [WARNING] [db] Slow query detected
+[2026-04-06 15:24:43] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:24:49] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:24:54] [INFO] [db] Cache refreshed
+[2026-04-06 15:24:59] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:25:04] [INFO] [db] Heartbeat OK
+[2026-04-06 15:25:09] [INFO] [network] Cache refreshed
+[2026-04-06 15:25:14] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:25:19] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:25:25] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:25:30] [WARNING] [db] High memory usage detected
+[2026-04-06 15:25:38] [INFO] [facade-demo] System started via facade
+[2026-04-06 15:25:38] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 15:25:38] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 15:25:38] [INFO] [observer-demo] Service started
+[2026-04-06 15:25:38] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 15:25:38] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 15:25:38] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:25:53] [INFO] [INFO] INFO
+[2026-04-06 15:26:03] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:26:07] [ERROR] [ERROR] ERROR
+[2026-04-06 15:26:18] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:26:23] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:26:34] [INFO] [db] Cache refreshed
+[2026-04-06 15:26:44] [INFO] [network] Cache refreshed
+[2026-04-06 15:26:49] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:26:54] [INFO] [cache] Cache refreshed
+[2026-04-06 15:27:15] [WARNING] [db] Slow query detected
+[2026-04-06 15:27:20] [INFO] [db] Heartbeat OK
+[2026-04-06 15:27:25] [WARNING] [db] Slow query detected
+[2026-04-06 15:27:31] [INFO] [network] Heartbeat OK
+[2026-04-06 15:27:36] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:27:41] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:27:48] [INFO] [facade-demo] System started via facade
+[2026-04-06 15:27:48] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 15:27:48] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 15:27:48] [INFO] [observer-demo] Service started
+[2026-04-06 15:27:48] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 15:27:48] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 15:27:48] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:28:00] [INFO] [INFO] INFO
+[2026-04-06 15:28:03] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:28:08] [INFO] [db] Cache refreshed
+[2026-04-06 15:28:13] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:28:18] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:28:23] [INFO] [network] Cache refreshed
+[2026-04-06 15:28:39] [INFO] [facade-demo] System started via facade
+[2026-04-06 15:28:39] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 15:28:39] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 15:28:39] [INFO] [observer-demo] Service started
+[2026-04-06 15:28:39] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 15:28:39] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 15:28:39] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:28:47] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:28:51] [ERROR] [ERROR] ERROR
+[2026-04-06 15:28:57] [INFO] [cache] Cache refreshed
+[2026-04-06 15:29:02] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:29:13] [WARNING] [db] Slow query detected
+[2026-04-06 15:29:23] [WARNING] [cache] Slow query detected
+[2026-04-06 15:29:28] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:29:33] [INFO] [auth] Cache refreshed
+[2026-04-06 15:29:44] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:29:49] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:29:59] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:30:04] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:30:09] [WARNING] [cache] Slow query detected
+[2026-04-06 15:30:20] [INFO] [network] Scheduled task completed
+[2026-04-06 15:30:25] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:30:30] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:30:35] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:30:40] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:30:45] [INFO] [network] Heartbeat OK
+[2026-04-06 15:30:51] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:30:56] [INFO] [network] Scheduled task completed
+[2026-04-06 15:31:01] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:31:06] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:31:10] [INFO] [facade-demo] System started via facade
+[2026-04-06 15:31:10] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 15:31:10] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 15:31:10] [INFO] [observer-demo] Service started
+[2026-04-06 15:31:10] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 15:31:10] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 15:31:10] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:31:25] [INFO] [network] Heartbeat OK
+[2026-04-06 15:31:30] [WARNING] [network] High memory usage detected
+[2026-04-06 15:31:35] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:31:55] [INFO] [auth] Cache refreshed
+[2026-04-06 15:32:01] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:32:06] [INFO] [network] Cache refreshed
+[2026-04-06 15:32:11] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:32:16] [INFO] [cache] Cache refreshed
+[2026-04-06 15:32:27] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:32:32] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:32:37] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:32:43] [INFO] [network] Cache refreshed
+[2026-04-06 15:32:48] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:32:53] [INFO] [cache] Heartbeat OK
+[2026-04-06 15:33:27] [INFO] [facade-demo] System started via facade
+[2026-04-06 15:33:27] [WARNING] [facade-demo] Low disk space via facade
+[2026-04-06 15:33:27] [ERROR] [facade-demo] Critical error via facade
+[2026-04-06 15:33:27] [INFO] [observer-demo] Service started
+[2026-04-06 15:33:27] [WARNING] [observer-demo] Memory usage high
+[2026-04-06 15:33:27] [ERROR] [observer-demo] Database unreachable
+[2026-04-06 15:33:27] [INFO] [observer-demo] Retry succeeded
+[2026-04-06 15:33:36] [INFO] [cache] Cache refreshed
+[2026-04-06 15:33:42] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:33:42] [ERROR] [ERROR] ERROR
+[2026-04-06 15:33:47] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:33:57] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:34:02] [INFO] [network] Cache refreshed
+[2026-04-06 15:34:12] [INFO] [auth] Cache refreshed
+[2026-04-06 15:34:28] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:34:33] [WARNING] [auth] Slow query detected
+[2026-04-06 15:34:38] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:34:44] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:34:54] [WARNING] [network] High memory usage detected
+[2026-04-06 15:34:59] [INFO] [network] Cache refreshed
+[2026-04-06 15:35:04] [WARNING] [network] Slow query detected
+[2026-04-06 15:35:09] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:35:15] [WARNING] [auth] Slow query detected
+[2026-04-06 15:35:25] [INFO] [db] Heartbeat OK
+[2026-04-06 15:35:30] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:35:40] [INFO] [scheduler] Heartbeat OK
+[2026-04-06 15:35:51] [INFO] [network] Cache refreshed
+[2026-04-06 15:35:56] [INFO] [db] Scheduled task completed
+[2026-04-06 15:36:06] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:36:11] [INFO] [db] Cache refreshed
+[2026-04-06 15:36:16] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:36:21] [ERROR] [auth] Connection pool exhausted
+[2026-04-06 15:36:27] [INFO] [network] Heartbeat OK
+[2026-04-06 15:36:37] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:36:42] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:36:47] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:36:52] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:37:03] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:37:08] [WARNING] [scheduler] High memory usage detected
+[2026-04-06 15:37:13] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:37:18] [INFO] [auth] Cache refreshed
+[2026-04-06 15:37:34] [INFO] [cache] Scheduled task completed
+[2026-04-06 15:37:39] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:37:49] [ERROR] [db] Connection pool exhausted
+[2026-04-06 15:37:54] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:38:04] [ERROR] [cache] Connection pool exhausted
+[2026-04-06 15:38:10] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:38:15] [INFO] [auth] Cache refreshed
+[2026-04-06 15:38:20] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:38:30] [INFO] [network] Scheduled task completed
+[2026-04-06 15:38:35] [WARNING] [scheduler] Slow query detected
+[2026-04-06 15:38:41] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:38:46] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:38:56] [ERROR] [network] Connection pool exhausted
+[2026-04-06 15:39:01] [INFO] [scheduler] Cache refreshed
+[2026-04-06 15:39:11] [WARNING] [db] Slow query detected
+[2026-04-06 15:39:17] [INFO] [auth] Heartbeat OK
+[2026-04-06 15:39:22] [INFO] [scheduler] Scheduled task completed
+[2026-04-06 15:39:27] [INFO] [network] Scheduled task completed
+[2026-04-06 15:39:32] [INFO] [auth] Scheduled task completed
+[2026-04-06 15:39:37] [INFO] [network] Heartbeat OK
+[2026-04-06 15:39:43] [WARNING] [network] Slow query detected
+[2026-04-06 15:39:48] [ERROR] [scheduler] Connection pool exhausted
+[2026-04-06 15:40:04] [INFO] [network] Heartbeat OK
+[2026-04-06 15:40:09] [WARNING] [auth] High memory usage detected
+[2026-04-06 15:40:14] [INFO] [network] Heartbeat OK
+[2026-04-06 15:40:19] [WARNING] [cache] High memory usage detected
+[2026-04-06 15:40:24] [INFO] [scheduler] Cache refreshed

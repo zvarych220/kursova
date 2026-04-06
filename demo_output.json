@@ -1,5 +1,5 @@
 [
-  {"time":"2026-03-26 16:29:11","level":"INFO","source":"demo","message":"Abstract Factory test entry"},
-  {"time":"2026-03-26 16:29:11","level":"WARNING","source":"demo","message":"Abstract Factory test entry"},
-  {"time":"2026-03-26 16:29:11","level":"ERROR","source":"demo","message":"Abstract Factory test entry"}
+  {"time":"2026-04-06 15:33:27","level":"INFO","source":"demo","message":"Abstract Factory test entry"},
+  {"time":"2026-04-06 15:33:27","level":"WARNING","source":"demo","message":"Abstract Factory test entry"},
+  {"time":"2026-04-06 15:33:27","level":"ERROR","source":"demo","message":"Abstract Factory test entry"}
 ]
