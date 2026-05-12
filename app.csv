@@ -11,6 +11,1581 @@ time,level,source,message
 2026-03-25 20:26:28,WARNING,db,Query took longer than expected
 2026-03-25 20:26:28,ERROR,network,Connection timeout
 2026-03-25 20:26:28,ERROR,db,Failed to execute query
-2026-04-06 15:33:27,INFO,facade-demo,System started via facade
-2026-04-06 15:33:27,WARNING,facade-demo,Low disk space via facade
-2026-04-06 15:33:27,ERROR,facade-demo,Critical error via facade
+2026-04-07 16:02:03,INFO,facade-demo,System started via facade
+2026-04-07 16:02:03,WARNING,facade-demo,Low disk space via facade
+2026-04-07 16:02:03,ERROR,facade-demo,Critical error via facade
+2026-04-07 16:02:03,INFO,observer-demo,Service started
+2026-04-07 16:02:03,WARNING,observer-demo,Memory usage high
+2026-04-07 16:02:03,ERROR,observer-demo,Database unreachable
+2026-04-07 16:02:03,INFO,observer-demo,Retry succeeded
+2026-04-07 16:02:12,INFO,scheduler,Heartbeat OK
+2026-04-07 16:02:17,INFO,db,Cache refreshed
+2026-04-07 16:02:22,WARNING,auth,High memory usage detected
+2026-04-07 16:02:27,INFO,auth,Cache refreshed
+2026-04-07 16:02:33,WARNING,scheduler,High memory usage detected
+2026-04-07 16:02:38,INFO,network,Scheduled task completed
+2026-04-07 16:02:43,ERROR,auth,Connection pool exhausted
+2026-04-07 16:02:53,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:03:14,INFO,auth,Cache refreshed
+2026-04-07 16:03:19,ERROR,auth,Connection pool exhausted
+2026-04-07 16:03:29,INFO,network,Heartbeat OK
+2026-04-07 16:03:45,INFO,auth,Cache refreshed
+2026-04-07 16:03:50,WARNING,auth,High memory usage detected
+2026-04-07 16:03:55,INFO,auth,Scheduled task completed
+2026-04-07 16:04:05,ERROR,db,Connection pool exhausted
+2026-04-07 16:04:10,INFO,db,Cache refreshed
+2026-04-07 16:04:15,INFO,db,Cache refreshed
+2026-04-07 16:04:21,ERROR,cache,Connection pool exhausted
+2026-04-07 16:04:25,INFO,facade-demo,System started via facade
+2026-04-07 16:04:25,WARNING,facade-demo,Low disk space via facade
+2026-04-07 16:04:25,ERROR,facade-demo,Critical error via facade
+2026-04-07 16:04:25,INFO,observer-demo,Service started
+2026-04-07 16:04:25,WARNING,observer-demo,Memory usage high
+2026-04-07 16:04:25,ERROR,observer-demo,Database unreachable
+2026-04-07 16:04:25,INFO,observer-demo,Retry succeeded
+2026-04-07 16:04:34,INFO,network,Heartbeat OK
+2026-04-07 16:04:50,WARNING,network,High memory usage detected
+2026-04-07 16:04:55,WARNING,scheduler,High memory usage detected
+2026-04-07 16:05:15,INFO,network,Cache refreshed
+2026-04-07 16:05:21,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:05:26,WARNING,network,High memory usage detected
+2026-04-07 16:05:36,INFO,db,Cache refreshed
+2026-04-07 16:05:41,INFO,cache,Heartbeat OK
+2026-04-07 16:05:46,INFO,db,Heartbeat OK
+2026-04-07 16:05:51,INFO,cache,Scheduled task completed
+2026-04-07 16:05:57,WARNING,auth,High memory usage detected
+2026-04-07 16:06:02,WARNING,db,Slow query detected
+2026-04-07 16:06:12,INFO,cache,Cache refreshed
+2026-04-07 16:06:17,INFO,auth,Cache refreshed
+2026-04-07 16:06:22,INFO,scheduler,Scheduled task completed
+2026-04-07 16:06:33,WARNING,network,High memory usage detected
+2026-04-07 16:06:48,INFO,scheduler,Scheduled task completed
+2026-04-07 16:06:59,INFO,auth,Heartbeat OK
+2026-04-07 16:07:04,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:07:10,INFO,scheduler,Cache refreshed
+2026-04-07 16:07:14,WARNING,cache,High memory usage detected
+2026-04-07 16:07:15,INFO,auth,Heartbeat OK
+2026-04-07 16:07:19,INFO,auth,Heartbeat OK
+2026-04-07 16:07:20,WARNING,auth,Slow query detected
+2026-04-07 16:07:25,ERROR,db,Connection pool exhausted
+2026-04-07 16:07:29,WARNING,scheduler,Slow query detected
+2026-04-07 16:07:30,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:07:35,INFO,auth,Cache refreshed
+2026-04-07 16:07:35,WARNING,db,Slow query detected
+2026-04-07 16:07:40,INFO,db,Heartbeat OK
+2026-04-07 16:07:40,INFO,scheduler,Heartbeat OK
+2026-04-07 16:07:45,ERROR,db,Connection pool exhausted
+2026-04-07 16:07:50,ERROR,db,Connection pool exhausted
+2026-04-07 16:07:51,INFO,scheduler,Cache refreshed
+2026-04-07 16:07:55,INFO,db,Cache refreshed
+2026-04-07 16:07:56,INFO,db,Heartbeat OK
+2026-04-07 16:08:00,INFO,auth,Heartbeat OK
+2026-04-07 16:08:06,WARNING,network,High memory usage detected
+2026-04-07 16:08:10,WARNING,network,Slow query detected
+2026-04-07 16:08:11,INFO,cache,Heartbeat OK
+2026-04-07 16:08:16,INFO,cache,Scheduled task completed
+2026-04-07 16:08:20,WARNING,network,Slow query detected
+2026-04-07 16:08:26,INFO,cache,Scheduled task completed
+2026-04-07 16:08:26,WARNING,scheduler,Slow query detected
+2026-04-07 16:08:31,WARNING,db,High memory usage detected
+2026-04-07 16:08:32,INFO,db,Cache refreshed
+2026-04-07 16:08:37,INFO,network,Cache refreshed
+2026-04-07 16:08:41,WARNING,auth,High memory usage detected
+2026-04-07 16:08:42,INFO,db,Heartbeat OK
+2026-04-07 16:08:46,ERROR,auth,Connection pool exhausted
+2026-04-07 16:08:47,INFO,db,Heartbeat OK
+2026-04-07 16:08:51,ERROR,network,Connection pool exhausted
+2026-04-07 16:08:56,ERROR,db,Connection pool exhausted
+2026-04-07 16:08:57,WARNING,db,Slow query detected
+2026-04-07 16:09:01,INFO,network,Cache refreshed
+2026-04-07 16:09:02,INFO,auth,Heartbeat OK
+2026-04-07 16:09:07,ERROR,auth,Connection pool exhausted
+2026-04-07 16:09:12,WARNING,db,High memory usage detected
+2026-04-07 16:09:17,ERROR,cache,Connection pool exhausted
+2026-04-07 16:09:18,WARNING,auth,Slow query detected
+2026-04-07 16:09:22,INFO,cache,Cache refreshed
+2026-04-07 16:09:23,WARNING,cache,High memory usage detected
+2026-04-07 16:09:27,ERROR,db,Connection pool exhausted
+2026-04-07 16:09:28,WARNING,network,High memory usage detected
+2026-04-07 16:10:19,INFO,auth,Scheduled task completed
+2026-04-07 16:10:25,INFO,network,Scheduled task completed
+2026-04-07 16:10:30,INFO,cache,Cache refreshed
+2026-04-07 16:10:31,INFO,db,Cache refreshed
+2026-04-07 16:10:35,ERROR,cache,Connection pool exhausted
+2026-04-07 16:10:36,ERROR,cache,Connection pool exhausted
+2026-04-07 16:10:40,WARNING,network,High memory usage detected
+2026-04-07 16:10:41,INFO,network,Cache refreshed
+2026-04-07 16:10:45,INFO,network,Scheduled task completed
+2026-04-07 16:10:46,WARNING,cache,High memory usage detected
+2026-04-07 16:10:50,INFO,cache,Scheduled task completed
+2026-04-07 16:10:51,WARNING,auth,Slow query detected
+2026-04-07 16:11:01,WARNING,network,Slow query detected
+2026-04-07 16:11:06,ERROR,db,Connection pool exhausted
+2026-04-07 16:11:07,WARNING,cache,Slow query detected
+2026-04-07 16:11:11,INFO,network,Cache refreshed
+2026-04-07 16:11:12,INFO,network,Cache refreshed
+2026-04-07 16:11:17,INFO,auth,Cache refreshed
+2026-04-07 16:11:21,INFO,cache,Heartbeat OK
+2026-04-07 16:11:22,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:11:26,WARNING,db,High memory usage detected
+2026-04-07 16:11:27,ERROR,db,Connection pool exhausted
+2026-04-07 16:11:31,INFO,cache,Cache refreshed
+2026-04-07 16:11:32,INFO,auth,Heartbeat OK
+2026-04-07 16:11:36,INFO,cache,Heartbeat OK
+2026-04-07 16:11:42,INFO,auth,Heartbeat OK
+2026-04-07 16:11:47,INFO,db,Scheduled task completed
+2026-04-07 16:11:48,WARNING,db,High memory usage detected
+2026-04-07 16:11:52,WARNING,auth,Slow query detected
+2026-04-07 16:11:53,WARNING,scheduler,High memory usage detected
+2026-04-07 16:11:58,INFO,auth,Heartbeat OK
+2026-04-07 16:12:02,INFO,db,Scheduled task completed
+2026-04-07 16:12:12,WARNING,db,High memory usage detected
+2026-04-07 16:12:13,INFO,db,Heartbeat OK
+2026-04-07 16:12:17,INFO,db,Cache refreshed
+2026-04-07 16:12:18,WARNING,db,High memory usage detected
+2026-04-07 16:12:23,WARNING,network,High memory usage detected
+2026-04-07 16:12:28,INFO,db,Scheduled task completed
+2026-04-07 16:12:29,WARNING,auth,High memory usage detected
+2026-04-07 16:12:34,WARNING,auth,Slow query detected
+2026-04-07 16:12:43,INFO,db,Heartbeat OK
+2026-04-07 16:12:44,INFO,auth,Heartbeat OK
+2026-04-07 16:12:53,WARNING,cache,High memory usage detected
+2026-04-07 16:12:54,INFO,auth,Heartbeat OK
+2026-04-07 16:12:59,ERROR,db,Connection pool exhausted
+2026-04-07 16:13:04,INFO,network,Heartbeat OK
+2026-04-07 16:13:04,INFO,cache,Scheduled task completed
+2026-04-07 16:13:09,ERROR,db,Connection pool exhausted
+2026-04-07 16:13:10,ERROR,network,Connection pool exhausted
+2026-04-07 16:13:14,WARNING,scheduler,High memory usage detected
+2026-04-07 16:13:15,ERROR,cache,Connection pool exhausted
+2026-04-07 16:13:19,WARNING,db,Slow query detected
+2026-04-07 16:13:20,INFO,cache,Scheduled task completed
+2026-04-07 16:13:24,INFO,network,Cache refreshed
+2026-04-07 16:13:25,INFO,network,Scheduled task completed
+2026-04-07 16:13:29,WARNING,db,Slow query detected
+2026-04-07 16:13:35,ERROR,auth,Connection pool exhausted
+2026-04-07 16:13:40,WARNING,network,Slow query detected
+2026-04-07 16:13:45,INFO,network,Cache refreshed
+2026-04-07 16:13:50,WARNING,cache,Slow query detected
+2026-04-07 16:13:51,INFO,network,Cache refreshed
+2026-04-07 16:13:55,INFO,network,Heartbeat OK
+2026-04-07 16:13:56,WARNING,scheduler,Slow query detected
+2026-04-07 16:14:00,INFO,db,Heartbeat OK
+2026-04-07 16:14:05,ERROR,network,Connection pool exhausted
+2026-04-07 16:14:06,ERROR,cache,Connection pool exhausted
+2026-04-07 16:14:10,INFO,cache,Heartbeat OK
+2026-04-07 16:14:11,INFO,scheduler,Heartbeat OK
+2026-04-07 16:14:15,INFO,cache,Heartbeat OK
+2026-04-07 16:14:21,WARNING,network,High memory usage detected
+2026-04-07 16:14:31,WARNING,db,High memory usage detected
+2026-04-07 16:14:32,ERROR,cache,Connection pool exhausted
+2026-04-07 16:14:36,WARNING,network,Slow query detected
+2026-04-07 16:14:41,WARNING,db,High memory usage detected
+2026-04-07 16:14:46,ERROR,auth,Connection pool exhausted
+2026-04-07 16:14:47,INFO,cache,Heartbeat OK
+2026-04-07 16:14:57,INFO,cache,Heartbeat OK
+2026-04-07 16:15:02,INFO,network,Heartbeat OK
+2026-04-07 16:15:02,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:15:07,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:15:07,INFO,cache,Heartbeat OK
+2026-04-07 16:15:12,INFO,db,Cache refreshed
+2026-04-07 16:15:13,INFO,auth,Cache refreshed
+2026-04-07 16:15:23,INFO,network,Heartbeat OK
+2026-04-07 16:15:28,INFO,network,Cache refreshed
+2026-04-07 16:15:32,ERROR,auth,Connection pool exhausted
+2026-04-07 16:15:33,INFO,scheduler,Scheduled task completed
+2026-04-07 16:15:37,INFO,db,Scheduled task completed
+2026-04-07 16:15:38,WARNING,network,High memory usage detected
+2026-04-07 16:15:43,WARNING,auth,High memory usage detected
+2026-04-07 16:15:43,ERROR,network,Connection pool exhausted
+2026-04-07 16:15:48,INFO,auth,Cache refreshed
+2026-04-07 16:15:53,ERROR,auth,Connection pool exhausted
+2026-04-07 16:15:54,WARNING,auth,Slow query detected
+2026-04-07 16:16:03,WARNING,cache,High memory usage detected
+2026-04-07 16:16:04,INFO,cache,Scheduled task completed
+2026-04-07 16:16:08,ERROR,network,Connection pool exhausted
+2026-04-07 16:16:09,INFO,auth,Cache refreshed
+2026-04-07 16:16:13,WARNING,db,Slow query detected
+2026-04-07 16:16:14,ERROR,db,Connection pool exhausted
+2026-04-07 16:16:18,ERROR,db,Connection pool exhausted
+2026-04-07 16:16:19,INFO,auth,Cache refreshed
+2026-04-07 16:16:24,WARNING,network,High memory usage detected
+2026-04-07 16:16:24,WARNING,scheduler,Slow query detected
+2026-04-07 16:16:35,WARNING,scheduler,Slow query detected
+2026-04-07 16:16:39,INFO,scheduler,Scheduled task completed
+2026-04-07 16:16:45,WARNING,auth,Slow query detected
+2026-04-07 16:16:46,ERROR,network,Connection pool exhausted
+2026-04-07 16:16:50,INFO,db,Heartbeat OK
+2026-04-07 16:16:51,INFO,db,Heartbeat OK
+2026-04-07 16:16:55,ERROR,db,Connection pool exhausted
+2026-04-07 16:16:56,WARNING,db,Slow query detected
+2026-04-07 16:17:01,INFO,scheduler,Scheduled task completed
+2026-04-07 16:17:02,ERROR,db,Connection pool exhausted
+2026-04-07 16:17:06,WARNING,db,Slow query detected
+2026-04-07 16:17:07,WARNING,cache,Slow query detected
+2026-04-07 16:17:12,INFO,auth,Heartbeat OK
+2026-04-07 16:17:16,INFO,network,Scheduled task completed
+2026-04-07 16:17:22,INFO,scheduler,Heartbeat OK
+2026-04-07 16:17:23,WARNING,db,Slow query detected
+2026-04-07 16:17:27,WARNING,cache,Slow query detected
+2026-04-07 16:17:28,INFO,scheduler,Scheduled task completed
+2026-04-07 16:17:32,INFO,scheduler,Cache refreshed
+2026-04-07 16:17:33,WARNING,db,High memory usage detected
+2026-04-07 16:17:38,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:17:39,INFO,auth,Cache refreshed
+2026-04-07 16:17:43,INFO,scheduler,Scheduled task completed
+2026-04-07 16:17:48,WARNING,db,High memory usage detected
+2026-04-07 16:17:49,WARNING,cache,High memory usage detected
+2026-04-07 16:17:54,INFO,auth,Heartbeat OK
+2026-04-07 16:17:59,WARNING,network,High memory usage detected
+2026-04-07 16:18:00,WARNING,network,Slow query detected
+2026-04-07 16:18:04,ERROR,cache,Connection pool exhausted
+2026-04-07 16:18:05,WARNING,cache,Slow query detected
+2026-04-07 16:18:09,INFO,network,Cache refreshed
+2026-04-07 16:18:10,INFO,network,Heartbeat OK
+2026-04-07 16:18:15,WARNING,auth,High memory usage detected
+2026-04-07 16:18:20,WARNING,scheduler,Slow query detected
+2026-04-07 16:18:21,ERROR,network,Connection pool exhausted
+2026-04-07 16:18:26,INFO,db,Scheduled task completed
+2026-04-07 16:18:31,INFO,db,Heartbeat OK
+2026-04-07 16:18:32,INFO,scheduler,Cache refreshed
+2026-04-07 16:18:36,ERROR,network,Connection pool exhausted
+2026-04-07 16:18:37,INFO,auth,Cache refreshed
+2026-04-07 16:18:41,WARNING,network,High memory usage detected
+2026-04-07 16:18:42,INFO,cache,Scheduled task completed
+2026-04-07 16:18:58,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:19:02,WARNING,auth,Slow query detected
+2026-04-07 16:19:03,INFO,cache,Scheduled task completed
+2026-04-07 16:19:08,INFO,auth,Cache refreshed
+2026-04-07 16:19:09,WARNING,db,High memory usage detected
+2026-04-07 16:19:13,ERROR,cache,Connection pool exhausted
+2026-04-07 16:19:14,INFO,network,Cache refreshed
+2026-04-07 16:19:18,WARNING,scheduler,High memory usage detected
+2026-04-07 16:19:19,INFO,scheduler,Scheduled task completed
+2026-04-07 16:19:24,WARNING,scheduler,Slow query detected
+2026-04-07 16:19:29,INFO,auth,Cache refreshed
+2026-04-07 16:19:30,WARNING,scheduler,Slow query detected
+2026-04-07 16:19:34,WARNING,db,Slow query detected
+2026-04-07 16:19:35,ERROR,network,Connection pool exhausted
+2026-04-07 16:19:40,WARNING,scheduler,High memory usage detected
+2026-04-07 16:19:41,INFO,db,Scheduled task completed
+2026-04-07 16:19:45,WARNING,auth,High memory usage detected
+2026-04-07 16:19:46,WARNING,scheduler,Slow query detected
+2026-04-07 16:19:50,INFO,cache,Cache refreshed
+2026-04-07 16:19:51,INFO,db,Cache refreshed
+2026-04-07 16:19:56,WARNING,scheduler,Slow query detected
+2026-04-07 16:19:57,WARNING,network,High memory usage detected
+2026-04-07 16:20:01,WARNING,scheduler,Slow query detected
+2026-04-07 16:20:02,INFO,network,Scheduled task completed
+2026-04-07 16:20:07,INFO,network,Scheduled task completed
+2026-04-07 16:20:11,INFO,network,Scheduled task completed
+2026-04-07 16:20:12,ERROR,cache,Connection pool exhausted
+2026-04-07 16:20:17,ERROR,cache,Connection pool exhausted
+2026-04-07 16:20:18,INFO,cache,Cache refreshed
+2026-04-07 16:20:22,INFO,scheduler,Cache refreshed
+2026-04-07 16:20:28,WARNING,network,High memory usage detected
+2026-04-07 16:20:33,INFO,cache,Heartbeat OK
+2026-04-07 16:20:43,WARNING,db,Slow query detected
+2026-04-07 16:20:44,INFO,auth,Cache refreshed
+2026-04-07 16:20:49,INFO,auth,Cache refreshed
+2026-04-07 16:20:50,INFO,auth,Cache refreshed
+2026-04-07 16:20:54,WARNING,scheduler,Slow query detected
+2026-04-07 16:20:55,INFO,db,Heartbeat OK
+2026-04-07 16:21:00,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:21:05,WARNING,network,Slow query detected
+2026-04-07 16:21:10,WARNING,network,Slow query detected
+2026-04-07 16:21:11,INFO,scheduler,Heartbeat OK
+2026-04-07 16:21:15,INFO,scheduler,Heartbeat OK
+2026-04-07 16:21:21,INFO,cache,Cache refreshed
+2026-04-07 16:21:22,WARNING,cache,Slow query detected
+2026-04-07 16:21:26,INFO,cache,Scheduled task completed
+2026-04-07 16:21:32,INFO,network,Scheduled task completed
+2026-04-07 16:21:37,INFO,auth,Scheduled task completed
+2026-04-07 16:21:42,INFO,auth,Cache refreshed
+2026-04-07 16:21:43,INFO,db,Cache refreshed
+2026-04-07 16:21:48,INFO,db,Heartbeat OK
+2026-04-07 16:21:54,WARNING,cache,High memory usage detected
+2026-04-07 16:21:58,INFO,network,Heartbeat OK
+2026-04-07 16:21:59,INFO,auth,Scheduled task completed
+2026-04-07 16:22:03,WARNING,scheduler,High memory usage detected
+2026-04-07 16:22:04,ERROR,db,Connection pool exhausted
+2026-04-07 16:22:14,WARNING,scheduler,Slow query detected
+2026-04-07 16:22:15,WARNING,auth,Slow query detected
+2026-04-07 16:22:24,ERROR,db,Connection pool exhausted
+2026-04-07 16:22:25,INFO,db,Heartbeat OK
+2026-04-07 16:22:30,INFO,db,Scheduled task completed
+2026-04-07 16:22:31,INFO,network,Heartbeat OK
+2026-04-07 16:22:36,INFO,network,Heartbeat OK
+2026-04-07 16:22:40,ERROR,db,Connection pool exhausted
+2026-04-07 16:22:45,INFO,db,Cache refreshed
+2026-04-07 16:22:46,INFO,db,Cache refreshed
+2026-04-07 16:22:50,WARNING,auth,Slow query detected
+2026-04-07 16:22:51,WARNING,db,High memory usage detected
+2026-04-07 16:22:55,INFO,auth,Heartbeat OK
+2026-04-07 16:22:56,INFO,db,Scheduled task completed
+2026-04-07 16:23:01,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:23:02,WARNING,cache,High memory usage detected
+2026-04-07 16:23:07,WARNING,scheduler,Slow query detected
+2026-04-07 16:23:11,ERROR,db,Connection pool exhausted
+2026-04-07 16:23:12,WARNING,cache,High memory usage detected
+2026-04-07 16:23:18,INFO,auth,Scheduled task completed
+2026-04-07 16:23:22,INFO,network,Cache refreshed
+2026-04-07 16:23:23,WARNING,network,Slow query detected
+2026-04-07 16:23:28,INFO,db,Cache refreshed
+2026-04-07 16:23:33,WARNING,cache,High memory usage detected
+2026-04-07 16:23:34,INFO,scheduler,Heartbeat OK
+2026-04-07 16:23:39,WARNING,network,High memory usage detected
+2026-04-07 16:23:43,ERROR,db,Connection pool exhausted
+2026-04-07 16:23:44,INFO,db,Heartbeat OK
+2026-04-07 16:23:49,WARNING,db,High memory usage detected
+2026-04-07 16:23:50,INFO,cache,Scheduled task completed
+2026-04-07 16:23:54,WARNING,scheduler,High memory usage detected
+2026-04-07 16:23:55,INFO,auth,Scheduled task completed
+2026-04-07 16:23:59,WARNING,network,Slow query detected
+2026-04-07 16:24:04,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:24:05,INFO,auth,Cache refreshed
+2026-04-07 16:24:09,WARNING,auth,Slow query detected
+2026-04-07 16:24:10,INFO,db,Heartbeat OK
+2026-04-07 16:24:15,INFO,auth,Cache refreshed
+2026-04-07 16:24:15,WARNING,network,High memory usage detected
+2026-04-07 16:24:20,ERROR,db,Connection pool exhausted
+2026-04-07 16:24:21,INFO,db,Cache refreshed
+2026-04-07 16:24:25,WARNING,db,Slow query detected
+2026-04-07 16:24:26,WARNING,db,Slow query detected
+2026-04-07 16:24:30,ERROR,db,Connection pool exhausted
+2026-04-07 16:24:31,WARNING,scheduler,High memory usage detected
+2026-04-07 16:24:36,ERROR,cache,Connection pool exhausted
+2026-04-07 16:24:45,WARNING,db,Slow query detected
+2026-04-07 16:24:50,INFO,auth,Cache refreshed
+2026-04-07 16:24:51,WARNING,cache,High memory usage detected
+2026-04-07 16:24:55,INFO,scheduler,Cache refreshed
+2026-04-07 16:24:56,WARNING,auth,High memory usage detected
+2026-04-07 16:25:02,INFO,db,Scheduled task completed
+2026-04-07 16:25:06,WARNING,cache,Slow query detected
+2026-04-07 16:25:07,WARNING,cache,High memory usage detected
+2026-04-07 16:25:11,WARNING,auth,High memory usage detected
+2026-04-07 16:25:12,WARNING,db,Slow query detected
+2026-04-07 16:25:16,INFO,scheduler,Heartbeat OK
+2026-04-07 16:25:17,WARNING,network,High memory usage detected
+2026-04-07 16:25:21,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:25:26,WARNING,cache,High memory usage detected
+2026-04-07 16:25:27,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:25:31,INFO,scheduler,Cache refreshed
+2026-04-07 16:25:32,INFO,network,Cache refreshed
+2026-04-07 16:25:36,WARNING,db,High memory usage detected
+2026-04-07 16:25:37,INFO,db,Scheduled task completed
+2026-04-07 16:25:42,INFO,cache,Scheduled task completed
+2026-04-07 16:25:47,WARNING,db,High memory usage detected
+2026-04-07 16:25:48,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:25:52,WARNING,network,Slow query detected
+2026-04-07 16:25:58,WARNING,scheduler,High memory usage detected
+2026-04-07 16:26:03,INFO,cache,Cache refreshed
+2026-04-07 16:26:07,INFO,db,Heartbeat OK
+2026-04-07 16:26:08,INFO,auth,Cache refreshed
+2026-04-07 16:26:13,WARNING,auth,Slow query detected
+2026-04-07 16:26:17,INFO,db,Heartbeat OK
+2026-04-07 16:26:19,WARNING,cache,High memory usage detected
+2026-04-07 16:26:23,WARNING,db,Slow query detected
+2026-04-07 16:26:24,WARNING,auth,High memory usage detected
+2026-04-07 16:26:28,INFO,network,Cache refreshed
+2026-04-07 16:26:29,WARNING,scheduler,High memory usage detected
+2026-04-07 16:26:33,INFO,cache,Heartbeat OK
+2026-04-07 16:26:34,INFO,db,Cache refreshed
+2026-04-07 16:26:38,INFO,db,Heartbeat OK
+2026-04-07 16:26:39,ERROR,cache,Connection pool exhausted
+2026-04-07 16:26:43,WARNING,auth,High memory usage detected
+2026-04-07 16:26:48,INFO,auth,Scheduled task completed
+2026-04-07 16:26:49,INFO,db,Cache refreshed
+2026-04-07 16:26:54,WARNING,auth,Slow query detected
+2026-04-07 16:26:59,INFO,network,Heartbeat OK
+2026-04-07 16:27:00,INFO,cache,Scheduled task completed
+2026-04-07 16:27:04,INFO,cache,Heartbeat OK
+2026-04-07 16:27:05,INFO,cache,Scheduled task completed
+2026-04-07 16:27:09,ERROR,db,Connection pool exhausted
+2026-04-07 16:27:20,INFO,scheduler,Scheduled task completed
+2026-04-07 16:27:24,INFO,db,Cache refreshed
+2026-04-07 16:27:25,ERROR,db,Connection pool exhausted
+2026-04-07 16:27:30,INFO,auth,Cache refreshed
+2026-04-07 16:27:34,WARNING,network,High memory usage detected
+2026-04-07 16:27:35,WARNING,network,Slow query detected
+2026-04-07 16:27:40,INFO,db,Cache refreshed
+2026-04-07 16:27:41,ERROR,cache,Connection pool exhausted
+2026-04-07 16:27:45,ERROR,db,Connection pool exhausted
+2026-04-07 16:27:46,WARNING,db,High memory usage detected
+2026-04-07 16:27:51,WARNING,network,Slow query detected
+2026-04-07 16:27:56,INFO,network,Heartbeat OK
+2026-04-07 16:28:00,INFO,cache,Scheduled task completed
+2026-04-07 16:28:01,WARNING,cache,High memory usage detected
+2026-04-07 16:28:05,WARNING,db,Slow query detected
+2026-04-07 16:28:06,INFO,cache,Heartbeat OK
+2026-04-07 16:28:10,INFO,scheduler,Cache refreshed
+2026-04-07 16:28:11,INFO,network,Heartbeat OK
+2026-04-07 16:28:15,INFO,cache,Cache refreshed
+2026-04-07 16:28:21,WARNING,auth,Slow query detected
+2026-04-07 16:28:22,WARNING,cache,Slow query detected
+2026-04-07 16:28:26,INFO,auth,Scheduled task completed
+2026-04-07 16:28:27,WARNING,scheduler,High memory usage detected
+2026-04-07 16:28:31,ERROR,network,Connection pool exhausted
+2026-04-07 16:28:32,WARNING,network,High memory usage detected
+2026-04-07 16:28:36,INFO,db,Heartbeat OK
+2026-04-07 16:28:37,WARNING,cache,High memory usage detected
+2026-04-07 16:28:41,WARNING,scheduler,High memory usage detected
+2026-04-07 16:28:42,WARNING,auth,Slow query detected
+2026-04-07 16:28:46,INFO,network,Scheduled task completed
+2026-04-07 16:28:47,ERROR,network,Connection pool exhausted
+2026-04-07 16:28:51,INFO,network,Heartbeat OK
+2026-04-07 16:28:57,WARNING,scheduler,High memory usage detected
+2026-04-07 16:28:58,WARNING,auth,Slow query detected
+2026-04-07 16:29:02,INFO,network,Heartbeat OK
+2026-04-07 16:29:03,WARNING,auth,High memory usage detected
+2026-04-07 16:29:08,WARNING,auth,High memory usage detected
+2026-04-07 16:29:12,INFO,network,Scheduled task completed
+2026-04-07 16:29:13,WARNING,db,Slow query detected
+2026-04-07 16:29:22,INFO,db,Heartbeat OK
+2026-04-07 16:29:23,INFO,cache,Heartbeat OK
+2026-04-07 16:29:33,INFO,scheduler,Heartbeat OK
+2026-04-07 16:29:38,WARNING,auth,High memory usage detected
+2026-04-07 16:29:39,INFO,scheduler,Cache refreshed
+2026-04-07 16:29:43,ERROR,auth,Connection pool exhausted
+2026-04-07 16:29:44,ERROR,cache,Connection pool exhausted
+2026-04-07 16:29:48,ERROR,db,Connection pool exhausted
+2026-04-07 16:29:49,INFO,db,Heartbeat OK
+2026-04-07 16:29:53,WARNING,scheduler,Slow query detected
+2026-04-07 16:29:54,INFO,cache,Cache refreshed
+2026-04-07 16:29:59,ERROR,db,Connection pool exhausted
+2026-04-07 16:30:03,WARNING,scheduler,High memory usage detected
+2026-04-07 16:30:04,INFO,auth,Cache refreshed
+2026-04-07 16:30:08,INFO,scheduler,Cache refreshed
+2026-04-07 16:30:14,WARNING,scheduler,Slow query detected
+2026-04-07 16:30:19,WARNING,network,High memory usage detected
+2026-04-07 16:30:20,WARNING,auth,Slow query detected
+2026-04-07 16:30:24,ERROR,db,Connection pool exhausted
+2026-04-07 16:30:30,WARNING,scheduler,Slow query detected
+2026-04-07 16:30:34,INFO,scheduler,Scheduled task completed
+2026-04-07 16:30:39,WARNING,network,High memory usage detected
+2026-04-07 16:30:40,ERROR,network,Connection pool exhausted
+2026-04-07 16:30:44,ERROR,db,Connection pool exhausted
+2026-04-07 16:30:45,INFO,db,Cache refreshed
+2026-04-07 16:30:49,INFO,auth,Heartbeat OK
+2026-04-07 16:30:50,INFO,cache,Cache refreshed
+2026-04-07 16:30:55,WARNING,db,Slow query detected
+2026-04-07 16:31:00,INFO,scheduler,Cache refreshed
+2026-04-07 16:31:01,INFO,db,Cache refreshed
+2026-04-07 16:31:05,INFO,db,Cache refreshed
+2026-04-07 16:31:06,INFO,auth,Heartbeat OK
+2026-04-07 16:31:10,ERROR,cache,Connection pool exhausted
+2026-04-07 16:31:15,INFO,network,Heartbeat OK
+2026-04-07 16:31:20,WARNING,network,High memory usage detected
+2026-04-07 16:31:21,INFO,cache,Cache refreshed
+2026-04-07 16:31:25,INFO,auth,Cache refreshed
+2026-04-07 16:31:26,INFO,scheduler,Cache refreshed
+2026-04-07 16:31:30,INFO,network,Scheduled task completed
+2026-04-07 16:31:31,INFO,db,Scheduled task completed
+2026-04-07 16:31:35,ERROR,network,Connection pool exhausted
+2026-04-07 16:31:36,INFO,network,Scheduled task completed
+2026-04-07 16:31:40,INFO,scheduler,Heartbeat OK
+2026-04-07 16:31:41,ERROR,db,Connection pool exhausted
+2026-04-07 16:31:51,WARNING,cache,High memory usage detected
+2026-04-07 16:31:52,ERROR,cache,Connection pool exhausted
+2026-04-07 16:31:57,INFO,network,Heartbeat OK
+2026-04-07 16:32:01,WARNING,cache,High memory usage detected
+2026-04-07 16:32:06,ERROR,auth,Connection pool exhausted
+2026-04-07 16:32:07,INFO,db,Scheduled task completed
+2026-04-07 16:32:11,INFO,auth,Heartbeat OK
+2026-04-07 16:32:12,WARNING,scheduler,High memory usage detected
+2026-04-07 16:32:16,INFO,auth,Scheduled task completed
+2026-04-07 16:32:17,ERROR,cache,Connection pool exhausted
+2026-04-07 16:32:22,WARNING,db,High memory usage detected
+2026-04-07 16:32:32,WARNING,auth,Slow query detected
+2026-04-07 16:32:38,INFO,db,Heartbeat OK
+2026-04-07 16:32:42,INFO,db,Cache refreshed
+2026-04-07 16:32:47,INFO,network,Cache refreshed
+2026-04-07 16:32:48,INFO,db,Heartbeat OK
+2026-04-07 16:32:52,ERROR,db,Connection pool exhausted
+2026-04-07 16:32:53,INFO,scheduler,Scheduled task completed
+2026-04-07 16:32:57,INFO,scheduler,Heartbeat OK
+2026-04-07 16:32:58,WARNING,auth,Slow query detected
+2026-04-07 16:33:03,INFO,network,Scheduled task completed
+2026-04-07 16:33:08,WARNING,auth,Slow query detected
+2026-04-07 16:33:09,INFO,network,Cache refreshed
+2026-04-07 16:33:13,WARNING,auth,High memory usage detected
+2026-04-07 16:33:18,WARNING,scheduler,Slow query detected
+2026-04-07 16:33:19,INFO,cache,Scheduled task completed
+2026-04-07 16:33:23,INFO,auth,Cache refreshed
+2026-04-07 16:33:24,INFO,cache,Heartbeat OK
+2026-04-07 16:33:28,WARNING,auth,Slow query detected
+2026-04-07 16:33:29,WARNING,network,High memory usage detected
+2026-04-07 16:33:34,WARNING,cache,Slow query detected
+2026-04-07 16:33:43,INFO,test,sad
+2026-04-07 16:33:44,INFO,auth,Heartbeat OK
+2026-04-07 16:33:45,INFO,auth,Scheduled task completed
+2026-04-07 16:33:49,INFO,scheduler,Cache refreshed
+2026-04-07 16:33:50,INFO,db,Scheduled task completed
+2026-04-07 16:33:54,ERROR,db,Connection pool exhausted
+2026-04-07 16:33:55,ERROR,db,Connection pool exhausted
+2026-04-07 16:33:59,WARNING,db,Slow query detected
+2026-04-07 16:34:00,WARNING,auth,Slow query detected
+2026-04-07 16:34:04,INFO,auth,Heartbeat OK
+2026-04-07 16:34:05,INFO,scheduler,Scheduled task completed
+2026-04-07 16:34:09,WARNING,network,High memory usage detected
+2026-04-07 16:34:10,INFO,auth,Cache refreshed
+2026-04-07 16:34:15,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:34:16,INFO,network,Cache refreshed
+2026-04-07 16:34:20,ERROR,network,Connection pool exhausted
+2026-04-07 16:34:21,INFO,network,Cache refreshed
+2026-04-07 16:34:26,INFO,cache,Cache refreshed
+2026-04-07 16:34:30,INFO,network,Heartbeat OK
+2026-04-07 16:34:35,INFO,network,Scheduled task completed
+2026-04-07 16:34:36,INFO,cache,Scheduled task completed
+2026-04-07 16:34:40,INFO,cache,Heartbeat OK
+2026-04-07 16:34:41,WARNING,cache,Slow query detected
+2026-04-07 16:34:45,INFO,cache,Heartbeat OK
+2026-04-07 16:34:46,INFO,network,Heartbeat OK
+2026-04-07 16:34:51,INFO,db,Heartbeat OK
+2026-04-07 16:34:57,WARNING,scheduler,Slow query detected
+2026-04-07 16:35:01,INFO,cache,Scheduled task completed
+2026-04-07 16:35:06,WARNING,cache,High memory usage detected
+2026-04-07 16:35:07,INFO,scheduler,Cache refreshed
+2026-04-07 16:35:12,INFO,auth,Cache refreshed
+2026-04-07 16:35:13,INFO,auth,Heartbeat OK
+2026-04-07 16:35:17,WARNING,scheduler,High memory usage detected
+2026-04-07 16:35:22,WARNING,auth,Slow query detected
+2026-04-07 16:35:23,INFO,network,Heartbeat OK
+2026-04-07 16:35:27,ERROR,db,Connection pool exhausted
+2026-04-07 16:35:28,INFO,cache,Cache refreshed
+2026-04-07 16:35:32,WARNING,cache,Slow query detected
+2026-04-07 16:35:33,WARNING,auth,Slow query detected
+2026-04-07 16:35:37,ERROR,network,Connection pool exhausted
+2026-04-07 16:35:42,WARNING,auth,Slow query detected
+2026-04-07 16:35:43,WARNING,auth,High memory usage detected
+2026-04-07 16:35:53,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:35:54,INFO,auth,Heartbeat OK
+2026-04-07 16:35:59,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:36:04,INFO,db,Cache refreshed
+2026-04-07 16:36:09,WARNING,db,Slow query detected
+2026-04-07 16:36:14,INFO,db,Heartbeat OK
+2026-04-07 16:36:14,INFO,auth,Scheduled task completed
+2026-04-07 16:36:20,WARNING,auth,Slow query detected
+2026-04-07 16:36:24,WARNING,db,Slow query detected
+2026-04-07 16:36:34,ERROR,cache,Connection pool exhausted
+2026-04-07 16:36:40,ERROR,auth,Connection pool exhausted
+2026-04-07 16:36:45,WARNING,db,Slow query detected
+2026-04-07 16:36:50,ERROR,network,Connection pool exhausted
+2026-04-07 16:36:50,INFO,auth,Cache refreshed
+2026-04-07 16:36:55,INFO,cache,Heartbeat OK
+2026-04-07 16:37:00,INFO,auth,Heartbeat OK
+2026-04-07 16:37:01,INFO,scheduler,Scheduled task completed
+2026-04-07 16:37:06,WARNING,network,High memory usage detected
+2026-04-07 16:37:10,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:37:11,INFO,cache,Heartbeat OK
+2026-04-07 16:37:15,INFO,auth,Scheduled task completed
+2026-04-07 16:37:20,INFO,network,Cache refreshed
+2026-04-07 16:37:21,WARNING,scheduler,Slow query detected
+2026-04-07 16:37:26,INFO,auth,Scheduled task completed
+2026-04-07 16:37:26,WARNING,cache,Slow query detected
+2026-04-07 16:37:31,INFO,scheduler,Heartbeat OK
+2026-04-07 16:37:32,WARNING,scheduler,Slow query detected
+2026-04-07 16:37:41,WARNING,db,High memory usage detected
+2026-04-07 16:37:42,INFO,cache,Cache refreshed
+2026-04-07 16:37:47,INFO,cache,Cache refreshed
+2026-04-07 16:37:51,INFO,auth,Cache refreshed
+2026-04-07 16:37:52,WARNING,network,High memory usage detected
+2026-04-07 16:37:56,WARNING,network,Slow query detected
+2026-04-07 16:37:57,WARNING,cache,Slow query detected
+2026-04-07 16:38:01,WARNING,network,High memory usage detected
+2026-04-07 16:38:06,INFO,db,Scheduled task completed
+2026-04-07 16:38:07,ERROR,db,Connection pool exhausted
+2026-04-07 16:38:12,INFO,cache,Heartbeat OK
+2026-04-07 16:38:12,INFO,auth,Cache refreshed
+2026-04-07 16:38:17,INFO,network,Heartbeat OK
+2026-04-07 16:38:18,INFO,db,Cache refreshed
+2026-04-07 16:38:22,WARNING,auth,High memory usage detected
+2026-04-07 16:38:23,WARNING,auth,High memory usage detected
+2026-04-07 16:38:27,WARNING,db,Slow query detected
+2026-04-07 16:38:28,INFO,network,Cache refreshed
+2026-04-07 16:38:32,WARNING,cache,High memory usage detected
+2026-04-07 16:38:38,WARNING,cache,High memory usage detected
+2026-04-07 16:38:42,INFO,network,Scheduled task completed
+2026-04-07 16:38:43,INFO,db,Heartbeat OK
+2026-04-07 16:38:48,INFO,auth,Scheduled task completed
+2026-04-07 16:38:48,WARNING,cache,High memory usage detected
+2026-04-07 16:38:53,INFO,cache,Scheduled task completed
+2026-04-07 16:38:58,ERROR,auth,Connection pool exhausted
+2026-04-07 16:38:59,WARNING,scheduler,High memory usage detected
+2026-04-07 16:39:03,WARNING,db,High memory usage detected
+2026-04-07 16:39:04,WARNING,db,Slow query detected
+2026-04-07 16:39:08,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:39:13,INFO,cache,Heartbeat OK
+2026-04-07 16:39:19,INFO,network,Heartbeat OK
+2026-04-07 16:39:24,WARNING,auth,Slow query detected
+2026-04-07 16:39:24,INFO,auth,Heartbeat OK
+2026-04-07 16:39:39,INFO,db,Cache refreshed
+2026-04-07 16:39:40,WARNING,scheduler,High memory usage detected
+2026-04-07 16:39:44,ERROR,db,Connection pool exhausted
+2026-04-07 16:39:49,INFO,auth,Heartbeat OK
+2026-04-07 16:39:54,INFO,cache,Scheduled task completed
+2026-04-07 16:39:55,WARNING,cache,High memory usage detected
+2026-04-07 16:40:00,INFO,auth,Cache refreshed
+2026-04-07 16:40:00,INFO,auth,Scheduled task completed
+2026-04-07 16:40:05,ERROR,cache,Connection pool exhausted
+2026-04-07 16:40:05,WARNING,network,High memory usage detected
+2026-04-07 16:40:10,INFO,auth,Scheduled task completed
+2026-04-07 16:40:15,WARNING,auth,High memory usage detected
+2026-04-07 16:40:16,INFO,cache,Cache refreshed
+2026-04-07 16:40:20,INFO,cache,Scheduled task completed
+2026-04-07 16:40:21,INFO,scheduler,Heartbeat OK
+2026-04-07 16:40:26,INFO,auth,Heartbeat OK
+2026-04-07 16:40:30,INFO,db,Heartbeat OK
+2026-04-07 16:40:36,INFO,scheduler,Scheduled task completed
+2026-04-07 16:40:36,WARNING,cache,High memory usage detected
+2026-04-07 16:40:41,INFO,cache,Scheduled task completed
+2026-04-07 16:40:41,WARNING,cache,Slow query detected
+2026-04-07 16:40:46,WARNING,cache,High memory usage detected
+2026-04-07 16:40:47,WARNING,cache,Slow query detected
+2026-04-07 16:40:51,INFO,network,Heartbeat OK
+2026-04-07 16:40:56,WARNING,network,Slow query detected
+2026-04-07 16:41:01,WARNING,db,Slow query detected
+2026-04-07 16:41:02,WARNING,network,Slow query detected
+2026-04-07 16:41:12,INFO,cache,Scheduled task completed
+2026-04-07 16:41:12,ERROR,network,Connection pool exhausted
+2026-04-07 16:41:17,INFO,network,Cache refreshed
+2026-04-07 16:41:22,WARNING,scheduler,Slow query detected
+2026-04-07 16:41:23,INFO,auth,Heartbeat OK
+2026-04-07 16:41:27,INFO,scheduler,Scheduled task completed
+2026-04-07 16:41:28,INFO,db,Scheduled task completed
+2026-04-07 16:41:33,INFO,scheduler,Heartbeat OK
+2026-04-07 16:41:39,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:41:43,INFO,scheduler,Cache refreshed
+2026-04-07 16:41:48,INFO,cache,Scheduled task completed
+2026-04-07 16:41:49,ERROR,auth,Connection pool exhausted
+2026-04-07 16:42:03,WARNING,network,High memory usage detected
+2026-04-07 16:42:04,INFO,scheduler,Scheduled task completed
+2026-04-07 16:42:14,INFO,auth,Cache refreshed
+2026-04-07 16:42:14,INFO,cache,Cache refreshed
+2026-04-07 16:42:19,INFO,network,Scheduled task completed
+2026-04-07 16:42:20,INFO,auth,Cache refreshed
+2026-04-07 16:42:25,INFO,scheduler,Scheduled task completed
+2026-04-07 16:42:29,INFO,scheduler,Heartbeat OK
+2026-04-07 16:42:34,WARNING,auth,High memory usage detected
+2026-04-07 16:42:35,INFO,scheduler,Scheduled task completed
+2026-04-07 16:42:39,WARNING,auth,Slow query detected
+2026-04-07 16:42:40,INFO,auth,Cache refreshed
+2026-04-07 16:42:44,ERROR,db,Connection pool exhausted
+2026-04-07 16:42:45,WARNING,network,High memory usage detected
+2026-04-07 16:42:50,INFO,network,Cache refreshed
+2026-04-07 16:42:50,WARNING,db,Slow query detected
+2026-04-07 16:42:55,ERROR,network,Connection pool exhausted
+2026-04-07 16:42:56,INFO,db,Cache refreshed
+2026-04-07 16:43:00,ERROR,db,Connection pool exhausted
+2026-04-07 16:43:01,INFO,network,Scheduled task completed
+2026-04-07 16:43:05,WARNING,cache,High memory usage detected
+2026-04-07 16:43:06,ERROR,cache,Connection pool exhausted
+2026-04-07 16:43:10,INFO,cache,Cache refreshed
+2026-04-07 16:43:15,WARNING,network,High memory usage detected
+2026-04-07 16:43:21,INFO,cache,Scheduled task completed
+2026-04-07 16:43:21,INFO,scheduler,Scheduled task completed
+2026-04-07 16:43:26,ERROR,db,Connection pool exhausted
+2026-04-07 16:43:26,ERROR,network,Connection pool exhausted
+2026-04-07 16:43:31,INFO,auth,Heartbeat OK
+2026-04-07 16:43:32,WARNING,auth,High memory usage detected
+2026-04-07 16:43:36,WARNING,auth,High memory usage detected
+2026-04-07 16:43:37,WARNING,network,High memory usage detected
+2026-04-07 16:43:41,INFO,cache,Scheduled task completed
+2026-04-07 16:43:42,WARNING,db,Slow query detected
+2026-04-07 16:43:46,INFO,db,Scheduled task completed
+2026-04-07 16:43:47,WARNING,db,High memory usage detected
+2026-04-07 16:43:52,INFO,scheduler,Cache refreshed
+2026-04-07 16:43:56,ERROR,cache,Connection pool exhausted
+2026-04-07 16:43:57,INFO,db,Scheduled task completed
+2026-04-07 16:44:02,WARNING,db,Slow query detected
+2026-04-07 16:44:02,INFO,auth,Heartbeat OK
+2026-04-07 16:44:07,INFO,scheduler,Heartbeat OK
+2026-04-07 16:44:13,INFO,scheduler,Scheduled task completed
+2026-04-07 16:44:17,WARNING,network,High memory usage detected
+2026-04-07 16:44:18,INFO,scheduler,Heartbeat OK
+2026-04-07 16:44:23,INFO,scheduler,Heartbeat OK
+2026-04-07 16:44:28,INFO,scheduler,Scheduled task completed
+2026-04-07 16:44:32,INFO,cache,Scheduled task completed
+2026-04-07 16:44:33,INFO,network,Scheduled task completed
+2026-04-07 16:44:38,INFO,network,Heartbeat OK
+2026-04-07 16:44:48,INFO,cache,Cache refreshed
+2026-04-07 16:44:49,INFO,scheduler,Cache refreshed
+2026-04-07 16:44:53,WARNING,db,Slow query detected
+2026-04-07 16:44:54,ERROR,db,Connection pool exhausted
+2026-04-07 16:44:58,INFO,network,Heartbeat OK
+2026-04-07 16:45:09,INFO,network,Cache refreshed
+2026-04-07 16:45:10,WARNING,db,Slow query detected
+2026-04-07 16:45:14,ERROR,cache,Connection pool exhausted
+2026-04-07 16:45:20,WARNING,auth,High memory usage detected
+2026-04-07 16:45:25,INFO,scheduler,Cache refreshed
+2026-04-07 16:45:30,ERROR,db,Connection pool exhausted
+2026-04-07 16:45:31,INFO,network,Scheduled task completed
+2026-04-07 16:45:35,INFO,cache,Cache refreshed
+2026-04-07 16:45:36,INFO,auth,Heartbeat OK
+2026-04-07 16:45:40,INFO,network,Heartbeat OK
+2026-04-07 16:45:41,WARNING,db,High memory usage detected
+2026-04-07 16:45:50,WARNING,scheduler,High memory usage detected
+2026-04-07 16:45:51,INFO,cache,Heartbeat OK
+2026-04-07 16:45:55,INFO,network,Scheduled task completed
+2026-04-07 16:45:57,INFO,db,Cache refreshed
+2026-04-07 16:46:01,INFO,scheduler,Heartbeat OK
+2026-04-07 16:46:02,INFO,db,Heartbeat OK
+2026-04-07 16:46:06,INFO,scheduler,Cache refreshed
+2026-04-07 16:46:11,INFO,auth,Cache refreshed
+2026-04-07 16:46:17,INFO,network,Cache refreshed
+2026-04-07 16:46:22,INFO,cache,Cache refreshed
+2026-04-07 16:46:26,WARNING,db,High memory usage detected
+2026-04-07 16:46:27,INFO,network,Scheduled task completed
+2026-04-07 16:46:32,INFO,cache,Cache refreshed
+2026-04-07 16:46:38,INFO,scheduler,Heartbeat OK
+2026-04-07 16:46:42,INFO,cache,Cache refreshed
+2026-04-07 16:46:47,ERROR,auth,Connection pool exhausted
+2026-04-07 16:46:48,WARNING,scheduler,High memory usage detected
+2026-04-07 16:46:52,INFO,db,Heartbeat OK
+2026-04-07 16:46:57,INFO,auth,Cache refreshed
+2026-04-07 16:46:58,ERROR,cache,Connection pool exhausted
+2026-04-07 16:47:02,INFO,network,Cache refreshed
+2026-04-07 16:47:03,WARNING,db,High memory usage detected
+2026-04-07 16:47:09,WARNING,db,Slow query detected
+2026-04-07 16:47:14,INFO,auth,Cache refreshed
+2026-04-07 16:47:18,WARNING,scheduler,High memory usage detected
+2026-04-07 16:47:23,INFO,scheduler,Scheduled task completed
+2026-04-07 16:47:28,WARNING,auth,Slow query detected
+2026-04-07 16:47:29,INFO,network,Heartbeat OK
+2026-04-07 16:47:33,ERROR,network,Connection pool exhausted
+2026-04-07 16:47:34,WARNING,cache,Slow query detected
+2026-04-07 16:47:38,WARNING,auth,Slow query detected
+2026-04-07 16:47:39,WARNING,auth,High memory usage detected
+2026-04-07 16:47:43,WARNING,network,High memory usage detected
+2026-04-07 16:47:44,WARNING,network,Slow query detected
+2026-04-07 16:47:49,INFO,db,Cache refreshed
+2026-04-07 16:47:50,WARNING,scheduler,High memory usage detected
+2026-04-07 16:47:54,INFO,cache,Scheduled task completed
+2026-04-07 16:48:00,WARNING,cache,Slow query detected
+2026-04-07 16:48:04,INFO,network,Heartbeat OK
+2026-04-07 16:48:05,INFO,auth,Heartbeat OK
+2026-04-07 16:48:10,ERROR,cache,Connection pool exhausted
+2026-04-07 16:48:15,INFO,scheduler,Heartbeat OK
+2026-04-07 16:48:16,INFO,auth,Heartbeat OK
+2026-04-07 16:48:20,INFO,auth,Cache refreshed
+2026-04-07 16:48:21,ERROR,auth,Connection pool exhausted
+2026-04-07 16:48:26,WARNING,network,Slow query detected
+2026-04-07 16:48:31,INFO,cache,Scheduled task completed
+2026-04-07 16:48:36,WARNING,auth,High memory usage detected
+2026-04-07 16:48:41,WARNING,db,Slow query detected
+2026-04-07 16:48:42,WARNING,auth,High memory usage detected
+2026-04-07 16:48:47,WARNING,auth,High memory usage detected
+2026-04-07 16:48:51,ERROR,db,Connection pool exhausted
+2026-04-07 16:48:56,INFO,auth,Scheduled task completed
+2026-04-07 16:48:57,WARNING,db,Slow query detected
+2026-04-07 16:49:01,INFO,auth,Cache refreshed
+2026-04-07 16:49:02,WARNING,scheduler,Slow query detected
+2026-04-07 16:49:07,INFO,network,Scheduled task completed
+2026-04-07 16:49:12,INFO,scheduler,Heartbeat OK
+2026-04-07 16:49:13,INFO,db,Cache refreshed
+2026-04-07 16:49:18,WARNING,db,Slow query detected
+2026-04-07 16:49:22,INFO,network,Cache refreshed
+2026-04-07 16:49:23,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:49:27,WARNING,network,Slow query detected
+2026-04-07 16:49:28,WARNING,cache,High memory usage detected
+2026-04-07 16:49:33,INFO,cache,Heartbeat OK
+2026-04-07 16:49:38,ERROR,db,Connection pool exhausted
+2026-04-07 16:49:42,INFO,auth,Scheduled task completed
+2026-04-07 16:49:43,WARNING,network,High memory usage detected
+2026-04-07 16:49:48,ERROR,cache,Connection pool exhausted
+2026-04-07 16:49:49,ERROR,auth,Connection pool exhausted
+2026-04-07 16:49:53,INFO,auth,Scheduled task completed
+2026-04-07 16:49:54,INFO,network,Scheduled task completed
+2026-04-07 16:49:58,WARNING,db,High memory usage detected
+2026-04-07 16:49:59,INFO,cache,Heartbeat OK
+2026-04-07 16:50:03,WARNING,auth,High memory usage detected
+2026-04-07 16:50:08,INFO,network,Scheduled task completed
+2026-04-07 16:50:13,INFO,scheduler,Heartbeat OK
+2026-04-07 16:50:14,INFO,auth,Scheduled task completed
+2026-04-07 16:50:18,WARNING,auth,Slow query detected
+2026-04-07 16:50:19,ERROR,network,Connection pool exhausted
+2026-04-07 16:50:24,ERROR,network,Connection pool exhausted
+2026-04-07 16:50:29,INFO,db,Cache refreshed
+2026-04-07 16:50:30,INFO,auth,Heartbeat OK
+2026-04-07 16:50:34,WARNING,cache,High memory usage detected
+2026-04-07 16:50:35,WARNING,scheduler,High memory usage detected
+2026-04-07 16:50:39,INFO,cache,Scheduled task completed
+2026-04-07 16:50:40,ERROR,cache,Connection pool exhausted
+2026-04-07 16:50:49,WARNING,scheduler,Slow query detected
+2026-04-07 16:50:50,WARNING,scheduler,Slow query detected
+2026-04-07 16:50:55,INFO,cache,Cache refreshed
+2026-04-07 16:51:00,WARNING,scheduler,Slow query detected
+2026-04-07 16:51:05,ERROR,auth,Connection pool exhausted
+2026-04-07 16:51:10,WARNING,auth,Slow query detected
+2026-04-07 16:51:11,INFO,scheduler,Heartbeat OK
+2026-04-07 16:51:15,ERROR,cache,Connection pool exhausted
+2026-04-07 16:51:16,INFO,scheduler,Cache refreshed
+2026-04-07 16:51:20,INFO,scheduler,Cache refreshed
+2026-04-07 16:51:21,INFO,network,Heartbeat OK
+2026-04-07 16:51:26,INFO,cache,Scheduled task completed
+2026-04-07 16:51:26,WARNING,cache,Slow query detected
+2026-04-07 16:51:31,INFO,scheduler,Cache refreshed
+2026-04-07 16:51:32,INFO,db,Scheduled task completed
+2026-04-07 16:51:46,INFO,network,Heartbeat OK
+2026-04-07 16:51:47,WARNING,auth,Slow query detected
+2026-04-07 16:51:51,ERROR,cache,Connection pool exhausted
+2026-04-07 16:51:52,INFO,network,Heartbeat OK
+2026-04-07 16:52:02,ERROR,cache,Connection pool exhausted
+2026-04-07 16:52:03,WARNING,cache,Slow query detected
+2026-04-07 16:52:08,INFO,scheduler,Cache refreshed
+2026-04-07 16:52:12,WARNING,cache,High memory usage detected
+2026-04-07 16:52:13,INFO,cache,Scheduled task completed
+2026-04-07 16:52:17,WARNING,cache,Slow query detected
+2026-04-07 16:52:23,INFO,scheduler,Heartbeat OK
+2026-04-07 16:52:29,INFO,db,Scheduled task completed
+2026-04-07 16:52:33,INFO,db,Scheduled task completed
+2026-04-07 16:52:34,WARNING,cache,Slow query detected
+2026-04-07 16:52:39,ERROR,db,Connection pool exhausted
+2026-04-07 16:52:43,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:52:48,WARNING,auth,High memory usage detected
+2026-04-07 16:52:49,INFO,scheduler,Cache refreshed
+2026-04-07 16:52:53,INFO,auth,Cache refreshed
+2026-04-07 16:52:58,ERROR,scheduler,Connection pool exhausted
+2026-04-07 16:52:59,WARNING,scheduler,Slow query detected
+2026-04-07 16:53:03,INFO,network,Scheduled task completed
+2026-04-07 16:53:04,WARNING,auth,Slow query detected
+2026-04-07 16:53:09,INFO,network,Heartbeat OK
+2026-04-07 16:53:14,INFO,scheduler,Heartbeat OK
+2026-04-07 16:53:14,INFO,cache,Cache refreshed
+2026-04-07 16:53:19,WARNING,scheduler,High memory usage detected
+2026-04-07 16:53:20,INFO,scheduler,Cache refreshed
+2026-04-07 16:53:24,WARNING,scheduler,High memory usage detected
+2026-04-07 16:53:25,INFO,cache,Cache refreshed
+2026-04-07 16:53:34,INFO,network,Heartbeat OK
+2026-04-07 16:53:35,INFO,cache,Heartbeat OK
+2026-04-07 16:53:44,ERROR,auth,Connection pool exhausted
+2026-04-07 18:07:16,INFO,auth,Scheduled task completed
+2026-04-07 18:07:21,INFO,cache,Cache refreshed
+2026-04-07 18:07:32,ERROR,cache,Connection pool exhausted
+2026-04-07 18:07:42,INFO,db,Scheduled task completed
+2026-04-07 18:07:45,INFO,facade-demo,System started via facade
+2026-04-07 18:07:45,WARNING,facade-demo,Low disk space via facade
+2026-04-07 18:07:45,ERROR,facade-demo,Critical error via facade
+2026-04-07 18:07:45,INFO,observer-demo,Service started
+2026-04-07 18:07:45,WARNING,observer-demo,Memory usage high
+2026-04-07 18:07:45,ERROR,observer-demo,Database unreachable
+2026-04-07 18:07:45,INFO,observer-demo,Retry succeeded
+2026-04-07 18:07:47,INFO,auth,Scheduled task completed
+2026-04-07 18:07:52,WARNING,db,Slow query detected
+2026-04-07 18:07:53,INFO,auth,Cache refreshed
+2026-04-07 18:07:57,INFO,cache,Heartbeat OK
+2026-04-07 18:08:04,INFO,cache,Cache refreshed
+2026-04-07 18:08:08,WARNING,network,Slow query detected
+2026-04-07 18:08:09,INFO,scheduler,Cache refreshed
+2026-04-07 18:08:13,WARNING,auth,Slow query detected
+2026-04-07 18:08:14,ERROR,cache,Connection pool exhausted
+2026-04-07 18:08:18,WARNING,auth,High memory usage detected
+2026-04-07 18:08:19,INFO,db,Heartbeat OK
+2026-04-07 18:08:23,INFO,db,Cache refreshed
+2026-04-07 18:08:25,INFO,auth,Heartbeat OK
+2026-04-07 18:08:29,WARNING,network,High memory usage detected
+2026-04-07 18:08:30,INFO,scheduler,Scheduled task completed
+2026-04-07 18:08:34,INFO,auth,Cache refreshed
+2026-04-07 18:08:35,INFO,db,Heartbeat OK
+2026-04-07 18:08:39,INFO,auth,Cache refreshed
+2026-04-07 18:08:45,INFO,cache,Heartbeat OK
+2026-04-07 18:08:51,INFO,auth,Scheduled task completed
+2026-04-07 18:08:56,INFO,network,Scheduled task completed
+2026-04-07 18:09:01,ERROR,cache,Connection pool exhausted
+2026-04-07 18:09:04,INFO,cache,Scheduled task completed
+2026-04-07 18:09:06,INFO,network,Scheduled task completed
+2026-04-07 18:09:09,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:09:11,ERROR,cache,Connection pool exhausted
+2026-04-07 18:09:16,INFO,cache,Scheduled task completed
+2026-04-07 18:09:19,WARNING,cache,Slow query detected
+2026-04-07 18:09:22,INFO,cache,Cache refreshed
+2026-04-07 18:09:24,WARNING,scheduler,Slow query detected
+2026-04-07 18:09:27,INFO,db,Cache refreshed
+2026-04-07 18:09:34,INFO,cache,Cache refreshed
+2026-04-07 18:09:37,WARNING,auth,Slow query detected
+2026-04-07 18:09:40,WARNING,network,High memory usage detected
+2026-04-07 18:09:42,ERROR,cache,Connection pool exhausted
+2026-04-07 18:09:45,WARNING,network,High memory usage detected
+2026-04-07 18:09:47,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:09:55,INFO,network,Heartbeat OK
+2026-04-07 18:09:58,ERROR,auth,Connection pool exhausted
+2026-04-07 18:10:03,INFO,network,Cache refreshed
+2026-04-07 18:10:05,WARNING,scheduler,High memory usage detected
+2026-04-07 18:10:08,ERROR,auth,Connection pool exhausted
+2026-04-07 18:10:16,INFO,auth,Cache refreshed
+2026-04-07 18:10:18,WARNING,scheduler,High memory usage detected
+2026-04-07 18:10:21,WARNING,network,High memory usage detected
+2026-04-07 18:10:24,INFO,auth,Scheduled task completed
+2026-04-07 18:10:26,WARNING,auth,High memory usage detected
+2026-04-07 18:10:29,WARNING,scheduler,High memory usage detected
+2026-04-07 18:10:31,INFO,db,Scheduled task completed
+2026-04-07 18:10:34,INFO,db,Cache refreshed
+2026-04-07 18:10:36,INFO,cache,Scheduled task completed
+2026-04-07 18:10:39,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:10:41,WARNING,network,High memory usage detected
+2026-04-07 18:10:44,INFO,db,Heartbeat OK
+2026-04-07 18:10:52,INFO,scheduler,Scheduled task completed
+2026-04-07 18:10:54,ERROR,cache,Connection pool exhausted
+2026-04-07 18:10:57,INFO,network,Scheduled task completed
+2026-04-07 18:11:00,WARNING,auth,High memory usage detected
+2026-04-07 18:11:02,ERROR,db,Connection pool exhausted
+2026-04-07 18:11:05,WARNING,auth,High memory usage detected
+2026-04-07 18:11:07,WARNING,auth,Slow query detected
+2026-04-07 18:11:10,INFO,scheduler,Heartbeat OK
+2026-04-07 18:11:12,INFO,auth,Heartbeat OK
+2026-04-07 18:11:15,WARNING,auth,High memory usage detected
+2026-04-07 18:11:18,INFO,db,Cache refreshed
+2026-04-07 18:11:20,INFO,db,Heartbeat OK
+2026-04-07 18:11:23,INFO,auth,Scheduled task completed
+2026-04-07 18:11:26,INFO,scheduler,Heartbeat OK
+2026-04-07 18:11:31,WARNING,db,High memory usage detected
+2026-04-07 18:11:33,WARNING,network,Slow query detected
+2026-04-07 18:11:38,INFO,scheduler,Heartbeat OK
+2026-04-07 18:11:41,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:11:46,INFO,auth,Cache refreshed
+2026-04-07 18:11:52,ERROR,db,Connection pool exhausted
+2026-04-07 18:11:57,ERROR,network,Connection pool exhausted
+2026-04-07 18:11:59,ERROR,db,Connection pool exhausted
+2026-04-07 18:12:02,INFO,network,Cache refreshed
+2026-04-07 18:12:07,ERROR,db,Connection pool exhausted
+2026-04-07 18:12:10,WARNING,cache,High memory usage detected
+2026-04-07 18:12:12,INFO,cache,Heartbeat OK
+2026-04-07 18:12:15,INFO,db,Cache refreshed
+2026-04-07 18:12:17,INFO,db,Scheduled task completed
+2026-04-07 18:12:20,INFO,auth,Scheduled task completed
+2026-04-07 18:12:23,INFO,scheduler,Cache refreshed
+2026-04-07 18:12:25,INFO,auth,Cache refreshed
+2026-04-07 18:12:33,WARNING,db,Slow query detected
+2026-04-07 18:12:35,INFO,cache,Cache refreshed
+2026-04-07 18:12:38,INFO,network,Cache refreshed
+2026-04-07 18:12:40,INFO,scheduler,Heartbeat OK
+2026-04-07 18:12:43,INFO,db,Cache refreshed
+2026-04-07 18:12:46,INFO,network,Cache refreshed
+2026-04-07 18:12:48,INFO,network,Cache refreshed
+2026-04-07 18:12:53,INFO,auth,Heartbeat OK
+2026-04-07 18:12:56,WARNING,network,Slow query detected
+2026-04-07 18:12:59,INFO,cache,Heartbeat OK
+2026-04-07 18:13:01,WARNING,scheduler,High memory usage detected
+2026-04-07 18:13:04,WARNING,cache,Slow query detected
+2026-04-07 18:13:06,INFO,network,Scheduled task completed
+2026-04-07 18:13:09,ERROR,db,Connection pool exhausted
+2026-04-07 18:13:11,INFO,db,Scheduled task completed
+2026-04-07 18:13:14,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:13:17,INFO,network,Scheduled task completed
+2026-04-07 18:13:19,WARNING,scheduler,High memory usage detected
+2026-04-07 18:13:22,WARNING,network,High memory usage detected
+2026-04-07 18:13:27,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:13:30,INFO,auth,Heartbeat OK
+2026-04-07 18:13:35,WARNING,auth,High memory usage detected
+2026-04-07 18:13:37,WARNING,cache,High memory usage detected
+2026-04-07 18:13:40,ERROR,auth,Connection pool exhausted
+2026-04-07 18:13:42,INFO,cache,Heartbeat OK
+2026-04-07 18:13:47,ERROR,db,Connection pool exhausted
+2026-04-07 18:13:50,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:13:52,WARNING,scheduler,Slow query detected
+2026-04-07 18:13:55,WARNING,scheduler,Slow query detected
+2026-04-07 18:13:58,WARNING,auth,Slow query detected
+2026-04-07 18:14:00,INFO,cache,Heartbeat OK
+2026-04-07 18:14:03,WARNING,network,Slow query detected
+2026-04-07 18:14:06,INFO,cache,Heartbeat OK
+2026-04-07 18:14:08,WARNING,cache,Slow query detected
+2026-04-07 18:14:11,WARNING,db,High memory usage detected
+2026-04-07 18:14:13,WARNING,cache,High memory usage detected
+2026-04-07 18:14:18,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:14:21,INFO,auth,Scheduled task completed
+2026-04-07 18:14:36,INFO,auth,Scheduled task completed
+2026-04-07 18:14:39,INFO,db,Heartbeat OK
+2026-04-07 18:14:42,INFO,auth,Cache refreshed
+2026-04-07 18:14:44,WARNING,cache,High memory usage detected
+2026-04-07 18:14:47,WARNING,scheduler,Slow query detected
+2026-04-07 18:14:49,INFO,scheduler,Scheduled task completed
+2026-04-07 18:14:52,INFO,scheduler,Scheduled task completed
+2026-04-07 18:14:55,ERROR,auth,Connection pool exhausted
+2026-04-07 18:15:03,INFO,db,Cache refreshed
+2026-04-07 18:15:08,WARNING,auth,Slow query detected
+2026-04-07 18:15:10,INFO,scheduler,Heartbeat OK
+2026-04-07 18:15:13,WARNING,scheduler,High memory usage detected
+2026-04-07 18:15:16,INFO,scheduler,Scheduled task completed
+2026-04-07 18:15:18,INFO,scheduler,Heartbeat OK
+2026-04-07 18:15:21,INFO,cache,Scheduled task completed
+2026-04-07 18:15:24,INFO,scheduler,Heartbeat OK
+2026-04-07 18:15:29,WARNING,network,High memory usage detected
+2026-04-07 18:15:31,INFO,auth,Scheduled task completed
+2026-04-07 18:15:34,WARNING,cache,High memory usage detected
+2026-04-07 18:15:36,WARNING,auth,Slow query detected
+2026-04-07 18:15:39,INFO,network,Scheduled task completed
+2026-04-07 18:15:46,WARNING,scheduler,High memory usage detected
+2026-04-07 18:15:49,WARNING,scheduler,Slow query detected
+2026-04-07 18:15:52,ERROR,auth,Connection pool exhausted
+2026-04-07 18:15:54,WARNING,auth,High memory usage detected
+2026-04-07 18:15:57,ERROR,auth,Connection pool exhausted
+2026-04-07 18:16:00,WARNING,scheduler,Slow query detected
+2026-04-07 18:16:02,INFO,auth,Scheduled task completed
+2026-04-07 18:16:07,INFO,auth,Scheduled task completed
+2026-04-07 18:16:10,INFO,scheduler,Cache refreshed
+2026-04-07 18:16:12,INFO,cache,Cache refreshed
+2026-04-07 18:16:15,WARNING,network,High memory usage detected
+2026-04-07 18:16:17,WARNING,network,Slow query detected
+2026-04-07 18:16:23,INFO,auth,Heartbeat OK
+2026-04-07 18:16:25,ERROR,auth,Connection pool exhausted
+2026-04-07 18:16:28,WARNING,scheduler,High memory usage detected
+2026-04-07 18:16:31,WARNING,auth,Slow query detected
+2026-04-07 18:16:33,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:16:36,INFO,cache,Cache refreshed
+2026-04-07 18:16:38,INFO,scheduler,Cache refreshed
+2026-04-07 18:16:43,INFO,db,Cache refreshed
+2026-04-07 18:16:46,WARNING,auth,Slow query detected
+2026-04-07 18:16:48,INFO,network,Scheduled task completed
+2026-04-07 18:16:51,WARNING,scheduler,High memory usage detected
+2026-04-07 18:16:56,WARNING,cache,Slow query detected
+2026-04-07 18:16:59,INFO,db,Scheduled task completed
+2026-04-07 18:17:02,INFO,cache,Scheduled task completed
+2026-04-07 18:17:04,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:17:07,ERROR,network,Connection pool exhausted
+2026-04-07 18:17:12,INFO,scheduler,Cache refreshed
+2026-04-07 18:17:14,WARNING,scheduler,High memory usage detected
+2026-04-07 18:17:17,ERROR,db,Connection pool exhausted
+2026-04-07 18:17:19,WARNING,auth,Slow query detected
+2026-04-07 18:17:22,INFO,scheduler,Cache refreshed
+2026-04-07 18:17:24,WARNING,network,High memory usage detected
+2026-04-07 18:17:27,INFO,scheduler,Cache refreshed
+2026-04-07 18:17:30,WARNING,auth,Slow query detected
+2026-04-07 18:17:32,INFO,db,Heartbeat OK
+2026-04-07 18:17:35,INFO,scheduler,Cache refreshed
+2026-04-07 18:17:40,INFO,auth,Cache refreshed
+2026-04-07 18:17:48,INFO,network,Scheduled task completed
+2026-04-07 18:17:50,WARNING,scheduler,Slow query detected
+2026-04-07 18:17:55,INFO,db,Cache refreshed
+2026-04-07 18:18:00,WARNING,db,High memory usage detected
+2026-04-07 18:18:03,INFO,scheduler,Heartbeat OK
+2026-04-07 18:18:06,INFO,db,Cache refreshed
+2026-04-07 18:18:08,INFO,db,Cache refreshed
+2026-04-07 18:18:11,INFO,cache,Heartbeat OK
+2026-04-07 18:18:19,INFO,network,Heartbeat OK
+2026-04-07 18:18:21,INFO,network,Scheduled task completed
+2026-04-07 18:18:24,INFO,db,Heartbeat OK
+2026-04-07 18:18:26,INFO,scheduler,Cache refreshed
+2026-04-07 18:18:31,INFO,cache,Cache refreshed
+2026-04-07 18:18:34,INFO,cache,Scheduled task completed
+2026-04-07 18:18:36,INFO,db,Cache refreshed
+2026-04-07 18:18:39,INFO,scheduler,Scheduled task completed
+2026-04-07 18:18:44,INFO,network,Heartbeat OK
+2026-04-07 18:18:47,ERROR,db,Connection pool exhausted
+2026-04-07 18:18:49,INFO,scheduler,Scheduled task completed
+2026-04-07 18:18:52,INFO,scheduler,Scheduled task completed
+2026-04-07 18:18:57,INFO,network,Heartbeat OK
+2026-04-07 18:19:00,INFO,network,Scheduled task completed
+2026-04-07 18:19:02,INFO,auth,Cache refreshed
+2026-04-07 18:19:05,ERROR,auth,Connection pool exhausted
+2026-04-07 18:19:07,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:19:10,ERROR,auth,Connection pool exhausted
+2026-04-07 18:19:12,INFO,cache,Scheduled task completed
+2026-04-07 18:19:17,INFO,scheduler,Scheduled task completed
+2026-04-07 18:19:20,WARNING,scheduler,High memory usage detected
+2026-04-07 18:19:25,INFO,auth,Cache refreshed
+2026-04-07 18:19:30,INFO,auth,Heartbeat OK
+2026-04-07 18:19:33,INFO,auth,Heartbeat OK
+2026-04-07 18:19:36,WARNING,auth,High memory usage detected
+2026-04-07 18:19:38,INFO,scheduler,Scheduled task completed
+2026-04-07 18:19:41,INFO,auth,Cache refreshed
+2026-04-07 18:19:43,INFO,scheduler,Cache refreshed
+2026-04-07 18:19:48,INFO,db,Cache refreshed
+2026-04-07 18:19:51,INFO,db,Scheduled task completed
+2026-04-07 18:19:53,INFO,auth,Cache refreshed
+2026-04-07 18:19:59,INFO,cache,Cache refreshed
+2026-04-07 18:20:06,WARNING,network,High memory usage detected
+2026-04-07 18:20:09,INFO,scheduler,Scheduled task completed
+2026-04-07 18:20:14,INFO,db,Scheduled task completed
+2026-04-07 18:20:17,INFO,network,Cache refreshed
+2026-04-07 18:20:19,INFO,db,Scheduled task completed
+2026-04-07 18:20:22,WARNING,auth,High memory usage detected
+2026-04-07 18:20:24,INFO,auth,Heartbeat OK
+2026-04-07 18:20:27,INFO,network,Heartbeat OK
+2026-04-07 18:20:29,ERROR,db,Connection pool exhausted
+2026-04-07 18:20:32,INFO,db,Scheduled task completed
+2026-04-07 18:20:35,ERROR,network,Connection pool exhausted
+2026-04-07 18:20:37,ERROR,auth,Connection pool exhausted
+2026-04-07 18:20:40,INFO,auth,Heartbeat OK
+2026-04-07 18:20:42,WARNING,auth,Slow query detected
+2026-04-07 18:20:45,INFO,scheduler,Cache refreshed
+2026-04-07 18:20:47,WARNING,scheduler,High memory usage detected
+2026-04-07 18:20:50,WARNING,scheduler,Slow query detected
+2026-04-07 18:20:53,ERROR,auth,Connection pool exhausted
+2026-04-07 18:20:55,INFO,scheduler,Cache refreshed
+2026-04-07 18:20:58,WARNING,db,Slow query detected
+2026-04-07 18:21:03,INFO,cache,Cache refreshed
+2026-04-07 18:21:05,WARNING,auth,Slow query detected
+2026-04-07 18:21:08,INFO,cache,Scheduled task completed
+2026-04-07 18:21:13,INFO,db,Scheduled task completed
+2026-04-07 18:21:16,ERROR,db,Connection pool exhausted
+2026-04-07 18:21:18,INFO,cache,Cache refreshed
+2026-04-07 18:21:24,WARNING,db,High memory usage detected
+2026-04-07 18:21:26,ERROR,cache,Connection pool exhausted
+2026-04-07 18:21:29,WARNING,network,Slow query detected
+2026-04-07 18:21:31,INFO,scheduler,Cache refreshed
+2026-04-07 18:21:34,WARNING,network,Slow query detected
+2026-04-07 18:21:37,INFO,scheduler,Cache refreshed
+2026-04-07 18:21:40,INFO,auth,Heartbeat OK
+2026-04-07 18:21:42,WARNING,db,High memory usage detected
+2026-04-07 18:21:45,WARNING,auth,Slow query detected
+2026-04-07 18:21:47,INFO,db,Scheduled task completed
+2026-04-07 18:21:50,WARNING,cache,High memory usage detected
+2026-04-07 18:21:55,ERROR,cache,Connection pool exhausted
+2026-04-07 18:21:58,WARNING,db,High memory usage detected
+2026-04-07 18:22:06,INFO,scheduler,Cache refreshed
+2026-04-07 18:22:16,INFO,auth,Heartbeat OK
+2026-04-07 18:22:18,INFO,cache,Cache refreshed
+2026-04-07 18:22:26,WARNING,db,High memory usage detected
+2026-04-07 18:22:32,INFO,cache,Cache refreshed
+2026-04-07 18:22:37,WARNING,network,High memory usage detected
+2026-04-07 18:22:39,INFO,scheduler,Scheduled task completed
+2026-04-07 18:22:42,WARNING,network,High memory usage detected
+2026-04-07 18:22:52,INFO,network,Scheduled task completed
+2026-04-07 18:22:57,WARNING,network,Slow query detected
+2026-04-07 18:22:59,WARNING,cache,High memory usage detected
+2026-04-07 18:23:02,ERROR,db,Connection pool exhausted
+2026-04-07 18:23:05,ERROR,auth,Connection pool exhausted
+2026-04-07 18:23:08,WARNING,auth,Slow query detected
+2026-04-07 18:23:10,INFO,cache,Scheduled task completed
+2026-04-07 18:23:13,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:23:15,INFO,scheduler,Scheduled task completed
+2026-04-07 18:23:20,INFO,db,Cache refreshed
+2026-04-07 18:23:23,WARNING,cache,High memory usage detected
+2026-04-07 18:23:26,WARNING,auth,High memory usage detected
+2026-04-07 18:23:29,WARNING,cache,Slow query detected
+2026-04-07 18:23:34,INFO,auth,Heartbeat OK
+2026-04-07 18:23:36,INFO,scheduler,Cache refreshed
+2026-04-07 18:23:39,ERROR,auth,Connection pool exhausted
+2026-04-07 18:23:41,INFO,db,Heartbeat OK
+2026-04-07 18:23:46,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:23:52,WARNING,db,High memory usage detected
+2026-04-07 18:24:02,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:24:07,INFO,network,Heartbeat OK
+2026-04-07 18:24:33,WARNING,db,Slow query detected
+2026-04-07 18:24:43,WARNING,scheduler,Slow query detected
+2026-04-07 18:24:48,WARNING,cache,Slow query detected
+2026-04-07 18:24:53,INFO,db,Scheduled task completed
+2026-04-07 18:24:58,WARNING,cache,Slow query detected
+2026-04-07 18:25:04,INFO,cache,Heartbeat OK
+2026-04-07 18:25:09,INFO,network,Scheduled task completed
+2026-04-07 18:25:14,INFO,auth,Cache refreshed
+2026-04-07 18:25:24,INFO,scheduler,Scheduled task completed
+2026-04-07 18:25:29,INFO,scheduler,Cache refreshed
+2026-04-07 18:25:34,INFO,network,Heartbeat OK
+2026-04-07 18:25:40,INFO,cache,Scheduled task completed
+2026-04-07 18:25:45,WARNING,db,Slow query detected
+2026-04-07 18:25:50,INFO,network,Cache refreshed
+2026-04-07 18:25:55,INFO,scheduler,Cache refreshed
+2026-04-07 18:26:01,ERROR,cache,Connection pool exhausted
+2026-04-07 18:56:04,WARNING,auth,High memory usage detected
+2026-04-07 18:56:15,INFO,cache,Scheduled task completed
+2026-04-07 18:56:20,INFO,db,Cache refreshed
+2026-04-07 18:56:25,INFO,scheduler,Scheduled task completed
+2026-04-07 18:56:31,WARNING,network,High memory usage detected
+2026-04-07 18:56:36,WARNING,db,High memory usage detected
+2026-04-07 18:56:47,INFO,auth,Scheduled task completed
+2026-04-07 18:56:52,ERROR,scheduler,Connection pool exhausted
+2026-04-07 18:57:08,WARNING,db,Slow query detected
+2026-04-07 18:57:29,INFO,cache,Heartbeat OK
+2026-04-07 18:57:35,WARNING,db,High memory usage detected
+2026-04-07 18:57:40,WARNING,network,Slow query detected
+2026-04-07 18:57:56,WARNING,network,High memory usage detected
+2026-04-07 18:58:07,INFO,auth,Scheduled task completed
+2026-04-07 18:58:12,WARNING,db,Slow query detected
+2026-04-07 18:58:17,INFO,auth,Heartbeat OK
+2026-04-07 18:58:23,INFO,network,Cache refreshed
+2026-04-07 18:58:28,WARNING,network,Slow query detected
+2026-04-07 18:58:34,INFO,db,Cache refreshed
+2026-04-07 18:58:39,WARNING,auth,High memory usage detected
+2026-04-07 18:58:44,INFO,auth,Scheduled task completed
+2026-04-07 18:59:00,WARNING,scheduler,High memory usage detected
+2026-04-07 18:59:06,INFO,db,Cache refreshed
+2026-04-07 18:59:17,INFO,db,Cache refreshed
+2026-04-07 18:59:27,INFO,scheduler,Scheduled task completed
+2026-04-07 18:59:33,INFO,db,Heartbeat OK
+2026-04-07 18:59:38,WARNING,db,High memory usage detected
+2026-04-07 18:59:43,INFO,auth,Heartbeat OK
+2026-04-07 18:59:54,WARNING,scheduler,Slow query detected
+2026-04-07 19:00:00,INFO,db,Cache refreshed
+2026-04-07 19:00:05,INFO,auth,Cache refreshed
+2026-04-07 19:00:10,WARNING,db,High memory usage detected
+2026-04-07 19:00:16,INFO,network,Cache refreshed
+2026-04-07 19:00:32,INFO,auth,Cache refreshed
+2026-04-07 19:00:43,WARNING,auth,High memory usage detected
+2026-04-07 19:00:48,INFO,auth,Scheduled task completed
+2026-04-07 19:00:53,ERROR,auth,Connection pool exhausted
+2026-04-07 19:00:59,INFO,scheduler,Cache refreshed
+2026-04-07 19:01:20,INFO,network,Cache refreshed
+2026-04-07 19:01:26,INFO,scheduler,Scheduled task completed
+2026-04-07 19:01:31,INFO,auth,Cache refreshed
+2026-04-07 19:01:36,WARNING,auth,Slow query detected
+2026-04-07 19:01:42,INFO,auth,Cache refreshed
+2026-04-07 19:01:47,WARNING,scheduler,High memory usage detected
+2026-04-07 19:01:53,WARNING,network,High memory usage detected
+2026-04-07 19:01:58,INFO,network,Scheduled task completed
+2026-04-07 19:02:03,INFO,scheduler,Heartbeat OK
+2026-04-07 19:02:14,WARNING,cache,Slow query detected
+2026-04-07 19:02:19,WARNING,network,High memory usage detected
+2026-04-07 19:02:25,ERROR,network,Connection pool exhausted
+2026-04-07 19:02:30,INFO,scheduler,Scheduled task completed
+2026-04-07 19:02:35,INFO,db,Cache refreshed
+2026-04-07 19:02:41,WARNING,scheduler,High memory usage detected
+2026-04-07 19:02:46,INFO,scheduler,Scheduled task completed
+2026-04-07 19:02:52,WARNING,db,High memory usage detected
+2026-04-07 19:03:02,WARNING,db,High memory usage detected
+2026-04-07 19:03:08,ERROR,auth,Connection pool exhausted
+2026-04-07 19:03:13,INFO,cache,Scheduled task completed
+2026-04-07 19:03:18,INFO,scheduler,Scheduled task completed
+2026-04-07 19:03:24,INFO,cache,Cache refreshed
+2026-04-07 19:03:29,INFO,network,Cache refreshed
+2026-04-07 19:03:40,WARNING,cache,High memory usage detected
+2026-04-07 19:03:51,INFO,auth,Heartbeat OK
+2026-04-07 19:03:56,WARNING,db,High memory usage detected
+2026-04-07 19:04:01,INFO,db,Cache refreshed
+2026-04-07 19:04:12,INFO,db,Scheduled task completed
+2026-04-07 19:04:17,INFO,scheduler,Cache refreshed
+2026-04-07 19:04:23,INFO,cache,Scheduled task completed
+2026-04-07 19:04:28,ERROR,scheduler,Connection pool exhausted
+2026-04-07 19:04:33,INFO,auth,Cache refreshed
+2026-04-07 19:04:39,WARNING,network,High memory usage detected
+2026-04-07 19:04:44,WARNING,db,High memory usage detected
+2026-04-07 19:04:54,WARNING,cache,High memory usage detected
+2026-04-07 19:05:05,INFO,scheduler,Cache refreshed
+2026-04-07 19:05:10,INFO,cache,Cache refreshed
+2026-04-07 19:05:16,WARNING,auth,High memory usage detected
+2026-04-07 19:05:21,WARNING,db,High memory usage detected
+2026-04-07 19:05:26,ERROR,scheduler,Connection pool exhausted
+2026-04-07 19:05:37,ERROR,db,Connection pool exhausted
+2026-04-07 19:05:42,INFO,db,Scheduled task completed
+2026-04-07 19:05:47,WARNING,cache,High memory usage detected
+2026-04-07 19:05:53,WARNING,network,High memory usage detected
+2026-04-07 19:05:58,ERROR,scheduler,Connection pool exhausted
+2026-04-07 19:06:03,INFO,auth,Scheduled task completed
+2026-04-07 19:06:08,INFO,auth,Heartbeat OK
+2026-04-07 19:06:13,INFO,auth,Scheduled task completed
+2026-04-07 19:06:19,INFO,cache,Cache refreshed
+2026-04-07 19:06:24,INFO,scheduler,Cache refreshed
+2026-04-07 19:06:34,WARNING,scheduler,Slow query detected
+2026-04-07 19:06:39,INFO,network,Cache refreshed
+2026-04-07 19:06:44,WARNING,cache,Slow query detected
+2026-04-07 19:06:49,WARNING,network,Slow query detected
+2026-04-07 19:07:10,INFO,db,Heartbeat OK
+2026-04-07 19:07:15,WARNING,network,High memory usage detected
+2026-04-07 19:07:20,ERROR,auth,Connection pool exhausted
+2026-04-07 19:07:25,INFO,db,Cache refreshed
+2026-04-07 19:07:30,WARNING,cache,High memory usage detected
+2026-04-07 19:07:41,INFO,network,Heartbeat OK
+2026-04-07 19:07:51,ERROR,cache,Connection pool exhausted
+2026-04-07 19:07:56,INFO,db,Cache refreshed
+2026-04-07 19:08:01,INFO,network,Scheduled task completed
+2026-04-07 19:08:06,ERROR,db,Connection pool exhausted
+2026-04-07 19:08:11,INFO,network,Cache refreshed
+2026-04-07 19:08:16,WARNING,db,High memory usage detected
+2026-04-07 19:08:22,WARNING,network,High memory usage detected
+2026-04-07 19:08:27,ERROR,db,Connection pool exhausted
+2026-04-07 19:08:37,INFO,cache,Cache refreshed
+2026-04-07 19:08:42,INFO,scheduler,Heartbeat OK
+2026-04-07 19:08:47,INFO,cache,Cache refreshed
+2026-04-07 19:09:03,WARNING,network,High memory usage detected
+2026-04-07 19:09:08,INFO,scheduler,Cache refreshed
+2026-04-07 19:09:13,INFO,network,Heartbeat OK
+2026-04-07 19:09:18,INFO,scheduler,Heartbeat OK
+2026-04-07 19:09:23,WARNING,auth,Slow query detected
+2026-04-07 19:09:28,INFO,cache,Cache refreshed
+2026-04-07 19:09:39,INFO,cache,Heartbeat OK
+2026-04-07 19:09:44,WARNING,db,High memory usage detected
+2026-04-07 19:09:54,INFO,scheduler,Scheduled task completed
+2026-04-07 19:10:09,INFO,auth,Heartbeat OK
+2026-04-07 19:10:15,INFO,network,Cache refreshed
+2026-04-07 19:10:25,ERROR,db,Connection pool exhausted
+2026-04-07 19:10:30,INFO,auth,Scheduled task completed
+2026-04-07 19:10:35,WARNING,cache,Slow query detected
+2026-04-07 19:10:45,INFO,db,Scheduled task completed
+2026-04-07 19:10:50,WARNING,db,High memory usage detected
+2026-04-07 19:10:56,WARNING,cache,High memory usage detected
+2026-04-07 19:11:01,INFO,auth,Cache refreshed
+2026-04-07 19:11:06,INFO,cache,Cache refreshed
+2026-04-07 19:11:16,INFO,network,Heartbeat OK
+2026-04-07 19:11:21,WARNING,cache,High memory usage detected
+2026-04-07 19:11:26,ERROR,db,Connection pool exhausted
+2026-04-07 19:11:31,INFO,network,Heartbeat OK
+2026-04-07 19:11:37,ERROR,db,Connection pool exhausted
+2026-04-23 16:08:01,INFO,cache,Scheduled task completed
+2026-04-23 16:08:07,INFO,auth,Cache refreshed
+2026-04-23 16:08:12,INFO,scheduler,Heartbeat OK
+2026-04-23 16:08:22,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:08:28,INFO,scheduler,Scheduled task completed
+2026-04-23 16:08:33,INFO,cache,Scheduled task completed
+2026-04-23 16:08:38,INFO,network,Heartbeat OK
+2026-04-23 16:08:43,INFO,cache,Scheduled task completed
+2026-04-23 16:08:49,INFO,db,Heartbeat OK
+2026-04-23 16:08:54,INFO,auth,Scheduled task completed
+2026-04-23 16:09:05,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:09:10,WARNING,auth,Slow query detected
+2026-04-23 16:09:15,INFO,cache,Scheduled task completed
+2026-04-23 16:09:21,INFO,scheduler,Cache refreshed
+2026-04-23 16:09:26,WARNING,db,High memory usage detected
+2026-04-23 16:09:31,INFO,cache,Scheduled task completed
+2026-04-23 16:09:37,ERROR,db,Connection pool exhausted
+2026-04-23 16:09:42,INFO,auth,User login successful
+2026-04-23 16:09:42,ERROR,cache,Connection pool exhausted
+2026-04-23 16:09:47,INFO,auth,Cache refreshed
+2026-04-23 16:09:52,WARNING,cache,High memory usage detected
+2026-04-23 16:09:58,WARNING,network,High memory usage detected
+2026-04-23 16:10:03,WARNING,network,Slow query detected
+2026-04-23 16:10:08,INFO,network,Cache refreshed
+2026-04-23 16:10:19,ERROR,db,Connection pool exhausted
+2026-04-23 16:10:24,ERROR,network,Connection pool exhausted
+2026-04-23 16:10:29,WARNING,db,Slow query detected
+2026-04-23 16:10:35,INFO,network,Heartbeat OK
+2026-04-23 16:10:40,INFO,auth,Cache refreshed
+2026-04-23 16:10:51,ERROR,network,Connection pool exhausted
+2026-04-23 16:10:56,INFO,db,Cache refreshed
+2026-04-23 16:10:56,ERROR,db,Connection pool exhausted
+2026-04-23 16:11:01,INFO,auth,Cache refreshed
+2026-04-23 16:11:06,INFO,auth,Heartbeat OK
+2026-04-23 16:11:12,INFO,cache,Cache refreshed
+2026-04-23 16:11:22,INFO,scheduler,Heartbeat OK
+2026-04-23 16:11:33,INFO,scheduler,Heartbeat OK
+2026-04-23 16:11:43,WARNING,db,High memory usage detected
+2026-04-23 16:11:49,WARNING,network,High memory usage detected
+2026-04-23 16:11:54,INFO,network,Scheduled task completed
+2026-04-23 16:11:59,WARNING,cache,Slow query detected
+2026-04-23 16:12:05,INFO,network,Scheduled task completed
+2026-04-23 16:12:10,INFO,scheduler,Heartbeat OK
+2026-04-23 16:12:15,WARNING,auth,High memory usage detected
+2026-04-23 16:12:21,INFO,cache,Heartbeat OK
+2026-04-23 16:12:36,INFO,network,Cache refreshed
+2026-04-23 16:12:42,INFO,db,Heartbeat OK
+2026-04-23 16:12:47,INFO,auth,Scheduled task completed
+2026-04-23 16:12:52,INFO,db,Cache refreshed
+2026-04-23 16:12:57,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:13:13,INFO,db,Cache refreshed
+2026-04-23 16:13:18,ERROR,db,Connection pool exhausted
+2026-04-23 16:13:39,ERROR,cache,Connection pool exhausted
+2026-04-23 16:13:45,INFO,db,Scheduled task completed
+2026-04-23 16:13:50,WARNING,auth,High memory usage detected
+2026-04-23 16:14:00,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:14:06,INFO,network,Cache refreshed
+2026-04-23 16:14:11,WARNING,cache,High memory usage detected
+2026-04-23 16:14:16,INFO,network,Heartbeat OK
+2026-04-23 16:14:27,INFO,scheduler,Heartbeat OK
+2026-04-23 16:14:32,INFO,db,Scheduled task completed
+2026-04-23 16:14:37,INFO,scheduler,Cache refreshed
+2026-04-23 16:14:42,INFO,scheduler,Scheduled task completed
+2026-04-23 16:14:48,INFO,db,Heartbeat OK
+2026-04-23 16:14:53,INFO,db,Heartbeat OK
+2026-04-23 16:15:04,INFO,auth,Scheduled task completed
+2026-04-23 16:15:25,INFO,network,Cache refreshed
+2026-04-23 16:15:30,WARNING,scheduler,Slow query detected
+2026-04-23 16:15:35,INFO,db,Cache refreshed
+2026-04-23 16:15:41,WARNING,auth,Slow query detected
+2026-04-23 16:15:51,WARNING,scheduler,Slow query detected
+2026-04-23 16:15:56,WARNING,auth,Slow query detected
+2026-04-23 16:16:02,INFO,scheduler,Cache refreshed
+2026-04-23 16:16:07,INFO,db,Heartbeat OK
+2026-04-23 16:16:17,INFO,cache,Scheduled task completed
+2026-04-23 16:16:28,INFO,network,Scheduled task completed
+2026-04-23 16:16:38,WARNING,network,High memory usage detected
+2026-04-23 16:16:44,INFO,db,Cache refreshed
+2026-04-23 16:16:49,INFO,db,Heartbeat OK
+2026-04-23 16:16:54,INFO,db,Cache refreshed
+2026-04-23 16:16:59,INFO,db,Heartbeat OK
+2026-04-23 16:17:05,ERROR,network,Connection pool exhausted
+2026-04-23 16:17:10,WARNING,network,Slow query detected
+2026-04-23 16:17:15,INFO,scheduler,Cache refreshed
+2026-04-23 16:17:26,INFO,cache,Scheduled task completed
+2026-04-23 16:17:31,INFO,cache,Cache refreshed
+2026-04-23 16:17:42,INFO,db,Cache refreshed
+2026-04-23 16:17:47,INFO,auth,Heartbeat OK
+2026-04-23 16:17:52,WARNING,scheduler,High memory usage detected
+2026-04-23 16:17:57,WARNING,db,High memory usage detected
+2026-04-23 16:18:03,INFO,auth,Scheduled task completed
+2026-04-23 16:18:08,WARNING,network,Slow query detected
+2026-04-23 16:18:13,INFO,cache,Cache refreshed
+2026-04-23 16:18:19,INFO,scheduler,Heartbeat OK
+2026-04-23 16:18:24,WARNING,network,High memory usage detected
+2026-04-23 16:18:29,INFO,db,Cache refreshed
+2026-04-23 16:18:45,WARNING,auth,High memory usage detected
+2026-04-23 16:18:50,INFO,scheduler,Cache refreshed
+2026-04-23 16:19:01,INFO,cache,Cache refreshed
+2026-04-23 16:19:06,ERROR,network,Connection pool exhausted
+2026-04-23 16:19:11,INFO,db,Scheduled task completed
+2026-04-23 16:19:22,INFO,auth,Heartbeat OK
+2026-04-23 16:19:27,INFO,auth,Cache refreshed
+2026-04-23 16:19:32,INFO,scheduler,Scheduled task completed
+2026-04-23 16:19:43,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:19:48,WARNING,cache,High memory usage detected
+2026-04-23 16:19:53,INFO,db,Cache refreshed
+2026-04-23 16:19:59,INFO,cache,Heartbeat OK
+2026-04-23 16:20:04,INFO,scheduler,Scheduled task completed
+2026-04-23 16:20:09,WARNING,auth,Slow query detected
+2026-04-23 16:20:14,WARNING,network,Slow query detected
+2026-04-23 16:20:20,INFO,cache,Heartbeat OK
+2026-04-23 16:20:25,WARNING,db,High memory usage detected
+2026-04-23 16:20:30,ERROR,db,Connection pool exhausted
+2026-04-23 16:20:35,INFO,scheduler,Heartbeat OK
+2026-04-23 16:20:46,ERROR,cache,Connection pool exhausted
+2026-04-23 16:20:51,INFO,scheduler,Scheduled task completed
+2026-04-23 16:20:57,INFO,auth,Cache refreshed
+2026-04-23 16:21:02,WARNING,network,High memory usage detected
+2026-04-23 16:21:07,WARNING,scheduler,Slow query detected
+2026-04-23 16:21:12,INFO,scheduler,Cache refreshed
+2026-04-23 16:21:18,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:21:23,INFO,auth,Heartbeat OK
+2026-04-23 16:21:28,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:21:33,INFO,network,Cache refreshed
+2026-04-23 16:21:39,ERROR,db,Connection pool exhausted
+2026-04-23 16:21:44,INFO,network,Heartbeat OK
+2026-04-23 16:21:49,INFO,network,Cache refreshed
+2026-04-23 16:22:00,WARNING,scheduler,High memory usage detected
+2026-04-23 16:22:05,ERROR,cache,Connection pool exhausted
+2026-04-23 16:22:10,WARNING,cache,High memory usage detected
+2026-04-23 16:22:21,WARNING,scheduler,High memory usage detected
+2026-04-23 16:22:32,WARNING,auth,Slow query detected
+2026-04-23 16:22:37,ERROR,auth,Connection pool exhausted
+2026-04-23 16:22:53,WARNING,network,High memory usage detected
+2026-04-23 16:23:03,ERROR,auth,Connection pool exhausted
+2026-04-23 16:23:09,WARNING,auth,High memory usage detected
+2026-04-23 16:23:19,WARNING,network,Slow query detected
+2026-04-23 16:23:25,WARNING,cache,High memory usage detected
+2026-04-23 16:23:30,WARNING,cache,High memory usage detected
+2026-04-23 16:23:35,WARNING,scheduler,High memory usage detected
+2026-04-23 16:23:40,WARNING,scheduler,Slow query detected
+2026-04-23 16:23:46,WARNING,cache,Slow query detected
+2026-04-23 16:23:51,INFO,network,Scheduled task completed
+2026-04-23 16:23:56,INFO,cache,Cache refreshed
+2026-04-23 16:24:01,INFO,auth,Cache refreshed
+2026-04-23 16:24:07,WARNING,scheduler,Slow query detected
+2026-04-23 16:24:12,INFO,network,Scheduled task completed
+2026-04-23 16:24:17,INFO,auth,Cache refreshed
+2026-04-23 16:24:39,WARNING,scheduler,High memory usage detected
+2026-04-23 16:24:44,INFO,scheduler,Scheduled task completed
+2026-04-23 16:24:49,WARNING,auth,Slow query detected
+2026-04-23 16:24:55,WARNING,db,Slow query detected
+2026-04-23 16:25:05,ERROR,network,Connection pool exhausted
+2026-04-23 16:25:16,INFO,db,Heartbeat OK
+2026-04-23 16:25:26,INFO,cache,Cache refreshed
+2026-04-23 16:25:32,WARNING,network,High memory usage detected
+2026-04-23 16:25:48,WARNING,cache,Slow query detected
+2026-04-23 16:25:53,INFO,scheduler,Scheduled task completed
+2026-04-23 16:26:09,INFO,network,Heartbeat OK
+2026-04-23 16:26:14,WARNING,cache,High memory usage detected
+2026-04-23 16:26:19,INFO,auth,Scheduled task completed
+2026-04-23 16:26:30,INFO,db,Cache refreshed
+2026-04-23 16:26:35,ERROR,auth,Connection pool exhausted
+2026-04-23 16:26:56,INFO,scheduler,Heartbeat OK
+2026-04-23 16:27:02,WARNING,scheduler,Slow query detected
+2026-04-23 16:27:07,INFO,network,Heartbeat OK
+2026-04-23 16:27:12,INFO,network,Scheduled task completed
+2026-04-23 16:27:18,INFO,cache,Scheduled task completed
+2026-04-23 16:27:23,INFO,scheduler,Scheduled task completed
+2026-04-23 16:27:39,WARNING,db,High memory usage detected
+2026-04-23 16:27:44,ERROR,auth,Connection pool exhausted
+2026-04-23 16:27:50,INFO,auth,Scheduled task completed
+2026-04-23 16:28:00,INFO,network,Scheduled task completed
+2026-04-23 16:28:05,INFO,cache,Scheduled task completed
+2026-04-23 16:28:10,WARNING,scheduler,High memory usage detected
+2026-04-23 16:28:16,INFO,db,Cache refreshed
+2026-04-23 16:28:21,WARNING,auth,High memory usage detected
+2026-04-23 16:28:26,WARNING,cache,High memory usage detected
+2026-04-23 16:28:31,WARNING,auth,High memory usage detected
+2026-04-23 16:28:37,WARNING,network,High memory usage detected
+2026-04-23 16:28:42,INFO,auth,Scheduled task completed
+2026-04-23 16:28:47,ERROR,cache,Connection pool exhausted
+2026-04-23 16:28:52,WARNING,auth,Slow query detected
+2026-04-23 16:28:58,INFO,network,Heartbeat OK
+2026-04-23 16:29:08,WARNING,db,High memory usage detected
+2026-04-23 16:29:18,WARNING,scheduler,High memory usage detected
+2026-04-23 16:29:24,INFO,scheduler,Scheduled task completed
+2026-04-23 16:29:29,WARNING,cache,Slow query detected
+2026-04-23 16:29:34,ERROR,db,Connection pool exhausted
+2026-04-23 16:29:50,INFO,auth,Scheduled task completed
+2026-04-23 16:29:55,ERROR,network,Connection pool exhausted
+2026-04-23 16:30:01,INFO,db,Scheduled task completed
+2026-04-23 16:30:06,INFO,db,Cache refreshed
+2026-04-23 16:30:11,WARNING,cache,High memory usage detected
+2026-04-23 16:30:16,INFO,network,Scheduled task completed
+2026-04-23 16:30:27,INFO,scheduler,Scheduled task completed
+2026-04-23 16:30:32,INFO,auth,Scheduled task completed
+2026-04-23 16:30:38,ERROR,cache,Connection pool exhausted
+2026-04-23 16:30:48,INFO,db,Scheduled task completed
+2026-04-23 16:30:59,INFO,auth,Cache refreshed
+2026-04-23 16:36:22,INFO,network,Scheduled task completed
+2026-04-23 16:36:27,INFO,db,Cache refreshed
+2026-04-23 16:36:32,INFO,cache,Scheduled task completed
+2026-04-23 16:36:42,WARNING,network,Slow query detected
+2026-04-23 16:36:48,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:37:08,WARNING,scheduler,High memory usage detected
+2026-04-23 16:37:13,INFO,cache,Cache refreshed
+2026-04-23 16:37:18,ERROR,auth,Connection pool exhausted
+2026-04-23 16:37:23,WARNING,network,High memory usage detected
+2026-04-23 16:37:28,INFO,db,Cache refreshed
+2026-04-23 16:37:33,WARNING,cache,Slow query detected
+2026-04-23 16:37:44,INFO,network,Cache refreshed
+2026-04-23 16:37:49,INFO,cache,Scheduled task completed
+2026-04-23 16:37:54,WARNING,scheduler,High memory usage detected
+2026-04-23 16:38:04,INFO,scheduler,Heartbeat OK
+2026-04-23 16:38:09,INFO,scheduler,Heartbeat OK
+2026-04-23 16:38:15,INFO,auth,Heartbeat OK
+2026-04-23 16:38:20,WARNING,db,Slow query detected
+2026-04-23 16:38:25,WARNING,network,High memory usage detected
+2026-04-23 16:38:30,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:38:35,WARNING,network,High memory usage detected
+2026-04-23 16:38:40,INFO,auth,Scheduled task completed
+2026-04-23 16:38:45,INFO,scheduler,Cache refreshed
+2026-04-23 16:39:01,INFO,cache,Heartbeat OK
+2026-04-23 16:39:16,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:39:32,INFO,auth,Scheduled task completed
+2026-04-23 16:39:37,INFO,network,Scheduled task completed
+2026-04-23 16:39:42,WARNING,network,Slow query detected
+2026-04-23 16:39:47,INFO,scheduler,Cache refreshed
+2026-04-23 16:39:52,INFO,db,Scheduled task completed
+2026-04-23 16:39:57,WARNING,scheduler,Slow query detected
+2026-04-23 16:40:03,INFO,cache,Scheduled task completed
+2026-04-23 16:40:08,WARNING,cache,Slow query detected
+2026-04-23 16:40:13,INFO,network,Cache refreshed
+2026-04-23 16:40:18,ERROR,scheduler,Connection pool exhausted
+2026-04-23 16:40:23,ERROR,db,Connection pool exhausted
+2026-04-23 16:40:28,INFO,scheduler,Cache refreshed
+2026-04-23 16:40:39,INFO,auth,Cache refreshed
+2026-04-23 16:40:44,INFO,db,Heartbeat OK
+2026-04-23 16:40:54,INFO,network,Cache refreshed
+2026-04-23 16:40:59,ERROR,auth,Connection pool exhausted
+2026-04-23 16:41:15,INFO,scheduler,Cache refreshed
+2026-04-23 16:41:20,INFO,scheduler,Heartbeat OK
+2026-04-23 16:41:25,ERROR,cache,Connection pool exhausted
+2026-04-23 16:41:30,INFO,auth,Cache refreshed
+2026-04-23 16:41:35,INFO,network,Scheduled task completed
+2026-04-23 16:41:40,INFO,auth,Heartbeat OK
+2026-04-23 16:41:46,INFO,auth,Heartbeat OK
+2026-04-23 16:41:51,INFO,auth,Heartbeat OK
+2026-04-23 16:42:06,INFO,scheduler,Heartbeat OK
+2026-04-23 16:42:16,INFO,db,Scheduled task completed
+2026-04-23 16:42:21,INFO,scheduler,Cache refreshed
+2026-04-23 16:42:27,ERROR,network,Connection pool exhausted
+2026-04-23 16:42:32,INFO,scheduler,Cache refreshed
+2026-04-23 16:42:37,WARNING,auth,High memory usage detected
+2026-04-23 16:42:42,INFO,cache,Scheduled task completed
+2026-04-23 16:42:47,INFO,network,Scheduled task completed
+2026-04-23 16:42:52,INFO,scheduler,Heartbeat OK
+2026-04-23 16:42:57,ERROR,db,Connection pool exhausted
+2026-04-23 16:43:13,INFO,auth,Scheduled task completed
+2026-04-23 16:43:23,WARNING,network,Slow query detected
+2026-04-23 16:43:28,INFO,auth,Scheduled task completed
+2026-04-23 16:43:33,INFO,cache,Heartbeat OK
+2026-04-23 16:43:38,INFO,db,Cache refreshed
+2026-04-23 16:43:44,ERROR,network,Connection pool exhausted
+2026-04-23 16:43:49,INFO,auth,Heartbeat OK
+2026-04-23 16:44:04,WARNING,cache,High memory usage detected
+2026-04-23 16:44:09,WARNING,db,High memory usage detected
+2026-04-23 16:44:14,ERROR,db,Connection pool exhausted
+2026-04-23 16:44:19,WARNING,network,High memory usage detected
+2026-04-23 16:44:25,INFO,cache,Cache refreshed
+2026-04-23 16:44:27,INFO,system,Logs exported
+2026-04-23 16:44:30,INFO,scheduler,Scheduled task completed
+2026-04-23 16:44:40,INFO,db,Heartbeat OK
+2026-04-23 16:44:45,INFO,db,Heartbeat OK
+2026-04-23 16:44:55,WARNING,scheduler,High memory usage detected
+2026-04-23 16:45:00,INFO,auth,Scheduled task completed
+2026-04-23 16:45:06,INFO,system,Logs exported

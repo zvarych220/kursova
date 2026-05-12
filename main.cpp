@@ -1021,6 +1021,180 @@ inline void acceptVisitor(const LogStorage& storage, ILogVisitor& visitor) {
     visitor.finalize();
 }
 
+// ─── Strategy (LogSortStrategy) ──────────────────────────────────────────────
+// Визначає алгоритм сортування/впорядкування списку записів.
+// Дозволяє підміняти стратегію без зміни коду, що її використовує.
+
+class ILogSortStrategy {
+public:
+    virtual ~ILogSortStrategy() = default;
+    virtual std::vector<LogEntry> sort(const std::vector<LogEntry>& entries) const = 0;
+    virtual std::string name() const = 0;
+};
+
+// Конкретна стратегія 1: сортування за часом (від найстарішого до найновішого)
+class SortByTimeAsc : public ILogSortStrategy {
+public:
+    std::vector<LogEntry> sort(const std::vector<LogEntry>& entries) const override {
+        auto copy = entries;
+        std::sort(copy.begin(), copy.end(),
+            [](const LogEntry& a, const LogEntry& b) { return a.timestamp < b.timestamp; });
+        return copy;
+    }
+    std::string name() const override { return "Sort by time (asc)"; }
+};
+
+// Конкретна стратегія 2: сортування за часом (від найновішого до найстарішого)
+class SortByTimeDesc : public ILogSortStrategy {
+public:
+    std::vector<LogEntry> sort(const std::vector<LogEntry>& entries) const override {
+        auto copy = entries;
+        std::sort(copy.begin(), copy.end(),
+            [](const LogEntry& a, const LogEntry& b) { return a.timestamp > b.timestamp; });
+        return copy;
+    }
+    std::string name() const override { return "Sort by time (desc)"; }
+};
+
+// Конкретна стратегія 3: сортування за рівнем (від ERROR до DEBUG)
+class SortByLevelDesc : public ILogSortStrategy {
+public:
+    std::vector<LogEntry> sort(const std::vector<LogEntry>& entries) const override {
+        auto copy = entries;
+        std::sort(copy.begin(), copy.end(),
+            [](const LogEntry& a, const LogEntry& b) { return a.level > b.level; });
+        return copy;
+    }
+    std::string name() const override { return "Sort by level (ERROR first)"; }
+};
+
+// Конкретна стратегія 4: сортування за джерелом (алфавітно)
+class SortBySourceAlpha : public ILogSortStrategy {
+public:
+    std::vector<LogEntry> sort(const std::vector<LogEntry>& entries) const override {
+        auto copy = entries;
+        std::sort(copy.begin(), copy.end(),
+            [](const LogEntry& a, const LogEntry& b) { return a.source < b.source; });
+        return copy;
+    }
+    std::string name() const override { return "Sort by source (A-Z)"; }
+};
+
+// LogSorter — контекст Strategy: зберігає поточну стратегію і застосовує її
+class LogSorter {
+public:
+    explicit LogSorter(std::unique_ptr<ILogSortStrategy> strategy)
+        : strategy_(std::move(strategy)) {}
+
+    void setStrategy(std::unique_ptr<ILogSortStrategy> strategy) {
+        strategy_ = std::move(strategy);
+    }
+
+    std::vector<LogEntry> apply(const std::vector<LogEntry>& entries) const {
+        return strategy_->sort(entries);
+    }
+
+    std::string strategyName() const { return strategy_->name(); }
+
+private:
+    std::unique_ptr<ILogSortStrategy> strategy_;
+};
+
+// ─── Chain of Responsibility (LogEntryValidator) ──────────────────────────────
+// Ланцюг обробників валідує LogEntry перед додаванням до сховища.
+// Кожен обробник або відхиляє запис (повертає false + причину), або передає далі.
+
+struct ValidationResult {
+    bool        ok;
+    std::string reason; // заповнюється при ok == false
+};
+
+class ILogValidator {
+public:
+    virtual ~ILogValidator() = default;
+
+    // Встановити наступний обробник у ланцюгу
+    ILogValidator* setNext(std::unique_ptr<ILogValidator> next) {
+        next_ = std::move(next);
+        return next_.get();
+    }
+
+    // Перевірити запис; якщо поточний обробник пропускає — передати далі
+    virtual ValidationResult validate(const LogEntry& entry) {
+        if (next_) return next_->validate(entry);
+        return { true, "" };
+    }
+
+protected:
+    std::unique_ptr<ILogValidator> next_;
+};
+
+// Обробник 1: повідомлення не може бути порожнім
+class EmptyMessageValidator : public ILogValidator {
+public:
+    ValidationResult validate(const LogEntry& entry) override {
+        if (entry.message.empty())
+            return { false, "Message cannot be empty" };
+        return ILogValidator::validate(entry);
+    }
+};
+
+// Обробник 2: повідомлення не може перевищувати 512 символів
+class MessageLengthValidator : public ILogValidator {
+public:
+    explicit MessageLengthValidator(size_t maxLen = 512) : maxLen_(maxLen) {}
+    ValidationResult validate(const LogEntry& entry) override {
+        if (entry.message.size() > maxLen_)
+            return { false, "Message too long (max " + std::to_string(maxLen_) + " chars)" };
+        return ILogValidator::validate(entry);
+    }
+private:
+    size_t maxLen_;
+};
+
+// Обробник 3: джерело не може бути порожнім
+class EmptySourceValidator : public ILogValidator {
+public:
+    ValidationResult validate(const LogEntry& entry) override {
+        if (entry.source.empty())
+            return { false, "Source cannot be empty" };
+        return ILogValidator::validate(entry);
+    }
+};
+
+// Обробник 4: повідомлення не повинно містити заборонених слів
+class ForbiddenWordsValidator : public ILogValidator {
+public:
+    explicit ForbiddenWordsValidator(std::vector<std::string> words)
+        : forbidden_(std::move(words)) {}
+
+    ValidationResult validate(const LogEntry& entry) override {
+        std::string lower = entry.message;
+        for (auto& c : lower) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+        for (const auto& word : forbidden_) {
+            if (lower.find(word) != std::string::npos)
+                return { false, "Message contains forbidden word: \"" + word + "\"" };
+        }
+        return ILogValidator::validate(entry);
+    }
+private:
+    std::vector<std::string> forbidden_;
+};
+
+// Хелпер: побудувати стандартний ланцюг валідації
+inline std::unique_ptr<ILogValidator> buildDefaultValidatorChain() {
+    auto head  = std::make_unique<EmptyMessageValidator>();
+    auto len   = std::make_unique<MessageLengthValidator>(512);
+    auto src   = std::make_unique<EmptySourceValidator>();
+    auto words = std::make_unique<ForbiddenWordsValidator>(
+        std::vector<std::string>{ "drop table", "rm -rf", "<script>" });
+
+    // Будуємо ланцюг: EmptyMessage → Length → EmptySource → ForbiddenWords
+    len->setNext(std::move(src))->setNext(std::move(words));
+    head->setNext(std::move(len));
+    return head;
+}
+
 // ─── Logger (Singleton) ──────────────────────────────────────────────────────
 
 class Logger {
@@ -1041,11 +1215,33 @@ public:
     void subscribe(ILogObserver* observer)   { eventSource_.subscribe(observer); }
     void unsubscribe(ILogObserver* observer) { eventSource_.unsubscribe(observer); }
 
-    // Req 7.1, 6.1, 8.3 — create entry, filter by minLevel, store and write
+    // Strategy: змінити поточну стратегію сортування
+    void setSortStrategy(std::unique_ptr<ILogSortStrategy> strategy) {
+        sorter_.setStrategy(std::move(strategy));
+    }
+
+    // Strategy: відсортувати всі записи за поточною стратегією
+    std::vector<LogEntry> sortedEntries() const {
+        return sorter_.apply(storage.getEntries());
+    }
+
+    std::string currentSortStrategyName() const { return sorter_.strategyName(); }
+
+    // Req 7.1, 6.1, 8.3 — create entry, filter by minLevel, validate (CoR), store and write
     void log(LogLevel level, const std::string& source, const std::string& message) {
         try {
             if (level < config.minLevel) return;
             LogEntry entry{ level, source, message, std::chrono::system_clock::now() };
+
+            // Chain of Responsibility: валідуємо запис перед збереженням
+            auto result = validator_->validate(entry);
+            if (!result.ok) {
+                std::cerr << Color::YELLOW
+                          << "[Validator] Entry rejected: " << result.reason
+                          << Color::RESET << "\n";
+                return;
+            }
+
             std::lock_guard<std::mutex> lock(mtx);
             storage.add(entry);
             writer.write(entry, formatter);
@@ -1103,7 +1299,8 @@ public:
     }
 
 private:
-    Logger() : writer(config) {}
+    Logger() : writer(config), sorter_(std::make_unique<SortByTimeAsc>()),
+               validator_(buildDefaultValidatorChain()) {}
     Logger(const Logger&)            = delete;
     Logger& operator=(const Logger&) = delete;
 
@@ -1113,6 +1310,8 @@ private:
     LogAnalyzer  analyzer;
     LogFileWriter writer;
     LogEventSource eventSource_;
+    LogSorter    sorter_;                          // Strategy
+    std::unique_ptr<ILogValidator> validator_;     // Chain of Responsibility
     mutable std::mutex mtx;
 };
 
@@ -1198,7 +1397,210 @@ private:
     Logger& logger_;
 };
 
-// ─── Logger (Singleton) ──────────────────────────────────────────────────────
+// ─── State (LoggerSessionState) ──────────────────────────────────────────────
+// Моделює стан сесії логера: IDLE → ACTIVE → PAUSED → STOPPED.
+// Поведінка методів log() та info() залежить від поточного стану.
+
+class LoggerSessionContext; // forward declaration
+
+class ISessionState {
+public:
+    virtual ~ISessionState() = default;
+    virtual bool  canLog()        const = 0;
+    virtual std::string name()    const = 0;
+    // Переходи
+    virtual void activate(LoggerSessionContext& ctx);
+    virtual void pause(LoggerSessionContext& ctx);
+    virtual void resume(LoggerSessionContext& ctx);
+    virtual void stop(LoggerSessionContext& ctx);
+};
+
+// Контекст — зберігає поточний стан і делегує йому поведінку
+class LoggerSessionContext {
+public:
+    LoggerSessionContext();
+
+    void setState(std::unique_ptr<ISessionState> state) {
+        std::cout << Color::CYAN << "[State] " << stateName() << " → " << state->name()
+                  << Color::RESET << "\n";
+        state_ = std::move(state);
+    }
+
+    bool  canLog()    const { return state_->canLog(); }
+    std::string stateName() const { return state_->name(); }
+
+    void activate() { state_->activate(*this); }
+    void pause()    { state_->pause(*this);    }
+    void resume()   { state_->resume(*this);   }
+    void stop()     { state_->stop(*this);     }
+
+private:
+    std::unique_ptr<ISessionState> state_;
+};
+
+// ── Конкретні стани ──
+
+class IdleState : public ISessionState {
+public:
+    bool canLog() const override { return false; }
+    std::string name() const override { return "IDLE"; }
+    void activate(LoggerSessionContext& ctx) override;
+};
+
+class ActiveState : public ISessionState {
+public:
+    bool canLog() const override { return true; }
+    std::string name() const override { return "ACTIVE"; }
+    void pause(LoggerSessionContext& ctx) override;
+    void stop(LoggerSessionContext& ctx) override;
+};
+
+class PausedState : public ISessionState {
+public:
+    bool canLog() const override { return false; }
+    std::string name() const override { return "PAUSED"; }
+    void resume(LoggerSessionContext& ctx) override;
+    void stop(LoggerSessionContext& ctx) override;
+};
+
+class StoppedState : public ISessionState {
+public:
+    bool canLog() const override { return false; }
+    std::string name() const override { return "STOPPED"; }
+    // Зі STOPPED жодних переходів немає
+};
+
+// ── Реалізації переходів (після оголошення всіх станів) ──
+
+inline void ISessionState::activate(LoggerSessionContext&) {
+    std::cout << Color::YELLOW << "[State] Cannot activate from state: " << name() << Color::RESET << "\n";
+}
+inline void ISessionState::pause(LoggerSessionContext&) {
+    std::cout << Color::YELLOW << "[State] Cannot pause from state: " << name() << Color::RESET << "\n";
+}
+inline void ISessionState::resume(LoggerSessionContext&) {
+    std::cout << Color::YELLOW << "[State] Cannot resume from state: " << name() << Color::RESET << "\n";
+}
+inline void ISessionState::stop(LoggerSessionContext&) {
+    std::cout << Color::YELLOW << "[State] Cannot stop from state: " << name() << Color::RESET << "\n";
+}
+
+inline void IdleState::activate(LoggerSessionContext& ctx) {
+    ctx.setState(std::make_unique<ActiveState>());
+}
+inline void ActiveState::pause(LoggerSessionContext& ctx) {
+    ctx.setState(std::make_unique<PausedState>());
+}
+inline void ActiveState::stop(LoggerSessionContext& ctx) {
+    ctx.setState(std::make_unique<StoppedState>());
+}
+inline void PausedState::resume(LoggerSessionContext& ctx) {
+    ctx.setState(std::make_unique<ActiveState>());
+}
+inline void PausedState::stop(LoggerSessionContext& ctx) {
+    ctx.setState(std::make_unique<StoppedState>());
+}
+
+// Конструктор контексту — початковий стан IDLE
+inline LoggerSessionContext::LoggerSessionContext()
+    : state_(std::make_unique<IdleState>()) {}
+
+// ─── Composite (LogFilterNode) ────────────────────────────────────────────────
+// Дерево фільтрів для відбору LogEntry.
+// Leaf: конкретний фільтр (за рівнем, джерелом, підрядком).
+// Composite: AND/OR група дочірніх фільтрів.
+
+class ILogFilter {
+public:
+    virtual ~ILogFilter() = default;
+    virtual bool matches(const LogEntry& e) const = 0;
+    virtual std::string describe() const = 0;
+};
+
+// ── Листові фільтри ──
+
+class LevelFilter : public ILogFilter {
+public:
+    explicit LevelFilter(LogLevel level) : level_(level) {}
+    bool matches(const LogEntry& e) const override { return e.level == level_; }
+    std::string describe() const override { return "level=" + levelToString(level_); }
+private:
+    LogLevel level_;
+};
+
+class SourceFilter : public ILogFilter {
+public:
+    explicit SourceFilter(std::string source) : source_(std::move(source)) {}
+    bool matches(const LogEntry& e) const override { return e.source == source_; }
+    std::string describe() const override { return "source=" + source_; }
+private:
+    std::string source_;
+};
+
+class MessageContainsFilter : public ILogFilter {
+public:
+    explicit MessageContainsFilter(std::string keyword) : keyword_(std::move(keyword)) {}
+    bool matches(const LogEntry& e) const override {
+        return e.message.find(keyword_) != std::string::npos;
+    }
+    std::string describe() const override { return "message~\"" + keyword_ + "\""; }
+private:
+    std::string keyword_;
+};
+
+// ── Composite: AND-група ──
+
+class AndFilterGroup : public ILogFilter {
+public:
+    void add(std::unique_ptr<ILogFilter> f) { children_.push_back(std::move(f)); }
+    bool matches(const LogEntry& e) const override {
+        for (const auto& c : children_)
+            if (!c->matches(e)) return false;
+        return true;
+    }
+    std::string describe() const override {
+        std::string s = "(";
+        for (size_t i = 0; i < children_.size(); ++i) {
+            if (i) s += " AND ";
+            s += children_[i]->describe();
+        }
+        return s + ")";
+    }
+private:
+    std::vector<std::unique_ptr<ILogFilter>> children_;
+};
+
+// ── Composite: OR-група ──
+
+class OrFilterGroup : public ILogFilter {
+public:
+    void add(std::unique_ptr<ILogFilter> f) { children_.push_back(std::move(f)); }
+    bool matches(const LogEntry& e) const override {
+        for (const auto& c : children_)
+            if (c->matches(e)) return true;
+        return false;
+    }
+    std::string describe() const override {
+        std::string s = "(";
+        for (size_t i = 0; i < children_.size(); ++i) {
+            if (i) s += " OR ";
+            s += children_[i]->describe();
+        }
+        return s + ")";
+    }
+private:
+    std::vector<std::unique_ptr<ILogFilter>> children_;
+};
+
+// Хелпер: застосувати фільтр до сховища
+inline std::vector<LogEntry> applyFilter(const LogStorage& storage, const ILogFilter& filter) {
+    std::vector<LogEntry> result;
+    for (const auto& e : storage.getEntries())
+        if (filter.matches(e)) result.push_back(e);
+    return result;
+}
+
+// ─── CLI ─────────────────────────────────────────────────────────────────────
 
 class CLI {
 public:
@@ -1225,6 +1627,8 @@ public:
                 facade_ = std::make_unique<LoggingFacade>(logger);
                 proxy_  = std::make_unique<LogStorageProxy>(
                     logger.getStorageMutable(), currentUser->role);
+                // State: активуємо сесію після успішного логіну
+                sessionState_.activate();
                 return true;
             }
             std::cout << Color::RED << "Invalid credentials. Try again." << Color::RESET << "\n";
@@ -1259,7 +1663,10 @@ public:
                     break;
                 case 8: handleClearLogs();  break;
                 case 9: handleVisitorAnalysis(); break;
+                case 10: handleSessionState();  break;
+                case 11: handleFilterBuilder(); break;
                 case 0:
+                    sessionState_.stop();
                     std::cout << "Goodbye.\n";
                     return;
                 default: std::cout << "Invalid option. Try again.\n"; pause(); break;
@@ -1276,6 +1683,8 @@ private:
     // Observer: спостерігачі активні протягом усієї сесії користувача
     ConsoleObserver consoleObs_;
     AlertObserver   alertObs_;
+    // State: стан сесії логера
+    LoggerSessionContext sessionState_;
 
     bool isSuperAdmin() const {
         return currentUser && currentUser->role == Role::SUPERADMIN;
@@ -1299,7 +1708,9 @@ private:
                   << "4. Statistics\n"
                   << "5. Save logs to file\n"
                   << "8. Clear logs\n"
-                  << "9. Visitor: analyze logs\n";
+                  << "9. Visitor: analyze logs\n"
+                  << "10. Session state (State)\n"
+                  << "11. Filter builder (Composite)\n";
         if (isSuperAdmin()) {
             std::cout << "6. Configure logger\n"
                       << "7. Manage users\n";
@@ -1482,19 +1893,27 @@ private:
 
     void handleSortLogs() {
         clearScreen();
-        std::cout << "-- Sort logs --\n"
-                  << "1. Sort by timestamp\n"
-                  << "2. Sort by source\n"
+        std::cout << "-- Sort logs (Strategy) --\n"
+                  << "1. By time (oldest first)\n"
+                  << "2. By time (newest first)\n"
+                  << "3. By level (ERROR first)\n"
+                  << "4. By source (A-Z)\n"
                   << "Choice: ";
         std::string input; std::getline(std::cin, input);
         int choice = 0;
         try { choice = std::stoi(input); } catch (...) {}
-        // Proxy: читання через контролер прав
+
+        // Strategy: вибираємо і встановлюємо стратегію сортування
         switch (choice) {
-            case 1: printEntries(logger.getStorage().sortedByTime());   break;
-            case 2: printEntries(logger.getStorage().sortedBySource()); break;
-            default: std::cout << "Invalid option.\n"; pause(); break;
+            case 1: logger.setSortStrategy(std::make_unique<SortByTimeAsc>());    break;
+            case 2: logger.setSortStrategy(std::make_unique<SortByTimeDesc>());   break;
+            case 3: logger.setSortStrategy(std::make_unique<SortByLevelDesc>());  break;
+            case 4: logger.setSortStrategy(std::make_unique<SortBySourceAlpha>()); break;
+            default: std::cout << "Invalid option.\n"; pause(); return;
         }
+        std::cout << Color::CYAN << "[Strategy] Active: " << logger.currentSortStrategyName()
+                  << Color::RESET << "\n\n";
+        printEntries(logger.sortedEntries());
     }
 
     void handleStatistics() {
@@ -1749,6 +2168,122 @@ private:
         }
         pause();
     }
+
+    // ── State: керування станом сесії ──
+    void handleSessionState() {
+        clearScreen();
+        std::cout << "-- Session State (State pattern) --\n"
+                  << "Current state: " << Color::CYAN << sessionState_.stateName() << Color::RESET << "\n\n"
+                  << "1. Activate\n"
+                  << "2. Pause\n"
+                  << "3. Resume\n"
+                  << "4. Stop\n"
+                  << "0. Back\n"
+                  << "Choice: ";
+        std::string input; std::getline(std::cin, input);
+        int choice = 0;
+        try { choice = std::stoi(input); } catch (...) {}
+
+        switch (choice) {
+            case 1: sessionState_.activate(); break;
+            case 2: sessionState_.pause();    break;
+            case 3: sessionState_.resume();   break;
+            case 4: sessionState_.stop();     break;
+            case 0: return;
+            default: std::cout << "Invalid option.\n"; break;
+        }
+
+        // Показуємо вплив стану на логування
+        std::cout << "\nLogging " << (sessionState_.canLog()
+            ? Color::GREEN + "ALLOWED" : Color::RED + "BLOCKED")
+            << Color::RESET << " in state [" << sessionState_.stateName() << "]\n";
+        pause();
+    }
+
+    // ── Composite: конструктор фільтрів ──
+    void handleFilterBuilder() {
+        clearScreen();
+        std::cout << "-- Filter Builder (Composite pattern) --\n"
+                  << "Build a filter tree to search logs.\n\n"
+                  << "1. Filter by level only\n"
+                  << "2. Filter by source only\n"
+                  << "3. Filter by message keyword only\n"
+                  << "4. AND: level + source\n"
+                  << "5. AND: level + message keyword\n"
+                  << "6. OR: two levels\n"
+                  << "7. AND(level + source) OR message keyword\n"
+                  << "0. Back\n"
+                  << "Choice: ";
+        std::string input; std::getline(std::cin, input);
+        int choice = 0;
+        try { choice = std::stoi(input); } catch (...) {}
+
+        std::unique_ptr<ILogFilter> filter;
+
+        switch (choice) {
+            case 0: return;
+            case 1: {
+                LogLevel lv = promptLevel();
+                filter = std::make_unique<LevelFilter>(lv);
+                break;
+            }
+            case 2: {
+                std::cout << "Source: "; std::string s; std::getline(std::cin, s);
+                filter = std::make_unique<SourceFilter>(s);
+                break;
+            }
+            case 3: {
+                std::cout << "Keyword: "; std::string kw; std::getline(std::cin, kw);
+                filter = std::make_unique<MessageContainsFilter>(kw);
+                break;
+            }
+            case 4: {
+                LogLevel lv = promptLevel();
+                std::cout << "Source: "; std::string s; std::getline(std::cin, s);
+                auto grp = std::make_unique<AndFilterGroup>();
+                grp->add(std::make_unique<LevelFilter>(lv));
+                grp->add(std::make_unique<SourceFilter>(s));
+                filter = std::move(grp);
+                break;
+            }
+            case 5: {
+                LogLevel lv = promptLevel();
+                std::cout << "Keyword: "; std::string kw; std::getline(std::cin, kw);
+                auto grp = std::make_unique<AndFilterGroup>();
+                grp->add(std::make_unique<LevelFilter>(lv));
+                grp->add(std::make_unique<MessageContainsFilter>(kw));
+                filter = std::move(grp);
+                break;
+            }
+            case 6: {
+                std::cout << "First "; LogLevel lv1 = promptLevel();
+                std::cout << "Second "; LogLevel lv2 = promptLevel();
+                auto grp = std::make_unique<OrFilterGroup>();
+                grp->add(std::make_unique<LevelFilter>(lv1));
+                grp->add(std::make_unique<LevelFilter>(lv2));
+                filter = std::move(grp);
+                break;
+            }
+            case 7: {
+                LogLevel lv = promptLevel();
+                std::cout << "Source: "; std::string s; std::getline(std::cin, s);
+                std::cout << "Keyword: "; std::string kw; std::getline(std::cin, kw);
+                auto andGrp = std::make_unique<AndFilterGroup>();
+                andGrp->add(std::make_unique<LevelFilter>(lv));
+                andGrp->add(std::make_unique<SourceFilter>(s));
+                auto orGrp = std::make_unique<OrFilterGroup>();
+                orGrp->add(std::move(andGrp));
+                orGrp->add(std::make_unique<MessageContainsFilter>(kw));
+                filter = std::move(orGrp);
+                break;
+            }
+            default: std::cout << "Invalid option.\n"; pause(); return;
+        }
+
+        std::cout << Color::CYAN << "\nFilter: " << filter->describe() << Color::RESET << "\n\n";
+        auto results = applyFilter(logger.getStorage(), *filter);
+        printEntries(results);
+    }
 };
 
 int main(int argc, char* argv[]) {
@@ -1774,256 +2309,6 @@ int main(int argc, char* argv[]) {
     cfg.maxFileSizeKB = 1024;
     Logger::instance().configure(cfg);
     Logger::instance().loadFromFile(cfg.filePath);
-
-    // ─── Демонстрація патерну Factory Method ─────────────────────────────────
-    // Показує що кожна конкретна фабрика створює свій форматер
-    // і форматує один і той самий запис по-різному.
-    {
-        std::cout << "\n╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║     DEMO: Factory Method (FormatterFactory)  ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        // Тестовий запис журналу
-        LogEntry sample;
-        sample.level     = LogLevel::WARNING;
-        sample.source    = "auth";
-        sample.message   = "Failed login attempt";
-        sample.timestamp = std::chrono::system_clock::now();
-
-        // Три конкретні творці — кожен створює свій продукт
-        std::vector<std::unique_ptr<FormatterFactory>> factories;
-        factories.push_back(std::make_unique<TXTFormatterFactory>(false));
-        factories.push_back(std::make_unique<CSVFormatterFactory>(','));
-        factories.push_back(std::make_unique<JSONFormatterFactory>(2));
-
-        for (const auto& factory : factories) {
-            auto formatter = factory->createFormatter();
-            std::cout << "[Factory: " << factory->outputFormat() << "]\n";
-            if (!formatter->header().empty())
-                std::cout << "  header : " << formatter->header() << "\n";
-            std::cout << "  format : " << formatter->format(sample) << "\n\n";
-        }
-    }
-
-    // ─── Демонстрація патерну Abstract Factory ────────────────────────────────
-    // Показує що кожна фабрика створює узгоджену пару продуктів
-    // (форматер + стратегія запису) і зберігає файл у своєму форматі.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║   DEMO: Abstract Factory (IOutputFactory)   ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        // Тестові записи для збереження
-        std::vector<LogEntry> samples;
-        for (auto lvl : { LogLevel::INFO, LogLevel::WARNING, LogLevel::ERROR }) {
-            LogEntry e;
-            e.level     = lvl;
-            e.source    = "demo";
-            e.message   = "Abstract Factory test entry";
-            e.timestamp = std::chrono::system_clock::now();
-            samples.push_back(e);
-        }
-
-        // Три конкретні фабрики — кожна зберігає файл свого сімейства
-        std::vector<std::unique_ptr<IOutputFactory>> outFactories;
-        outFactories.push_back(std::make_unique<TXTOutputFactory>());
-        outFactories.push_back(std::make_unique<CSVOutputFactory>());
-        outFactories.push_back(std::make_unique<JSONOutputFactory>());
-
-        for (const auto& factory : outFactories) {
-            factory->saveAll(samples, exeDir + "demo_output");
-            std::cout << "[Factory: " << factory->getFormat()
-                      << "] -> файл збережено\n";
-        }
-        std::cout << "\n";
-    }
-
-    // ─── Демонстрація патерну Decorator ──────────────────────────────────────
-    // Декоратори обгортають існуючі форматери, додаючи нову поведінку
-    // без зміни оригінальних класів.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║        DEMO: Decorator (FormatterDecorator) ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        LogEntry sample;
-        sample.level     = LogLevel::ERROR;
-        sample.source    = "network";
-        sample.message   = "connection timeout";
-        sample.timestamp = std::chrono::system_clock::now();
-
-        // Базовий TXT форматер
-        auto base = std::make_unique<TXTFormatter>(false);
-        std::cout << "[Base TXT]       : " << base->format(sample) << "\n";
-
-        // UpperCaseDecorator поверх TXT
-        auto upper = std::make_unique<UpperCaseDecorator>(std::make_unique<TXTFormatter>(false));
-        std::cout << "[UpperCase+TXT]  : " << upper->format(sample) << "\n";
-
-        // NumberedDecorator поверх CSV
-        auto numbered = std::make_unique<NumberedDecorator>(std::make_unique<CSVFormatter>());
-        std::cout << "[Numbered+CSV]   : " << numbered->format(sample) << "\n";
-        std::cout << "[Numbered+CSV]   : " << numbered->format(sample) << "\n";
-
-        // Стек декораторів: Numbered → UpperCase → TXT
-        auto stacked = std::make_unique<NumberedDecorator>(
-            std::make_unique<UpperCaseDecorator>(
-                std::make_unique<TXTFormatter>(false)));
-        std::cout << "[Numbered+Upper] : " << stacked->format(sample) << "\n\n";
-    }
-
-    // ─── Демонстрація патерну Flyweight ──────────────────────────────────────
-    // LogMetaPool кешує незмінні метадані (source + level) і повертає
-    // спільний об'єкт замість створення нового для кожного запису.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║        DEMO: Flyweight (LogMetaPool)        ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        auto& pool = LogMetaPool::instance();
-
-        // Симулюємо 6 записів з 3 унікальними (source, level) парами
-        struct RawEntry { std::string source; LogLevel level; std::string message; };
-        std::vector<RawEntry> raw = {
-            { "auth",    LogLevel::ERROR,   "login failed"       },
-            { "auth",    LogLevel::ERROR,   "token expired"      },
-            { "network", LogLevel::WARNING, "high latency"       },
-            { "network", LogLevel::WARNING, "packet loss"        },
-            { "db",      LogLevel::INFO,    "query executed"     },
-            { "db",      LogLevel::INFO,    "connection opened"  },
-        };
-
-        std::cout << "Entries: " << raw.size()
-                  << "  |  Unique meta objects in pool: ";
-
-        std::vector<const LogEntryMeta*> metas;
-        for (const auto& r : raw) {
-            const LogEntryMeta* meta = pool.get(r.source, r.level);
-            metas.push_back(meta);
-        }
-
-        std::cout << pool.poolSize() << "\n\n";
-
-        for (size_t i = 0; i < raw.size(); ++i) {
-            std::cout << "  [" << metas[i]->levelStr << "] ["
-                      << metas[i]->source << "] " << raw[i].message
-                      << "  (meta@" << static_cast<const void*>(metas[i]) << ")\n";
-        }
-
-        // Перевіряємо що однакові пари повертають той самий об'єкт
-        std::cout << "\n  auth/ERROR ptr same? "
-                  << (pool.get("auth", LogLevel::ERROR) == pool.get("auth", LogLevel::ERROR)
-                      ? "yes (shared)" : "no") << "\n\n";
-    }
-
-    // ─── Демонстрація патерну Proxy ──────────────────────────────────────────
-    // LogStorageProxy контролює доступ до LogStorage залежно від ролі.
-    // admin може лише читати; superadmin має повний доступ.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║        DEMO: Proxy (LogStorageProxy)        ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        // Додаємо тестові записи у сховище
-        LogStorage demoStorage;
-        LogEntry e1{ LogLevel::INFO, "proxy-demo", "test entry 1", std::chrono::system_clock::now() };
-        LogEntry e2{ LogLevel::ERROR, "proxy-demo", "test entry 2", std::chrono::system_clock::now() };
-        demoStorage.add(e1);
-        demoStorage.add(e2);
-
-        // Proxy для admin — читання дозволено, очищення заблоковано
-        LogStorageProxy adminProxy(demoStorage, Role::ADMIN);
-        std::cout << "[admin] getEntries count: " << adminProxy.getEntries().size() << "\n";
-        std::cout << "[admin] trying clearAll -> ";
-        adminProxy.clearAll();
-
-        // Proxy для superadmin — повний доступ
-        LogStorageProxy superProxy(demoStorage, Role::SUPERADMIN);
-        std::cout << "[superadmin] getEntries count: " << superProxy.getEntries().size() << "\n";
-        std::cout << "[superadmin] trying clearAll -> ";
-        superProxy.clearAll();
-        std::cout << "[superadmin] entries after clear: " << superProxy.getEntries().size() << "\n\n";
-    }
-
-    // ─── Демонстрація патерну Facade ─────────────────────────────────────────
-    // LoggingFacade спрощує типові операції: додати запис, зберегти у всіх
-    // форматах, показати статистику — один виклик замість кількох.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║       DEMO: Facade (LoggingFacade)          ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        LoggingFacade facade(Logger::instance());
-
-        // Один виклик — додати запис
-        facade.addEntry(LogLevel::INFO,    "facade-demo", "System started via facade");
-        facade.addEntry(LogLevel::WARNING, "facade-demo", "Low disk space via facade");
-        facade.addEntry(LogLevel::ERROR,   "facade-demo", "Critical error via facade");
-
-        // Отримати останні 3 записи
-        auto recent = facade.getRecent(3);
-        std::cout << "Last " << recent.size() << " entries via facade:\n";
-        TXTFormatter txt;
-        for (const auto& e : recent)
-            std::cout << "  " << txt.format(e) << "\n";
-
-        // Зберегти у всіх форматах одним викликом
-        facade.saveAllFormats(exeDir + "app");
-        std::cout << "\nSaved to TXT/CSV/JSON via facade.\n\n";
-    }
-
-    // ─── Демонстрація патерну Observer ───────────────────────────────────────
-    // Спостерігачі підписуються на Logger і отримують сповіщення при кожному
-    // новому записі. AlertObserver реагує лише на ERROR.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║        DEMO: Observer (LogEventSource)      ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        ConsoleObserver consoleObs;
-        AlertObserver   alertObs;
-        CounterObserver counterObs;
-
-        Logger::instance().subscribe(&consoleObs);
-        Logger::instance().subscribe(&alertObs);
-        Logger::instance().subscribe(&counterObs);
-
-        Logger::instance().log(LogLevel::INFO,    "observer-demo", "Service started");
-        Logger::instance().log(LogLevel::WARNING, "observer-demo", "Memory usage high");
-        Logger::instance().log(LogLevel::ERROR,   "observer-demo", "Database unreachable");
-        Logger::instance().log(LogLevel::INFO,    "observer-demo", "Retry succeeded");
-
-        counterObs.printCounts();
-
-        // Відписуємо спостерігачів після демо
-        Logger::instance().unsubscribe(&consoleObs);
-        Logger::instance().unsubscribe(&alertObs);
-        Logger::instance().unsubscribe(&counterObs);
-        std::cout << "\n";
-    }
-
-    // ─── Демонстрація патерну Visitor ────────────────────────────────────────
-    // Відвідувачі обходять записи сховища і виконують різні операції
-    // (статистика, фільтрація, звіт) без зміни LogEntry.
-    {
-        std::cout << "╔══════════════════════════════════════════════╗\n";
-        std::cout <<   "║        DEMO: Visitor (ILogVisitor)          ║\n";
-        std::cout <<   "╚══════════════════════════════════════════════╝\n";
-
-        // StatsVisitor — підраховує записи по рівнях та джерелах
-        StatsVisitor sv;
-        acceptVisitor(Logger::instance().getStorage(), sv);
-
-        // FilterVisitor — збирає лише ERROR записи
-        FilterVisitor fv(LogLevel::ERROR);
-        acceptVisitor(Logger::instance().getStorage(), fv);
-        std::cout << "FilterVisitor (ERROR): found " << fv.results().size() << " entries\n";
-
-        // ReportVisitor — будує текстовий звіт
-        ReportVisitor rv;
-        acceptVisitor(Logger::instance().getStorage(), rv);
-        std::cout << "ReportVisitor: report length = " << rv.report().size() << " chars\n\n";
-    }
 
     CLI cli(Logger::instance(), userManager);
     if (!cli.login()) {
